@@ -1,0 +1,19 @@
+export GCC_DIR=$GCC_DIR$
+
+export BUILD_DIR=$BUILD_DIR$
+export DEPLOY_DIR=$DEPLOY_DIR$
+export INSTALL_DIR=$INSTALL_DIR$
+export ROOTFS_DIR=$ROOTFS_DIR$
+
+${BUILD_DIR}:
+	mkdir -p ${BUILD_DIR}
+
+${DEPLOY_DIR}:
+	mkdir -p ${DEPLOY_DIR}	
+	
+${INSTALL_DIR}:
+	mkdir -p ${INSTALL_DIR}
+	
+${ROOTFS_DIR}:
+	mkdir -p ${ROOTFS_DIR}
+
