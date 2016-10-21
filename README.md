@@ -37,7 +37,11 @@ Hacer un proyecto compatible con esta aplicación:
 	- GCC_DIR: Directorio donde se encuentran los ejecutables del compilador (gcc, g++, ar...)
 	- INSTALL_DIR: Directorio donde se encuentra la raíz del ROOTFS que se generará al final
 	- MAKE_FLAGS: Flags a pasar al makefile final.
-	Además, esta plantilla tendrá dos target PHONY obligatorios: build (para compilar) e install (para pasar los resultados a la carpeta del rootfs final).
+	Además, esta plantilla tendrá dos target PHONY: build (para compilar, obligatorio) e install (para pasar los resultados a la carpeta del rootfs final, opcional).
+	Otros nombres para la plantilla en función del TARGET:
+		makefile.template.debug
+		makefile.template.x86
+		makefile.template.x86.debug
 3. Tras la ejecución de la compilación (target BUILD de la plantilla) se deberán haber dejado los resultados en DEPLOY_DIR/proyecto. La estructura de carpetas será DEPLOY_DIR/proyecto/lib, DEPLOY_DIR/proyecto/bin, DEPLOY_DIR/proyecto/sbin, DEPLOY_DIR/proyecto/etc..., según corresponda.
 
 

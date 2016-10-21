@@ -1,3 +1,4 @@
 builds/*
 *.pyc
 Makefile
+/Makefile_rootfs_local

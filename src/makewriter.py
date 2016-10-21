@@ -188,6 +188,7 @@ class Makewriter:
 		self.debug = args.debug
 		self.project_tree = project_tree
 		self.work_path = work_path
+		self.install = args.install
 		self.args = args
 		
 		
@@ -242,7 +243,8 @@ class Makewriter:
 				
 				make_text += pr_writer.project_phony_target_process()
 				
-				make_text += pr_writer.project_install_target_process()
+				if self.install and not self.debug and self.cross_compile:
+					make_text += pr_writer.project_install_target_process()
 				
 				pr_writer.project_create_makefile_exe()
 		

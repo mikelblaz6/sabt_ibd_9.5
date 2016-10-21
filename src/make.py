@@ -1,5 +1,5 @@
 #! /usr/bin/python
-import argparse, os, logging, time
+import argparse, os, logging, time, sys
 
 import defines as constants
 import local
@@ -18,6 +18,9 @@ def doit(args, work_path):
 	deploy_path = constants.deploy_paths[cc_key][deb_key]
 	#Not version checking for local compilations. version set to None
 	version = args.project_version if (args.project_version != "" and args.local == False) else None
+	
+	if args.no_rebuild and (args.git or args.install or args.compile_deps):
+		raise Exception("No rebuild no compatible with currernt config")
 
 	dep_processor = dependencies.Dependencies(args, build_path, deploy_path)
 	project_tree = dep_processor.get_depend_projects(version)
@@ -50,6 +53,7 @@ if __name__ == '__main__':
 	parser.add_argument('-c', '--create-only', action='store_true', help='only creates makefile and folder structure. Do not compile')
 	parser.add_argument('-i', '--install', action='store_true', help='install project on install directory')
 	parser.add_argument('-C', '--clean-install-dir', action='store_true', help='clean install directory (only if install selected)')
+	parser.add_argument('--no-rebuild', action='store_true', help='do not rebuild whole project (only if -l, and not -i and -D)')
 	args = parser.parse_args()
 
 	
@@ -62,15 +66,22 @@ if __name__ == '__main__':
 	logging.info("Starting app")
 	logging.info("Invoked with arguments: " + str(args))
 	
+	
+	
 	try:
 		doit(args, work_path)
 	except Exception as inst:
 		logging.error("Program exitted with exception: " + str(inst))
+		logging.error("--> File: " + str(sys.exc_info()[2].tb_frame.f_code.co_filename))
+		logging.error("--> Line: " + str(sys.exc_info()[2].tb_lineno))
 		print "Program exitted with exception: " + str(inst)
+		print "--> File:", sys.exc_info()[2].tb_frame.f_code.co_filename
+		print "--> Line:", sys.exc_info()[2].tb_lineno
 		exit(1)
 	else:
 		logging.info("Execution completed without errors")
 		exit(0)
+	
 	
 	
 
