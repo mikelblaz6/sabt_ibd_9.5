@@ -44,8 +44,7 @@ class Dependencies:
 	def get_depend_projects_local(self, project, version):
 		try:
 			if not project in self.project_tree:
-				if not self.no_rebuild:
-					local.prepare_local(project, version, self.build_path)
+				local.prepare_local(project, version, self.build_path, not self.no_rebuild)
 				self.project_tree[project] = {}
 				
 			project_build_path = self.build_path + utils.get_full_path(project, version)
