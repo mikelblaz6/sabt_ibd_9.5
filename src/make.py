@@ -47,7 +47,7 @@ if __name__ == '__main__':
 	group2 = parser.add_mutually_exclusive_group(required=True)
 	group2.add_argument('-d', '--debug', action='store_true', help='debug build')
 	group2.add_argument('-r', '--release', action='store_true', help='release build')
-	parser.add_argument('--no-cross-compile', action='store_true', help='debug build')
+	parser.add_argument('--no-cross-compile', action='store_true', help='x86 build')
 	parser.add_argument('-D', '--compile-deps', action='store_true', help='rebuild all project dependencies')
 	parser.add_argument('-m', '--make-params', help='arguments to be passed to final makefile of main project (if applies)', default = "")
 	parser.add_argument('-c', '--create-only', action='store_true', help='only creates makefile and folder structure. Do not compile')
