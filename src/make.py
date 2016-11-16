@@ -72,11 +72,7 @@ if __name__ == '__main__':
 		doit(args, work_path)
 	except Exception as inst:
 		logging.error("Program exitted with exception: " + str(inst))
-		logging.error("--> File: " + str(sys.exc_info()[2].tb_frame.f_code.co_filename))
-		logging.error("--> Line: " + str(sys.exc_info()[2].tb_lineno))
 		print "Program exitted with exception: " + str(inst)
-		print "--> File:", sys.exc_info()[2].tb_frame.f_code.co_filename
-		print "--> Line:", sys.exc_info()[2].tb_lineno
 		exit(1)
 	else:
 		logging.info("Execution completed without errors")

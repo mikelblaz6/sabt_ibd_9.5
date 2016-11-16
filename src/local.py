@@ -24,8 +24,9 @@ def prepare_local(project, version, build_path, remove=True):
 	project_build_path = build_path + utils.get_full_path(project, version)
 	if os.path.isdir(project_build_path) and remove:
 		shutil.rmtree(project_build_path)
-	
+
 	os.system("mkdir -p "  + build_path)
+	print "Copying sources from project", project, "..."
 	os.system("cp -aRf " + 	source_path + project + " " + build_path)
 	#shutil.copytree(source_path + project, project_build_path, symlinks=True)
 		
