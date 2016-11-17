@@ -4,25 +4,25 @@ MAIN_DIR='/MRT_OS/SRC/project_compiler/'
 
 #GLOBAL PROJECT VARIABLES
 # Nombre del proyecto a generar
-GLOBAL_PROJECT = '402.02.alpha2.ti.sdk'
+GLOBAL_PROJECT = '402.12'
 # Rama especifica del proyecto en GIT
-GLOBAL_PROJECT_GIT_BRANCH = '402_02'
+GLOBAL_PROJECT_GIT_BRANCH = '402_12'
 
 #DIRECTORIES
 # Directorios donde buscar codigos fuente de los proyectos a compilar
 SRC_DIR = ('/MRT_OS/SRC/','/home/jonathan/Dropbox/CodeBlocks/')
 
 # Directorios de trabajo para arm.release
-BUILD_DIR = '/MRT_OS/402.02.alpha2.ti.sdk/BUILD/'
-DEPLOY_DIR = '/MRT_OS/402.02.alpha2.ti.sdk/DEPLOY/'
+BUILD_DIR = '/MRT_OS/402.12/BUILD/'
+DEPLOY_DIR = '/MRT_OS/402.12/DEPLOY/'
 
 # Directorios de trabajo para x86.release
 BUILD_DIR_x86 = BUILD_DIR + 'x86/'
 DEPLOY_DIR_x86 = DEPLOY_DIR + 'x86/'
 
 # Directorios de trabajo para arm.debug
-BUILD_DIR_DEBUG = '/MRT_OS/402.02.alpha2.ti.sdk/BUILD_DEBUG/'
-DEPLOY_DIR_DEBUG = '/MRT_OS/402.02.alpha2.ti.sdk/DEPLOY_DEBUG/'
+BUILD_DIR_DEBUG = '/MRT_OS/402.12/BUILD_DEBUG/'
+DEPLOY_DIR_DEBUG = '/MRT_OS/402.12/DEPLOY_DEBUG/'
 
 # Directorios de trabajo para x86.debug
 BUILD_DIR_x86_DEBUG = BUILD_DIR_DEBUG + 'x86/'
@@ -30,8 +30,8 @@ DEPLOY_DIR_x86_DEBUG = DEPLOY_DIR_DEBUG + 'x86/'
 
 #FINAL INSTALLATION DIRS
 # Directorios de instalacion y de generacion de rootfs
-INSTALL_DIR = '/MRT_OS/402.02.alpha2.ti.sdk/SYSTEM/'
-ROOTFS_DIR = '/MRT_OS/402.02.alpha2.ti.sdk/SYSTEM_IMAGE/'
+INSTALL_DIR = '/MRT_OS/402.12/SYSTEM/'
+ROOTFS_DIR = '/MRT_OS/402.12/SYSTEM_IMAGE/'
 
 
 #TOOLCHAIN
