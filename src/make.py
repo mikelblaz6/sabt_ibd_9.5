@@ -21,6 +21,9 @@ def doit(args, work_path):
 	
 	if args.no_rebuild and (args.git or args.install or args.compile_deps):
 		raise Exception("No rebuild no compatible with currernt config")
+		
+	if args.git and not args.compile_deps:
+		raise Exception("Git projects must be compilled fully")
 
 	dep_processor = dependencies.Dependencies(args, build_path, deploy_path)
 	project_tree = dep_processor.get_depend_projects(version)
