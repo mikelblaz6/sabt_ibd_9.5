@@ -4,9 +4,9 @@ MAIN_DIR='/MRT_OS/SRC/project_compiler/'
 
 #GLOBAL PROJECT VARIABLES
 # Nombre del proyecto a generar
-GLOBAL_PROJECT = '402.12'
+GLOBAL_PROJECT = '402.12.01'
 # Rama especifica del proyecto en GIT
-GLOBAL_PROJECT_GIT_BRANCH = '402_12'
+GLOBAL_PROJECT_GIT_BRANCH = '402_12_01'
 
 #DIRECTORIES
 # Directorios donde buscar codigos fuente de los proyectos a compilar
@@ -46,7 +46,7 @@ GCC_BIN_x86_VERSION = '/usr/bin/gcc'
 # Propiedades de GIT
 GIT_URL = 'git@gitlab.merytronic.com'
 # Orden de busqueda de ramas
-GIT_BRANCHES = (GLOBAL_PROJECT_GIT_BRANCH, '402', 'master')
+GIT_BRANCHES = (GLOBAL_PROJECT_GIT_BRANCH, '402_12', '402', 'master')
 # Namespaces de busqueda en git
 GIT_NAMESPACES = ('mrt_developers', 'mrt_os_projects') 
 
