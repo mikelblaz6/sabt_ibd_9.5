@@ -61,7 +61,8 @@ class Dependencies:
 			if cfg.has_section('DEPS') and self.compile_deps:
 				for dependency in cfg.items('DEPS'):
 					#Not version checking for local compilations. version set to None
-					if not dependency[0] in self.project_tree[project][version]['depends']:
+					if not [dependency[0], None] in self.project_tree[project][version]['depends']:
+						#print "Project", dependency[0], "not found for project", project, "in tree", self.project_tree[project][version]['depends']
 						self.project_tree[project][version]['depends'].append([dependency[0], None])
 					self.get_depend_projects_local(dependency[0], None)
 		except Exception as inst:
@@ -96,7 +97,7 @@ class Dependencies:
 						self.project_tree[project][real_version]['install_depends'].append(fdep[0])
 			if cfg.has_section('DEPS') and self.compile_deps:
 				for dependency in cfg.items('DEPS'):
-					if not dependency[0] in self.project_tree[project][real_version]['depends']:
+					if not [dependency[0], dependency[1]] in self.project_tree[project][real_version]['depends']:
 						self.project_tree[project][real_version]['depends'].append([dependency[0], dependency[1]])
 					self.get_depend_projects_git(dependency[0], dependency[1])
 		except Exception as inst:
