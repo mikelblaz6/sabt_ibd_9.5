@@ -8,6 +8,7 @@ def compile(project_tree, args, work_path):
 	cc_key = 'arm' if not args.no_cross_compile else 'x86'
 	deb_key = 'debug' if args.debug else 'release'
 	deploy_path = constants.deploy_paths[cc_key][deb_key]
+	build_path = constants.build_paths[cc_key][deb_key]
 	
 	for project, project_data in project_tree.iteritems():
 		if args.project == project:
@@ -36,3 +37,11 @@ def compile(project_tree, args, work_path):
 			
 	print "------------- COMPILATION ENDED SUCCESSFULLY ----------------"
 
+
+
+def create_image(args, work_path):
+	if args.project == "rootfs":
+		p = subprocess.Popen(['make', '-f', work_path + '/Makefile', 'rootfs_image'], close_fds = True)
+		p.communicate()
+		if p.returncode != 0:
+			raise Exception("Error creating image")

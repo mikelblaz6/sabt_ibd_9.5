@@ -1,0 +1,46 @@
+export GCC_DIR=/MRT_OS/gcc-linaro-toolchain/bin/
+
+export BUILD_DIR=/MRT_OS/402.12/BUILD/
+export DEPLOY_DIR=/MRT_OS/402.12/DEPLOY/
+export INSTALL_DIR=/MRT_OS/402.12/SYSTEM_INCR/
+export ROOTFS_DIR=/MRT_OS/402.12/SYSTEM_IMAGE/
+
+${BUILD_DIR}:
+	mkdir -p ${BUILD_DIR}
+
+${DEPLOY_DIR}:
+	mkdir -p ${DEPLOY_DIR}	
+	
+${INSTALL_DIR}:
+	mkdir -p ${INSTALL_DIR}
+	
+${ROOTFS_DIR}:
+	mkdir -p ${ROOTFS_DIR}
+
+PHONY: 402_00_tasker_cpp_install
+402_00_tasker_cpp_install: ${DEPLOY_DIR}/402_00_tasker_cpp/bin/tasker \
+	| ${INSTALL_DIR}
+	$(MAKE) -C ${BUILD_DIR}/402_00_tasker_cpp -f mrt/makefile.final install
+
+PHONY: 402_00_cmm_cpp_install
+402_00_cmm_cpp_install: ${DEPLOY_DIR}/402_00_cmm_cpp/bin/cmm \
+	| ${INSTALL_DIR}
+	$(MAKE) -C ${BUILD_DIR}/402_00_cmm_cpp -f mrt/makefile.final install
+
+PHONY: 402_00_web_cpp_install
+402_00_web_cpp_install: ${DEPLOY_DIR}/402_00_web_cpp/bin/web \
+	| ${INSTALL_DIR}
+	$(MAKE) -C ${BUILD_DIR}/402_00_web_cpp -f mrt/makefile.final install
+
+PHONY: 402_00_qos_cpp_install
+402_00_qos_cpp_install: ${DEPLOY_DIR}/402_00_qos_cpp/bin/qos \
+	| ${INSTALL_DIR}
+	$(MAKE) -C ${BUILD_DIR}/402_00_qos_cpp -f mrt/makefile.final install
+
+PHONY: 402_00_shell_cpp_install
+402_00_shell_cpp_install: ${DEPLOY_DIR}/402_00_shell_cpp/bin/shell \
+	| ${INSTALL_DIR}
+	$(MAKE) -C ${BUILD_DIR}/402_00_shell_cpp -f mrt/makefile.final install
+
+PHONY: incr_release
+incr_release: 402_00_tasker_cpp_install 402_00_cmm_cpp_install 402_00_web_cpp_install 402_00_qos_cpp_install 402_00_shell_cpp_install

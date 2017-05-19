@@ -6,6 +6,8 @@ import defines as constants
 import local
 import dependencies
 import utils
+import mrt_git
+import database
 
 
 def get_template(project_path, cc, debug):
@@ -30,7 +32,6 @@ def get_template(project_path, cc, debug):
 	return (found, template)
 	
 def read_template_file(temp_filename):
-	section_found = False
 	ret = ""
 	temp_file = open(temp_filename)
 	for line in temp_file:
@@ -41,7 +42,7 @@ def read_template_file(temp_filename):
 
 
 class ProjectWriter:
-	def __init__(self, args, project, version, project_tree, build_path, deploy_path, ordered_versions = None):
+	def __init__(self, args, project, version, project_tree, build_path, deploy_path, ordered_versions = None, to_database = True, compilation_id = 0):
 		self.main_project = args.project
 		self.local = args.local
 		self.compile_deps = args.compile_deps
@@ -59,6 +60,7 @@ class ProjectWriter:
 		self.project_deploy_path = self.deploy_path + self.project_folder
 		
 		self.ordered_versions = ordered_versions
+		self.to_database = to_database
 		
 		(ok, self.temp_filename) = get_template(self.project_build_path, self.cross_compile, self.debug)
 		if not ok and args.debug:
@@ -67,6 +69,14 @@ class ProjectWriter:
 				logging.warning("Project " + str(project) + " compiled for release when building debug. Debug template missing.")
 		if not ok:
 			raise Exception('Template not found for project ' + str(project) + " for modes x86=" + str(not self.cross_compile) + ", debug=" + str(self.debug))
+			
+		cur_commit = mrt_git.get_current_commit(self.project_build_path)[1]
+		cur_version = mrt_git.get_last_tag(self.project_build_path)[1]
+		if self.to_database:
+			sql = database.Database()
+			sql.NewProject(compilation_id, self.project, cur_commit, cur_version)
+		else:
+			logging.info(str(project) + ". Commit id: " + str(cur_commit) + ". Version: " + str(cur_version))
 
 	def get_common_repl_tags(self):
 		repl_tags = [('${BUILD_DIR}/' + self.project + ' ', '${BUILD_DIR}/' + self.project_folder + ' '),
@@ -148,7 +158,6 @@ class ProjectWriter:
 		
 		
 		#Tags to replace in PROJECT INSTALL template
-		main_provide = self.get_main_provide() + " " + install_depends
 		repl_tags = [('$DEPEND_PROVIDES$', self.get_main_provide() + " " + install_depends,),
 						('$PROJECT$', self.project_folder + '_install'),
 						('$TEMPLATE_CONTENT$', '\t$(MAKE) -C ' + '${BUILD_DIR}/' + self.project_folder + ' -f mrt/makefile.final install'),]
@@ -173,6 +182,19 @@ class ProjectWriter:
 		
 		return utils.replace_strings(temp_text, repl_tags)
 		
+	def project_image_target_process(self):
+		if self.main_project != "rootfs" or self.project != "rootfs":
+			return 
+			
+		ret = ''
+		#Tags to replace in phony template for 'project' tarjet
+		repl_tags = [('$PROJECT$', self.project_folder + '_image'),
+						('$TEMPLATE_CONTENT$', '\t$(MAKE) -C ' + '${BUILD_DIR}/' + self.project_folder + ' -f mrt/makefile.final create_img'),]
+		mk_temp = open(constants.MAIN_DIR + 'templates/image_target.tmpl')
+		temp_text = mk_temp.read()
+		mk_temp.close()
+		
+		return utils.replace_strings(temp_text, repl_tags)
 	
 
 class Makewriter:
@@ -190,6 +212,8 @@ class Makewriter:
 		self.work_path = work_path
 		self.install = args.install
 		self.args = args
+		self.to_database = args.final_release
+		self.fw_version = args.final_release_version
 		
 		
 	def get_ordered_versions(self):
@@ -228,6 +252,12 @@ class Makewriter:
 
 
 	def write_makefile(self):
+		release_db_id = 0
+		if self.to_database:
+			sql = database.Database()
+			release_db_id = sql.NewRelease(self.fw_version)
+		else:
+			logging.info("Release for project " + self.main_project)
 		
 		make_text = self.makefile_hdr_process()
 		
@@ -237,7 +267,7 @@ class Makewriter:
 			
 		for project, project_data in self.project_tree.iteritems():
 			for version, version_data in project_data.iteritems():
-				pr_writer = ProjectWriter(self.args, project, version, self.project_tree, self.build_path, self.deploy_path, ordered_versions)
+				pr_writer = ProjectWriter(self.args, project, version, self.project_tree, self.build_path, self.deploy_path, ordered_versions, self.to_database)
 				
 				make_text += pr_writer.project_build_target_process()
 				
@@ -245,6 +275,9 @@ class Makewriter:
 				
 				if self.install and not self.debug and self.cross_compile:
 					make_text += pr_writer.project_install_target_process()
+					
+					if self.main_project == "rootfs" and project == "rootfs":
+						make_text += pr_writer.project_image_target_process()
 				
 				pr_writer.project_create_makefile_exe()
 		
