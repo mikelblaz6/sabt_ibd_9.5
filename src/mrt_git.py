@@ -28,6 +28,13 @@ def get_last_tag(path):
 	return (0, stdout.strip())
 
 
+def get_current_commit(path):
+	p = subprocess.Popen(['git', '-C', path, 'log', '-1', '--pretty=format:%h'], close_fds = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+	(stdout, stderr) = p.communicate()
+	if p.returncode != 0:
+		return (1,"")
+	return (0, stdout.strip())
+
 
 def get_project_source(project, build_path, version = None):
 	tmp_build_path = build_path + '/' + project + '_tmp'
