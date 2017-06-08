@@ -30,7 +30,6 @@ def doit(args, work_path):
 		args.project = "rootfs"
 		args.compile_deps = True
 		args.install = True
-		args.clean_install_dir = True
 		args.images = True
 	else:
 		if args.project == "":
@@ -54,21 +53,32 @@ def doit(args, work_path):
 	dep_processor = dependencies.Dependencies(args, build_path, deploy_path)
 	project_tree = dep_processor.get_depend_projects(version)
 
-	make_writer = makewriter.Makewriter(args, project_tree, build_path, deploy_path, work_path)
-	make_writer.write_makefile()
+	make_writer_tftp = makewriter.Makewriter(args, project_tree, build_path, deploy_path, work_path, "tftp")
+	make_writer_tftp.write_makefile()
 	
-	if args.install and args.clean_install_dir:
-		os.system('rm -Rf ' + constants.INSTALL_DIR)
+	make_writer_full = makewriter.Makewriter(args, project_tree, build_path, deploy_path, work_path, "full")
+	make_writer_full.write_makefile()
 	
 	if not args.create_only:
 		makeexe.compile(project_tree, args, work_path)
+		pass
+	
+	if args.install:
+		os.system('rm -Rf ' + constants.INSTALL_DIR_TFTP)
+		makeexe.install(project_tree, args, work_path, "tftp")
+		if args.images:
+			img_tftp.create_tftp_img(args, work_path)
+			
+		os.system('rm -Rf ' + constants.INSTALL_DIR_FULL)
+		makeexe.install(project_tree, args, work_path, "full")
+		if args.images:
+			img_web.create_web_img(args, project_tree, work_path)
 		
-	if args.images:
-		img_tftp.create_tftp_img(args, work_path)
-		img_web.create_web_img(args, project_tree, work_path)
+		os.system('rm -Rf ' + constants.INSTALL_DIR_INCR)
 		incr_make_writer = incr_makewriter.IncrMakewriter(args, project_tree, build_path, deploy_path, work_path)
 		incr_project_list = incr_make_writer.write_makefile()
-		img_incr.create_web_img(args, project_tree, incr_project_list, work_path)
+		if args.images:
+			img_incr.create_web_img(args, project_tree, incr_project_list, work_path)
 
 	
 

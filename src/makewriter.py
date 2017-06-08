@@ -170,6 +170,26 @@ class ProjectWriter:
 			
 		return ret
 		
+	def project_install_target_process_build_type(self, build_type):
+		ret = ''
+		
+		if self.main_project != "rootfs" or self.project != "rootfs":
+			return ret
+		
+
+		#Tags to replace in PROJECT INSTALL template
+
+		repl_tags = [('$DEPEND_PROVIDES$', self.get_main_provide(),),
+						('$PROJECT$', self.project_folder + '_install-' + build_type),
+						('$TEMPLATE_CONTENT$', '\t$(MAKE) -C ' + '${BUILD_DIR}/' + self.project_folder + ' -f mrt/makefile.final install-' + build_type),]
+		mk_temp = open(constants.MAIN_DIR + 'templates/install_target.tmpl')
+		temp_text = mk_temp.read()
+		mk_temp.close()
+
+		ret = utils.replace_strings(temp_text, repl_tags)
+			
+		return ret
+		
 	def project_phony_target_process(self):
 		ret = ''
 		#Tags to replace in phony template for 'project' tarjet
@@ -199,7 +219,7 @@ class ProjectWriter:
 
 class Makewriter:
 	
-	def __init__(self, args, project_tree, build_path, deploy_path, work_path):
+	def __init__(self, args, project_tree, build_path, deploy_path, work_path, build_type):
 		self.main_project = args.project
 		self.local = args.local
 		self.compile_deps = args.compile_deps
@@ -214,6 +234,7 @@ class Makewriter:
 		self.args = args
 		self.to_database = args.final_release
 		self.fw_version = args.final_release_version
+		self.build_type = build_type
 		
 		
 	def get_ordered_versions(self):
@@ -236,10 +257,14 @@ class Makewriter:
 		
 		
 	def makefile_hdr_process(self):
+		if self.build_type == "tftp":
+			install_dir = constants.INSTALL_DIR_TFTP
+		elif self.build_type == "full":
+			install_dir = constants.INSTALL_DIR_FULL
 		repl_tags  = [('$GCC_DIR$', constants.GCC_DIR if self.cross_compile else constants.GCC_DIR_x86),
 						('$BUILD_DIR$', self.build_path),
 						('$DEPLOY_DIR$', self.deploy_path),
-						('$INSTALL_DIR$', constants.INSTALL_DIR),
+						('$INSTALL_DIR$', install_dir),
 						('$ROOTFS_DIR$', constants.ROOTFS_DIR),]
 							
 		mk_temp = open(constants.MAIN_DIR + 'templates/makefile_hdr.tmpl')
@@ -277,16 +302,22 @@ class Makewriter:
 					make_text += pr_writer.project_install_target_process()
 					
 					if self.main_project == "rootfs" and project == "rootfs":
+						make_text += pr_writer.project_install_target_process_build_type("tftp")
+						make_text += pr_writer.project_install_target_process_build_type("full")
 						make_text += pr_writer.project_image_target_process()
 				
 				pr_writer.project_create_makefile_exe()
 		
+		if self.build_type == "tftp":
+			make_name = "Makefile_tftp"
+		elif self.build_type == "full":
+			make_name = "Makefile_full"
 		
-		fid = open(self.work_path + '/Makefile', 'w')
+		fid = open(self.work_path + '/' + make_name, 'w')
 		fid.write(make_text)
 		fid.close()
 		
-		fid = open(constants.MAIN_DIR + 'Makefile', 'w')
+		fid = open(constants.MAIN_DIR + make_name, 'w')
 		fid.write(make_text)
 		fid.close()
 		

@@ -41,12 +41,17 @@ class IncrProjectWriter:
 		if last_commit == None:
 			if self.compilation_id != None:
 				print "Proyecto", self.project, ":",self.version, "no encontrado en releases anteriores"
-			print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
-			b = raw_input()
-			if b=='y':
-				self.include = True
+			if self.project != "u-boot":
+				print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
+				b = raw_input()
+				if b=='y':
+					self.include = True
 		elif last_commit != cur_commit:
-			self.include = True
+			if self.project != "u-boot":
+				print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
+				b = raw_input()
+				if b=='y':
+					self.include = True
 		
 
 	def get_common_repl_tags(self):
@@ -79,6 +84,26 @@ class IncrProjectWriter:
 			mk_temp.close()
 
 			ret = utils.replace_strings(temp_text, repl_tags)
+			
+		return ret
+		
+		
+	def project_install_target_process_incr_type(self):
+		ret = ''
+		
+		if self.main_project != "rootfs" or self.project != "rootfs":
+			return ret
+		
+		#Tags to replace in PROJECT INSTALL template
+
+		repl_tags = [('$DEPEND_PROVIDES$', self.get_main_provide(),),
+						('$PROJECT$', self.project_folder + '_install-incr'),
+						('$TEMPLATE_CONTENT$', '\t$(MAKE) -C ' + '${BUILD_DIR}/' + self.project_folder + ' -f mrt/makefile.final install-incr'),]
+		mk_temp = open(constants.MAIN_DIR + 'templates/install_target.tmpl')
+		temp_text = mk_temp.read()
+		mk_temp.close()
+
+		ret = utils.replace_strings(temp_text, repl_tags)
 			
 		return ret
 	
@@ -129,13 +154,16 @@ class IncrMakewriter:
 			for version, version_data in project_data.iteritems():
 				pr_writer = IncrProjectWriter(self.args, project, version, self.project_tree, self.build_path, self.deploy_path, release_db_id)
 				project_text = pr_writer.project_install_target_process()
-				make_text += project_text
 				if len(project_text) > 0:
 					project_list.append(utils.get_full_path(project, version))
+				if self.main_project == "rootfs" and project == "rootfs":
+					project_text += pr_writer.project_install_target_process_incr_type()
+				make_text += project_text
 				
 		install_project_list = []
 		for project in project_list:
 			install_project_list.append(project + "_install")
+		install_project_list.append("rootfs_install-incr")
 		repl_tags = [('$INCR_PROJECTS$', " ".join(install_project_list)),]
 		mk_temp = open(constants.MAIN_DIR + 'templates/incr_install.tmpl')
 		temp_text = mk_temp.read()

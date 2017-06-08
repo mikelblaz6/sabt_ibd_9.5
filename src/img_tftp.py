@@ -25,16 +25,16 @@ def create_file(part_number, dest_file, work_path):
 	f_raw_img = open(orig_raw_img_file_path, "rb")
 	f_tftp_img = open(tftp_img_file_path, "wb")
 	
-	byte = f_crc.read(1)
-	while byte != "":
-		f_tftp_img.write(byte)
-		byte = f_crc.read(1)
-		
 	byte = f_raw_img.read(1)
 	while byte != "":
 		f_tftp_img.write(byte)
 		byte = f_raw_img.read(1)
 	
+	byte = f_crc.read(1)
+	while byte != "":
+		f_tftp_img.write(byte)
+		byte = f_crc.read(1)
+		
 	f_crc.close()
 	f_raw_img.close()
 	f_tftp_img.close()
@@ -42,12 +42,13 @@ def create_file(part_number, dest_file, work_path):
 	os.system("rm -Rf " + work_dir)
     
 
-def create_tftp_img(args, work_path, fw_version = "local"):
+def create_tftp_img(args, work_path):
+	fw_version = args.final_release_version
 	releases_dir = HOME + "/RELEASES/" + args.part_number + "/" + fw_version + "/TFTP/"
 	os.system("mkdir -p " + releases_dir)
 	dest_file = releases_dir + args.part_number + ".bin"
 	
-	makeexe.create_image(args, work_path)
+	makeexe.create_image(args, work_path, "tftp")
 	
 	create_file(args.part_number, dest_file, work_path)
 
