@@ -11,7 +11,6 @@ import img_tftp
 import img_web
 import incr_makewriter
 import img_incr
-import qos
 
 def doit(args, work_path):
 	cc_key = 'arm' if not args.no_cross_compile else 'x86'

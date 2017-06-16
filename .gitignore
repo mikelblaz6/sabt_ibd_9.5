@@ -1,3 +1,7 @@
 builds/*
 *.pyc
-/Makefile*
+/Makefile
+/Makefile_full
+/Makefile_tftp
+/Makefile_incr
+/Makefile_rootfs_full
