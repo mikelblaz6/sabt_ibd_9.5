@@ -35,6 +35,8 @@ INSTALL_DIR_FULL = '/MRT_OS/402.12/SYSTEM_FULL/'
 INSTALL_DIR_INCR = '/MRT_OS/402.12/SYSTEM_INCR/'
 ROOTFS_DIR = '/MRT_OS/402.12/SYSTEM_IMAGE/'
 
+QOS_FW_NAME = 'qos_fw.tar.xz'
+
 
 #TOOLCHAIN
 # Directorios del toolchain para arm

@@ -31,7 +31,7 @@ def set_full_upd_files(args, project_tree, project_list, work_path):
 	pre_actions_text = ''
 	post_action_text = ''
 	
-	print "Desea actualizar el bootloader en la actualziacion incremental? (y/n)"
+	print "Desea actualizar el bootloader en la actualizacion incremental? (y/n)"
 	b = raw_input()
 	if b=='y':
 		project_list.append("u-boot")
@@ -91,7 +91,8 @@ def set_full_upd_files(args, project_tree, project_list, work_path):
 	f.write(pre_actions_text)
 	f.close()
 	
-	post_action_text += '/bin/sqlite3 /sabt/data/db/system_db.db3 "update fw_info set fw_version=\'' + args.final_release_version + '\';"'
+	post_action_text += '/bin/sqlite3 /sabt/data/db/system_db.db3 "update fw_info set fw_version=\'' + args.final_release_version + '\';"\n'
+	post_action_text += '/bin/sqlite3 /sabt/data/db/regs_db.db3 "update rtu_status set web_status=\'UPDATED\';"\n'
 	f = open(work_path + "/update_files/post_actions.sh", "w")
 	f.write(post_action_text)
 	f.close()

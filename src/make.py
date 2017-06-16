@@ -11,6 +11,7 @@ import img_tftp
 import img_web
 import incr_makewriter
 import img_incr
+import qos
 
 def doit(args, work_path):
 	cc_key = 'arm' if not args.no_cross_compile else 'x86'
@@ -63,7 +64,7 @@ def doit(args, work_path):
 		makeexe.compile(project_tree, args, work_path)
 		pass
 	
-	if args.install:
+	if args.install:		
 		os.system('rm -Rf ' + constants.INSTALL_DIR_TFTP)
 		makeexe.install(project_tree, args, work_path, "tftp")
 		if args.images:
