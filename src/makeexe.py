@@ -24,7 +24,7 @@ def do_build(project_tree, args, paths):
 	
 	
 	for project in project_tree:
-		if args.project == project: #TODO: Remove comment or args.compile_deps:
+		if args.project == project or args.compile_deps:
 			for version in project_tree[project]:
 				local.prepare_deploy(project, version, paths.deploy_path)
 				break
