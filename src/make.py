@@ -1,6 +1,7 @@
 #! /usr/bin/python
-import argparse, os, logging, time, sys
+import os, logging, time, sys, traceback
 
+import args_parser, logger
 import defines as constants
 import local
 import dependencies
@@ -8,124 +9,86 @@ import utils
 import makewriter
 import makeexe
 import img_tftp
-import img_web
+import img_full
 import incr_makewriter
 import img_incr
+import database
 
-def doit(args, work_path):
-	cc_key = 'arm' if not args.no_cross_compile else 'x86'
-	deb_key = 'debug' if args.debug else 'release'
-	build_path = constants.build_paths[cc_key][deb_key]
-	deploy_path = constants.deploy_paths[cc_key][deb_key]
-	#Not version checking for local compilations. version set to None
-	version = args.project_version if (args.project_version != "" and args.local == False) else None
-	
+def doit(args, paths):
+	sql = None
 	if args.final_release:
-		if args.local or args.debug or args.no_cross_compile or args.create_only or args.no_rebuild or args.final_release_version == "local":
-			raise Exception("Parameters no compatible with Final Release")
+		sql = database.Database(args.part_number)
+	
+	try:
+		dep_processor = dependencies.Dependencies(args, paths)
+		project_tree = dep_processor.get_depend_projects()
+		
+		if not args.images:
+			make_writer = makewriter.Makewriter(args, project_tree, paths)
+			make_writer.write_makefile()
+		
+			if not args.create_only:
+				makeexe.do_build(project_tree, args, paths)
+				
+				if args.install:		
+					os.system('rm -Rf ' + constants.INSTALL_DIR_GENERIC)
+					makeexe.do_install(project_tree, args, paths)
+		else:
+			compilation_id = None
+			if args.final_release:
+				compilation_id = sql.NewRelease(args.final_release_version)
 			
-		if args.part_number == "":
-			raise Exception("Part number required for creating images")
+			''' Imagen TFTP '''
+			make_writer_tftp = makewriter.Makewriter(args, project_tree, paths, constants.BUILD_TYPE_TFTP)
+			make_writer_tftp.write_makefile(compilation_id, sql)
 			
-		args.project = "rootfs"
-		args.compile_deps = True
-		args.install = True
-		args.images = True
+			makeexe.do_build(project_tree, args, paths)
+			
+			os.system('rm -Rf ' + constants.INSTALL_DIR_TFTP)
+			makeexe.do_install(project_tree, args, paths, constants.BUILD_TYPE_TFTP)
+			img_tftp.create_tftp_img(project_tree, args, paths)
+			
+			''' Imagen Full '''
+			make_writer_full = makewriter.Makewriter(args, project_tree, paths, constants.BUILD_TYPE_FULL)
+			make_writer_full.write_makefile()
+			
+			os.system('rm -Rf ' + constants.INSTALL_DIR_FULL)
+			makeexe.do_install(project_tree, args, paths, constants.BUILD_TYPE_FULL)
+			img_full.create_full_img(args, project_tree, paths, compilation_id, sql)
+			
+			''' Imagen incremental '''
+			incr_make_writer = incr_makewriter.IncrMakewriter(args, project_tree, paths)
+			incr_project_list = incr_make_writer.write_makefile(compilation_id, sql)
+			
+			os.system('rm -Rf ' + constants.INSTALL_DIR_INCR)
+			makeexe.do_install(project_tree, args, paths, constants.BUILD_TYPE_INCR)		
+			img_incr.create_incr_img(args, project_tree, incr_project_list, paths, compilation_id, sql)
+	except:
+		if args.final_release:
+			sql.quit()
+		print traceback.format_exc()
+		exit(1)
 	else:
-		if args.project == "":
-			raise Exception("Project not set")
-	
-		if args.no_rebuild and (args.git or args.install or args.compile_deps):
-			raise Exception("No rebuild no compatible with currernt parameters")
-		
-		if args.git and (not args.compile_deps or args.debug):
-			raise Exception("Git projects must be compilled fully and in release mode")
-		
-		if args.images and (args.project != "rootfs"  or args.debug):
-			raise Exception("Images can only be created for rootfs project and in release mode")
-			
-		if args.images and args.part_number == "":
-			raise Exception("Part number required for creating images")
-			
-		if args.images:
-			args.install = True
-
-	dep_processor = dependencies.Dependencies(args, build_path, deploy_path)
-	project_tree = dep_processor.get_depend_projects(version)
-
-	make_writer_tftp = makewriter.Makewriter(args, project_tree, build_path, deploy_path, work_path, "tftp")
-	make_writer_tftp.write_makefile()
-	
-	make_writer_full = makewriter.Makewriter(args, project_tree, build_path, deploy_path, work_path, "full")
-	make_writer_full.write_makefile()
-	
-	if not args.create_only:
-		makeexe.compile(project_tree, args, work_path)
-		pass
-	
-	if args.install:		
-		os.system('rm -Rf ' + constants.INSTALL_DIR_TFTP)
-		makeexe.install(project_tree, args, work_path, "tftp")
-		if args.images:
-			img_tftp.create_tftp_img(args, work_path)
-			
-		os.system('rm -Rf ' + constants.INSTALL_DIR_FULL)
-		makeexe.install(project_tree, args, work_path, "full")
-		if args.images:
-			img_web.create_web_img(args, project_tree, work_path)
-		
-		os.system('rm -Rf ' + constants.INSTALL_DIR_INCR)
-		incr_make_writer = incr_makewriter.IncrMakewriter(args, project_tree, build_path, deploy_path, work_path)
-		incr_project_list = incr_make_writer.write_makefile()
-		if args.images:
-			img_incr.create_web_img(args, project_tree, incr_project_list, work_path)
+		if args.final_release:
+			sql.commit()
+			sql.quit()
 
 	
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description='Build MRT developments and dependencies.')
-	parser.add_argument('-P', '--project', help='project to build', default = "")
-	parser.add_argument('-v', '--project-version', help='project version to build (if not set, last version will be built). Only valid when using git', default = "")
-	group = parser.add_mutually_exclusive_group(required=True)
-	group.add_argument('-g', '--git', action='store_true', help='build from git sources')
-	group.add_argument('-l', '--local', action='store_true', help='build from local sources (disables git)')
-	parser.add_argument('-p', '--path', help='path to local sources (if local enabled)', default="")
-	group2 = parser.add_mutually_exclusive_group(required=True)
-	group2.add_argument('-d', '--debug', action='store_true', help='debug build')
-	group2.add_argument('-r', '--release', action='store_true', help='release build')
-	parser.add_argument('--no-cross-compile', action='store_true', help='x86 build')
-	parser.add_argument('-D', '--compile-deps', action='store_true', help='rebuild all project dependencies')
-	parser.add_argument('-m', '--make-params', help='arguments to be passed to final makefile of main project (if applies)', default = "")
-	parser.add_argument('-c', '--create-only', action='store_true', help='only creates makefile and folder structure. Do not compile')
-	parser.add_argument('-i', '--install', action='store_true', help='install project on install directory')
-	parser.add_argument('-C', '--clean-install-dir', action='store_true', help='clean install directory (only if install selected)')
-	parser.add_argument('--no-rebuild', action='store_true', help='do not rebuild whole project (only if -l, and not -i and -D)')
-	parser.add_argument('-I', '--images', action='store_true', help='create full tftp and web images, and incremental image')
-	parser.add_argument('--part-number', help='Part number') 
-	parser.add_argument('-F', '--final-release', action='store_true', help='create final release storing version info in database. Includes -g -r -D -i -C -I, -P rootfs')
-	parser.add_argument('-V', '--final-release-version', help='set fw version for current release. Needed if --final-release active', default = "local")
-	parser.add_argument('-M', '--previous-min-version', help='Minimum fw version needed in RTU for compatibility with new fw. Needed if --final-release active', default = "local")
-	args = parser.parse_args()
-
+	args = args_parser.get_shell_args(sys.argv[1:])
+	args = args_parser.normalize_args(args)
+	paths = args_parser.get_paths(args)
+	logger.init(args, paths)
 	
-	prefix = "local" if args.local else "git"
-	date = time.strftime("%Y%m%d_%H%M%S", time.localtime())
-	work_path = constants.MAIN_DIR + 'builds/'+ prefix+ '/' + date 
-	os.system('mkdir -p ' + work_path)
-	filename = work_path + '/log.txt'
-	logging.basicConfig(filename=filename, format='%(asctime)s %(levelname)s:%(message)s', level=logging.DEBUG)
-	logging.info("Starting app")
-	logging.info("Invoked with arguments: " + str(args))
-	
-	
-	doit(args, work_path)
+	doit(args, paths)
 	
 	'''try:
 		doit(args, work_path)
 	except Exception as inst:
 		logging.error("Program exitted with exception: " + str(inst))
 		print "Program exitted with exception: " + str(inst)
-		exit(1)
+		raise Exception()
 	else:
 		logging.info("Execution completed without errors")
 		exit(0)'''

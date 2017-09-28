@@ -1,5 +1,5 @@
 #! /usr/bin/python
-import subprocess, shutil, os
+import subprocess, shutil, os, sys
 
 import defines as constants
 import utils
@@ -36,7 +36,8 @@ def get_current_commit(path):
 	return (0, stdout.strip())
 
 
-def get_project_source(project, build_path, version = None):
+def get_project_source(project, build_path):
+	print "Getting git sources for " + project
 	tmp_build_path = build_path + '/' + project + '_tmp'
 	if os.path.isdir(tmp_build_path):
 		shutil.rmtree(tmp_build_path)
@@ -48,26 +49,21 @@ def get_project_source(project, build_path, version = None):
 	branch_name = ''
 	for branch in constants.GIT_BRANCHES:
 		if checkout(tmp_build_path, branch) == 0:
+			print "Checkout on branch", branch,"for project",project
 			branch_name = branch
 			break
 	if branch_name == '':
 		raise Exception("Branch for project " + project + " not found in GIT")
 			
-	if version == None:
-		(ok, branch_version) = get_last_tag(tmp_build_path)
-		if branch != 'master':
-			version = branch_version[len(branch)+1:]  #Eg: 402/vX.Y.Z, solo interesa vX.Y.Z
-		else:
-			version = branch_version  #Eg: vX.Y.Z, solo interesa vX.Y.Z
-		if version[0] == 'v':
-			version = version[1:]   #Quitamos la 'v'
+
+	(ok, branch_version) = get_last_tag(tmp_build_path)
+	if branch != 'master':
+		version = branch_version[len(branch)+1:]  #Eg: 402/vX.Y.Z, solo interesa vX.Y.Z
 	else:
-		git_version = version
-		if version[0] != 'v':
-			git_version = 'v' + version
-		if checkout(tmp_build_path, branch_name + '/' + git_version) != 0:  #Probamos con la 'v'
-			if checkout(tmp_build_path, branch_name + '/' + version) != 0:	#Probamos sin la 'v'
-				raise Exception("Version " + str(branch_name + '/' + version) + " for project " + project + " not found in GIT")
+		version = branch_version  #Eg: vX.Y.Z, solo interesa vX.Y.Z
+	if version[0] == 'v':
+		version = version[1:]   #Quitamos la 'v'
+
 		
 	if os.path.isdir(build_path + utils.get_full_path(project, version)):
 		shutil.rmtree(build_path + utils.get_full_path(project, version))
