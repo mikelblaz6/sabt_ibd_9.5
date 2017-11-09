@@ -22,11 +22,19 @@ class IncrProjectWriter:
 		self.project_deploy_path = self.paths.deploy_path + self.project_folder
 
 		self.include = False
+		last_commit = None
 		
 		if self.args.final_release:	
 			cur_version = mrt_git.get_last_tag(self.project_build_path)[1]
+			cur_commit = mrt_git.get_current_commit(self.project_build_path)[1]
+			last_commit = sql.GetPreviousCommit(self.project, compilation_id)
 
 		if self.project != constants.UBOOT_PROJECT:
+			if self.args.final_release:	
+				if last_commit == None:
+					print "Proyecto", self.project, ":",self.version, "no encontrado en releases anteriores"
+				elif last_commit != cur_commit:
+					print "Proyecto", self.project, ":",self.version, "ha cambiado respecto de la anterior release"
 			print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
 			b = raw_input()
 			if b=='y':
@@ -108,6 +116,8 @@ class IncrMakewriter:
 	def write_makefile(self, compilation_id, sql):
 		project_list = []
 		make_text = self.write_main_makefile_header()
+		
+		make_text += "export INCR=1\n"
 					
 		for project, project_data in self.project_tree.iteritems():
 			for version in project_data:
