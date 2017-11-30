@@ -99,8 +99,23 @@ class Database:
 			if len(rows) > 0:
 				ret = rows[0][0]  
 		return ret
+		
+	def GetCommitByVersion(self, name, version):
+		ret = None
+		query = "".join(["SELECT `commit` FROM `modules` WHERE `name`='", str(name), "' AND `comp_id`=(SELECT `id` FROM `compilations` WHERE `fw_version`='", str(version) ,"')"])
+		print query
+		try:
+			self.cur.execute(query)
+			rows = self.cur.fetchall()
+		except Exception as inst:
+			print_error("Error database query: " + query + ". Exception:" + str(inst))
+			raise Exception()
+		else:
+			if len(rows) > 0:
+				ret = rows[0][0]  
+		return ret
 
 if __name__ == '__main__':
-	db = Database("402.12.001")
-	print db.GetPreviousCommit("busybox", 7)
+	db = Database("402.12.01")
+	print db.GetCommitByVersion("402_00_libafs_cpp", "0.0.1")
 

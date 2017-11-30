@@ -20,6 +20,7 @@ class IncrProjectWriter:
 		self.project_folder = utils.get_full_path(self.project, self.version)
 		self.project_build_path = self.paths.build_path + self.project_folder
 		self.project_deploy_path = self.paths.deploy_path + self.project_folder
+		self.min_version = args.previous_min_version
 
 		self.include = False
 		last_commit = None
@@ -27,18 +28,23 @@ class IncrProjectWriter:
 		if self.args.final_release:	
 			cur_version = mrt_git.get_last_tag(self.project_build_path)[1]
 			cur_commit = mrt_git.get_current_commit(self.project_build_path)[1]
-			last_commit = sql.GetPreviousCommit(self.project, compilation_id)
+			min_version_commit = sql.GetCommitByVersion(self.project, self.min_version)
 
 		if self.project != constants.UBOOT_PROJECT:
 			if self.args.final_release:	
-				if last_commit == None:
+				if min_version_commit == None:
 					print "Proyecto", self.project, ":",self.version, "no encontrado en releases anteriores"
-				elif last_commit != cur_commit:
+				elif min_version_commit != cur_commit:
 					print "Proyecto", self.project, ":",self.version, "ha cambiado respecto de la anterior release"
-			print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
-			b = raw_input()
-			if b=='y':
-				self.include = True
+					print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
+					b = raw_input()
+					if b=='y':
+						self.include = True
+			else:
+				print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
+				b = raw_input()
+				if b=='y':
+					self.include = True
 		
 		if self.include and self.args.final_release:
 			sql.SetIncrUpdIncluded(compilation_id, self.project, cur_version, incr_upd_included = 1)
