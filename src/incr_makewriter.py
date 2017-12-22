@@ -36,10 +36,12 @@ class IncrProjectWriter:
 					print "Proyecto", self.project, ":",self.version, "no encontrado en releases anteriores"
 				elif min_version_commit != cur_commit:
 					print "Proyecto", self.project, ":",self.version, "ha cambiado respecto de la anterior release"
-					print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
-					b = raw_input()
-					if b=='y':
-						self.include = True
+				else:
+					print "Proyecto", self.project, ":",self.version, "NO ha cambiado respecto de la anterior release, pero verifica dependencias"
+				print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
+				b = raw_input()
+				if b=='y':
+					self.include = True
 			else:
 				print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
 				b = raw_input()

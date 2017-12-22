@@ -55,7 +55,7 @@ class Database:
 			
 	def SetFullUpdIncluded(self, compilation_id, name, version, full_upd_included):
 		query = "".join(["UPDATE `modules` SET `full_upd_included`=", str(full_upd_included), " WHERE `comp_id`=", str(compilation_id), " AND `name`='", str(name), "' AND `version`='",str(version),"'" ])
-		print query
+		#print query
 		try:
 			self.cur.execute(query)
 		except Exception as inst:
@@ -64,7 +64,7 @@ class Database:
 			
 	def SetIncrUpdIncluded(self, compilation_id, name, version, incr_upd_included):
 		query = "".join(["UPDATE `modules` SET `incr_upd_included`=", str(incr_upd_included), " WHERE `comp_id`=", str(compilation_id), " AND `name`='", str(name), "' AND `version`='",str(version),"'" ])
-		print query
+		#print query
 		try:
 			self.cur.execute(query)
 		except Exception as inst:
@@ -88,7 +88,7 @@ class Database:
 	def GetPreviousCommit(self, name, compilation_id):
 		ret = None
 		query = "".join(["SELECT `commit` FROM `modules` WHERE `name`='", str(name), "' AND `comp_id`<", str(compilation_id) ," ORDER BY `comp_id` DESC LIMIT 1"])
-		print query
+		#print query
 		try:
 			self.cur.execute(query)
 			rows = self.cur.fetchall()
