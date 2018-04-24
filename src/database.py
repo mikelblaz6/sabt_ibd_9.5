@@ -115,7 +115,4 @@ class Database:
 				ret = rows[0][0]  
 		return ret
 
-if __name__ == '__main__':
-	db = Database("402.12.01")
-	print db.GetCommitByVersion("402_00_libafs_cpp", "0.0.1")
 

@@ -17,7 +17,7 @@ uboot_included = False
 ''' Rellenamos main.sh con los datos de version de firmware 
 Si se solicita incluimos archivos del bootloader 
 Dejamos en work_tmp_dir los archivos:
-	* 402.12.01.bin
+	* 402.12.xx.bin
 	* main.sh
 	* Opcional: MLO
 	* Opcional: u-boot.img
