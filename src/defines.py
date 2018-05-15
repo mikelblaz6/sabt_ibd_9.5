@@ -6,9 +6,9 @@ DATABASE_PATH = '/MRT_OS/SRC/project_compiler/database/'
 
 #GLOBAL PROJECT VARIABLES
 # Nombre del proyecto a generar
-GLOBAL_PROJECT = '402.12.04'
+GLOBAL_PROJECT = '402.12.00'
 # Rama especifica del proyecto en GIT
-GLOBAL_PROJECT_GIT_BRANCH = '402_12_04'
+GLOBAL_PROJECT_GIT_BRANCH = '402_12_00'
 
 #DIRECTORIES
 # Directorios donde buscar codigos fuente de los proyectos a compilar
