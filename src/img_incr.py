@@ -8,7 +8,7 @@ import database
 import mrt_git
 
 from utils import print_error
-
+from include_projects import *
 
 def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_dir, compilation_id, sql):
 	os.system("mkdir -p " + work_tmp_dir + "/update_files/system/")
@@ -32,9 +32,9 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 	f.write(utils.replace_strings(text, tags))
 	f.close()
 	
-	print("Desea incluir el bootloader en la actualizacion incremental? (y/n)")
-	b = raw_input()
-	if b=='y':
+	#print("Desea incluir el bootloader en la actualizacion incremental? (y/n)")
+	#b = raw_input()
+	if UPDATE_BOOTLOADER:
 		project_list.append(constants.UBOOT_PROJECT)
 		for temp_file in constants.UBOOT_FILES:
 			if os.system("cp -af " + paths.deploy_path + "/" + uboot_project_name + "/" + temp_file + " " + work_tmp_dir + "/update_files/files/"):

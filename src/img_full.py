@@ -8,7 +8,7 @@ import database
 import mrt_git
 
 from utils import print_error
-
+from include_projects import *
 
 uboot_included = False
 
@@ -45,9 +45,9 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 	for project in project_tree:
 		include_in_database = True
 		if project == constants.UBOOT_PROJECT:
-			print("Desea incluir el bootloader en la actualizacion completa (full)? (y/n)")
-			b = raw_input()
-			if b=='y':
+			#print("Desea incluir el bootloader en la actualizacion completa (full)? (y/n)")
+			#b = raw_input()
+			if UPDATE_BOOTLOADER:
 				uboot_included = True
 				for temp_file in constants.UBOOT_FILES:
 					if os.system("cp -af " + paths.deploy_path + "/" + uboot_project_name + "/" + temp_file + " " + work_tmp_dir):
