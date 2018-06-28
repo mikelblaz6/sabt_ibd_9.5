@@ -1,4 +1,4 @@
-import MySQLdb, time
+import sqlite3, time
 
 import defines as constants
 
@@ -13,8 +13,8 @@ class Database:
 	def __del__(self):
 		self.quit()
 
-	def __init__(self, tmout = 15):
-		self.con = MySQLdb.connect(constants.DB_HOST, constants.DB_USER, constants.DB_PWD, constants.DB_NAME)
+	def __init__(self, part_number, tmout = 15):
+		self.con = sqlite3.connect(database = constants.DATABASE_PATH + part_number + '.db3', timeout = tmout)
 		self.cur = self.con.cursor()
 		self.cur.execute("begin")
 		
@@ -33,7 +33,7 @@ class Database:
 		self.con.commit()
 
 	def NewRelease(self, fw_version):
-		query = "".join(["INSERT INTO `", constants.DB_TABLES_PREFIX, "compilations` (`fw_version`, `date`) VALUES ('",str(fw_version),"','",str(GetTime()),"')"])
+		query = "".join(["INSERT INTO `compilations` (`fw_version`, `date`) VALUES ('",str(fw_version),"','",str(GetTime()),"')"])
 		print query
 		
 		try:
@@ -45,7 +45,7 @@ class Database:
 			return self.cur.lastrowid
 			
 	def NewProject(self, compilation_id, name, commit, version, tftp_img_included):
-		query = "".join(["INSERT INTO `", constants.DB_TABLES_PREFIX, "modules` (`comp_id`, `name`, `commit`, `version`,`tftp_img_included`,`full_upd_included`,`incr_upd_included`) VALUES (",str(compilation_id),",'",str(name),"','",str(commit),"','",str(version),"',",str(tftp_img_included),",0,0)"])
+		query = "".join(["INSERT INTO `modules` (`comp_id`, `name`, `commit`, `version`,`tftp_img_included`,`full_upd_included`,`incr_upd_included`) VALUES (",str(compilation_id),",'",str(name),"','",str(commit),"','",str(version),"',",str(tftp_img_included),",0,0)"])
 		print query
 		try:
 			self.cur.execute(query)
@@ -54,7 +54,7 @@ class Database:
 			raise Exception()
 			
 	def SetFullUpdIncluded(self, compilation_id, name, version, full_upd_included):
-		query = "".join(["UPDATE `", constants.DB_TABLES_PREFIX, "modules` SET `full_upd_included`=", str(full_upd_included), " WHERE `comp_id`=", str(compilation_id), " AND `name`='", str(name), "' AND `version`='",str(version),"'" ])
+		query = "".join(["UPDATE `modules` SET `full_upd_included`=", str(full_upd_included), " WHERE `comp_id`=", str(compilation_id), " AND `name`='", str(name), "' AND `version`='",str(version),"'" ])
 		#print query
 		try:
 			self.cur.execute(query)
@@ -63,7 +63,7 @@ class Database:
 			raise Exception()
 			
 	def SetIncrUpdIncluded(self, compilation_id, name, version, incr_upd_included):
-		query = "".join(["UPDATE `", constants.DB_TABLES_PREFIX, "modules` SET `incr_upd_included`=", str(incr_upd_included), " WHERE `comp_id`=", str(compilation_id), " AND `name`='", str(name), "' AND `version`='",str(version),"'" ])
+		query = "".join(["UPDATE `modules` SET `incr_upd_included`=", str(incr_upd_included), " WHERE `comp_id`=", str(compilation_id), " AND `name`='", str(name), "' AND `version`='",str(version),"'" ])
 		#print query
 		try:
 			self.cur.execute(query)
@@ -73,7 +73,7 @@ class Database:
 			
 	def GetLastRelease(self):
 		ret = None
-		query = "".join(["SELECT `id` FROM `", constants.DB_TABLES_PREFIX, "compilations` ORDER BY `id` DESC LIMIT 1"])
+		query = "".join(["SELECT `id` FROM `compilations` ORDER BY `id` DESC LIMIT 1"])
 		try:
 			self.cur.execute(query)
 			rows = self.cur.fetchall()
@@ -87,7 +87,7 @@ class Database:
 			
 	def GetPreviousCommit(self, name, compilation_id):
 		ret = None
-		query = "".join(["SELECT `commit` FROM `", constants.DB_TABLES_PREFIX, "modules` WHERE `name`='", str(name), "' AND `comp_id`<", str(compilation_id) ," ORDER BY `comp_id` DESC LIMIT 1"])
+		query = "".join(["SELECT `commit` FROM `modules` WHERE `name`='", str(name), "' AND `comp_id`<", str(compilation_id) ," ORDER BY `comp_id` DESC LIMIT 1"])
 		#print query
 		try:
 			self.cur.execute(query)
@@ -102,7 +102,7 @@ class Database:
 		
 	def GetCommitByVersion(self, name, version):
 		ret = None
-		query = "".join(["SELECT `commit` FROM `", constants.DB_TABLES_PREFIX, "modules` WHERE `name`='", str(name), "' AND `comp_id`=(SELECT `id` FROM `", constants.DB_TABLES_PREFIX, "compilations` WHERE `fw_version`='", str(version) ,"')"])
+		query = "".join(["SELECT `commit` FROM `modules` WHERE `name`='", str(name), "' AND `comp_id`=(SELECT `id` FROM `compilations` WHERE `fw_version`='", str(version) ,"')"])
 		print query
 		try:
 			self.cur.execute(query)
@@ -116,6 +116,6 @@ class Database:
 		return ret
 
 if __name__ == '__main__':
-	db = Database()
+	db = Database("402.12.01")
 	print db.GetCommitByVersion("402_00_libafs_cpp", "0.0.1")
 

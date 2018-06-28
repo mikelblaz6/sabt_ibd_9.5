@@ -2,8 +2,6 @@
 # Directorio de fuentes python
 MAIN_DIR='/MRT_OS/SRC/project_compiler/'
 
-DATABASE_PATH = '/MRT_OS/SRC/project_compiler/database/'
-
 #GLOBAL PROJECT VARIABLES
 # Nombre del proyecto a generar
 GLOBAL_PROJECT = '402.12.01'
@@ -39,6 +37,9 @@ INSTALL_DIR_INCR = '/MRT_OS/402.12/SYSTEM_INCR/'
 ROOTFS_DIR = '/MRT_OS/402.12/SYSTEM_IMAGE/'
 
 QOS_FW_NAME = 'qos_fw.tar.xz'
+
+#DATABASE PREFIX
+DB_TABLES_PREFIX = '402_12_01_'
 
 
 #TOOLCHAIN
@@ -124,5 +125,10 @@ PROJECT_UPDATE_EXTRA_FILES_FILE = "/mrt/incr_update/files"
 PROJECT_UPDATE_EXTRA_FILES_PATH = "/mrt/incr_update/"
 
 MAINSH_FILE = "main.sh"
+
+DB_HOST = "192.168.77.4"
+DB_USER = "merytronic"
+DB_PWD = "merytronic2012"
+DB_NAME = "402_12_fw_versions"
 
 
