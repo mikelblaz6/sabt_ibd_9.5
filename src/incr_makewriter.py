@@ -8,7 +8,7 @@ import dependencies
 import utils
 import mrt_git
 import database
-
+from include_projects import *
 
 class IncrProjectWriter:
 	def __init__(self, args, project, version, project_tree, paths, compilation_id, sql):
@@ -31,7 +31,7 @@ class IncrProjectWriter:
 			min_version_commit = sql.GetCommitByVersion(self.project, self.min_version)
 
 		if self.project != constants.UBOOT_PROJECT:
-			if self.args.final_release:	
+			'''if self.args.final_release:	
 				if min_version_commit == None:
 					print "Proyecto", self.project, ":",self.version, "no encontrado en releases anteriores"
 				elif min_version_commit != cur_commit:
@@ -46,8 +46,39 @@ class IncrProjectWriter:
 				print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
 				b = raw_input()
 				if b=='y':
+					self.include = True'''
+				
+			for proj, inc in INCLUDE_PROJECTS_INCR.iteritems():
+				if proj == self.project and inc == 'YES':
 					self.include = True
-		
+					
+			if self.include:
+				print "Proyecto", self.project, ":",self.version, "incluido en la actualizacion incremental. Desea corregir? (y/n)"
+			else:
+				print "Proyecto", self.project, ":",self.version, "NO incluido en la actualizacion incremental. Desea corregir? (y/n)"
+			b = raw_input()
+			if b=='y':
+				if self.args.final_release:	
+					if min_version_commit == None:
+						print "Proyecto", self.project, ":",self.version, "no encontrado en releases anteriores"
+					elif min_version_commit != cur_commit:
+						print "Proyecto", self.project, ":",self.version, "ha cambiado respecto de la anterior release"
+					else:
+						print "Proyecto", self.project, ":",self.version, "NO ha cambiado respecto de la anterior release, pero verifica dependencias"
+					print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
+					b = raw_input()
+					if b=='y':
+						self.include = True
+				else:
+					print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
+					b = raw_input()
+					if b=='y':
+						self.include = True
+				for proj, inc in INCLUDE_PROJECTS_INCR.iteritems():
+					self.include = False
+					if proj == self.project and inc == 'YES':
+						self.include = True
+				
 		if self.include and self.args.final_release:
 			sql.SetIncrUpdIncluded(compilation_id, self.project, cur_version, incr_upd_included = 1)
 			
@@ -163,4 +194,9 @@ class IncrMakewriter:
 		return project_list
 		
 
-
+if __name__ == '__main__':
+	for proj, inc in INCLUDE_PROJECTS_INCR.iteritems():
+		if inc == 'YES':
+			print "Proyecto", proj, "incluido en la actualizacion incremental. Desea corregir? (y/n)"
+		else:
+			print "Proyecto", proj, "NO incluido en la actualizacion incremental. Desea corregir? (y/n)"

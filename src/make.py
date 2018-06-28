@@ -17,7 +17,7 @@ import database
 def doit(args, paths):
 	sql = None
 	if args.final_release:
-		sql = database.Database(args.part_number)
+		sql = database.Database()
 	
 	try:
 		dep_processor = dependencies.Dependencies(args, paths)
