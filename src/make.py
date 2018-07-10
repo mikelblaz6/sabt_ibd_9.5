@@ -13,12 +13,23 @@ import img_full
 import incr_makewriter
 import img_incr
 import database
+import mrt_git
 
 def doit(args, paths):
+	project_compiler_part_number = mrt_git.get_branch_name(constants.MAIN_DIR)
+	args_part_number = args.part_number.replace('.', '_')
+	if project_compiler_part_number[0] == 0:
+		if project_compiler_part_number[1] != args_part_number:
+			print "Project compiler branch does not match selected part_number"
+			exit(1)
+	else:
+		print "Error getting project_compiler branch"
+		exit(1)
+	
 	sql = None
 	if args.final_release:
 		sql = database.Database()
-	
+		
 	try:
 		dep_processor = dependencies.Dependencies(args, paths)
 		project_tree = dep_processor.get_depend_projects()

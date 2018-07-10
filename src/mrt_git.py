@@ -71,5 +71,13 @@ def get_project_source(project, build_path):
 	
 	return version
 	
+	
+def get_branch_name(path):
+	p = subprocess.Popen(['git', '-C', path, 'rev-parse', '--abbrev-ref', 'HEAD'], close_fds = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+	(stdout, stderr) = p.communicate()
+	if p.returncode != 0:
+		return (1,"")
+	return (0, stdout.strip())
+	
 			
 
