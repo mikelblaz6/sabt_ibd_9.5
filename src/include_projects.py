@@ -13,4 +13,4 @@ INCLUDE_PROJECTS_INCR = {
 	'linux-4.4.19': 'YES',
 	'rootfs': 'YES', }
 
-UPDATE_BOOTLOADER = False
+UPDATE_BOOTLOADER = True
