@@ -238,7 +238,8 @@ class Makewriter:
 						('$BUILD_DIR$', self.paths.build_path),
 						('$DEPLOY_DIR$', self.paths.deploy_path),
 						('$INSTALL_DIR$', install_dir),
-						('$ROOTFS_DIR$', constants.ROOTFS_DIR),]
+						('$ROOTFS_DIR$', constants.ROOTFS_DIR),
+						('$PART_NUMBER$', self.args.part_number),]
 							
 		mk_temp = open(constants.MAIN_DIR + constants.MAKEFILE_HEADER_TEMPLATE_FILE)
 		temp_text = mk_temp.read()
