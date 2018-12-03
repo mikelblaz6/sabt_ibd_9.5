@@ -32,3 +32,6 @@ if __name__ == '__main__':
 	extract(args.file, args.folder)
 
 	
+'''Example:
+python extract_update.py -f /home/jonathan/MRT_402.12.00_1.1.0_incr.bin -d /home/jonathan/test
+'''
