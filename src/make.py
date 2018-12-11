@@ -16,7 +16,7 @@ import database
 import mrt_git
 
 def doit(args, paths):
-	if args.part_number != None:
+	if args.part_number != "NULL":
 		project_compiler_part_number = mrt_git.get_branch_name(constants.MAIN_DIR)
 		args_part_number = args.part_number.replace('.', '_')
 		if project_compiler_part_number[0] == 0:

@@ -23,7 +23,7 @@ def get_shell_args(shell_args):
     #parser.add_argument('-C', '--clean-install-dir', action='store_true', help='clean install directory (only if install selected)')
     parser.add_argument('--no-rebuild', action='store_true', help='do not rebuild whole project (only if -l, and not -i and -D)')
     parser.add_argument('-I', '--images', action='store_true', help='create full tftp and web images, and incremental image')
-    parser.add_argument('--part-number', help='Part number') 
+    parser.add_argument('--part-number', help='Part number', default = "NULL") 
     parser.add_argument('-V', '--final-release-version', help='set fw version for current release. Needed if --final-release active', default = "local")
     parser.add_argument('-M', '--previous-min-version', help='Minimum fw version needed in RTU for compatibility with new fw. Needed if --final-release active', default = "local")
     return parser.parse_args(shell_args)
@@ -67,7 +67,7 @@ def normalize_args(parsed_args):
         if parsed_args.previous_min_version == "local":
             print_error("[-M --previous-min-version] option required. Must be numeric")
             raise Exception()
-        if parsed_args.part_number == "":
+        if parsed_args.part_number == "NULL":
             print_error("[--part-number] required for final release compilation")
             raise Exception()
             
@@ -102,7 +102,7 @@ def normalize_args(parsed_args):
             print_error("[-I --images] option not compatible with other parameters ([-P --project] not rootfs, [-d --debug])")
             raise Exception()
             
-        if parsed_args.images and (parsed_args.part_number == "" or parsed_args.final_release_version == "local" or parsed_args.previous_min_version == "local"):
+        if parsed_args.images and (parsed_args.part_number == "NULL" or parsed_args.final_release_version == "local" or parsed_args.previous_min_version == "local"):
             print_error("[-I --images] option must include ([-p --part-number], [-V --final-release-version] and [-M --previous-min-version])")
             raise Exception()
             
