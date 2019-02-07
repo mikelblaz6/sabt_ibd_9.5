@@ -52,7 +52,7 @@ GCC_DIR_x86 = '/usr/bin/'
 GCC_BIN_x86_VERSION = '/usr/bin/gcc'
 
 # Propiedades de GIT
-GIT_URL = 'git@gitlab.merytronic.com'
+GIT_URL = 'ssh://git@gitlab.merytronicidi.com:30022'
 # Orden de busqueda de ramas
 GIT_BRANCHES = (GLOBAL_PROJECT_GIT_BRANCH, '402_12', '402', 'master')
 # Namespaces de busqueda en git

@@ -5,7 +5,7 @@ import defines as constants
 import utils
 
 def clone(namespace, project, path):
-	p = subprocess.Popen(['git', 'clone', 'git@gitlab.merytronic.com:' + namespace + '/' + project + '.git', path], close_fds = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+	p = subprocess.Popen(['git', 'clone', constants.GIT_URL + '/' + namespace + '/' + project + '.git', path], close_fds = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
 	p.communicate()
 	if p.returncode != 0:
 		return 1
