@@ -20,7 +20,7 @@ def doit(args, paths):
 		project_compiler_part_number = mrt_git.get_branch_name(constants.MAIN_DIR)
 		args_part_number = args.part_number.replace('.', '_')
 		if project_compiler_part_number[0] == 0:
-			if project_compiler_part_number[1] != args_part_number:
+			if project_compiler_part_number[1] != args_part_number  and (args.images or args.final_release):
 				print "Project compiler branch does not match selected part_number"
 				exit(1)
 		else:
