@@ -48,7 +48,7 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 		if project == constants.UBOOT_PROJECT:
 			#print("Desea incluir el bootloader en la actualizacion completa (full)? (y/n)")
 			#b = raw_input()
-			if UPDATE_BOOTLOADER:
+			if True:
 				uboot_included = True
 				for temp_file in constants.UBOOT_FILES:
 					if os.system("cp -af " + paths.deploy_path + "/" + uboot_project_name + "/" + temp_file + " " + work_tmp_dir):
