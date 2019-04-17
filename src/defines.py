@@ -131,4 +131,6 @@ DB_USER = "merytronic"
 DB_PWD = "merytronic2012"
 DB_NAME = "402_12_fw_versions"
 
+VALID_PART_NUMBERS = ("402.12.00", "402.12.01", "402.12.02", "402.12.03",
+					"402.12.04", "402.12.05.01", "402.12.06",)
 

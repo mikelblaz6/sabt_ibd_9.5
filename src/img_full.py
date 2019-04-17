@@ -36,7 +36,8 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 	f = open(paths.build_path + "/" + project_name + constants.BUILD_TYPE_FULL_MAINSH_TEMPLATE, "r")
 	text = f.read()
 	f.close()
-	tags = [("$FW_VERSION_PAR$", args.final_release_version)]
+	tags = [("$FW_VERSION_PAR$", args.final_release_version),
+			("$PART_NUMBER$", args.part_number)]
 	
 	f = open(work_tmp_dir + "/" + constants.MAINSH_FILE, "w")
 	f.write(utils.replace_strings(text, tags))
