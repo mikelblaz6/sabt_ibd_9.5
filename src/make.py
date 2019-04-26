@@ -95,7 +95,7 @@ if __name__ == '__main__':
 	args = args_parser.normalize_args(args)
 	paths = args_parser.get_paths(args)
 	logger.init(args, paths)
-	
+	os.umask(0022)
 	doit(args, paths)
 	
 	'''try:
