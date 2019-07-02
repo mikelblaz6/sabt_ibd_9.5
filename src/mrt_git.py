@@ -3,6 +3,7 @@ import subprocess, shutil, os, sys
 
 import defines as constants
 import utils
+import project_commits as pr_comm
 
 def clone(namespace, project, path):
 	p = subprocess.Popen(['git', 'clone', constants.GIT_URL + '/' + namespace + '/' + project + '.git', path], close_fds = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
@@ -47,11 +48,17 @@ def get_project_source(project, build_path):
 			break
 	
 	branch_name = ''
-	for branch in constants.GIT_BRANCHES:
-		if checkout(tmp_build_path, branch) == 0:
-			print "Checkout on branch", branch,"for project",project
-			branch_name = branch
-			break
+	if pr_comm.PROCESS_COMMITS == True and project in pr_comm.PROJECT_COMMITS:
+		if checkout(tmp_build_path, pr_comm.PROJECT_COMMITS[project]) == 0:
+			print "Checkout on commit", pr_comm.PROJECT_COMMITS[project],"for project",project
+			branch_name = get_branch_name(tmp_build_path)
+			branch = branch_name
+	else:
+		for branch in constants.GIT_BRANCHES:
+			if checkout(tmp_build_path, branch) == 0:
+				print "Checkout on branch", branch,"for project",project
+				branch_name = branch
+				break
 	if branch_name == '':
 		raise Exception("Branch for project " + project + " not found in GIT")
 			
