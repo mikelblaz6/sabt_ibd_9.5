@@ -4,9 +4,9 @@ MAIN_DIR='/MRT_OS/SRC/project_compiler/'
 
 #GLOBAL PROJECT VARIABLES
 # Nombre del proyecto a generar
-GLOBAL_PROJECT = '402.12.00'
+GLOBAL_PROJECT = '402.12.07'
 # Rama especifica del proyecto en GIT
-GLOBAL_PROJECT_GIT_BRANCH = '402_12_00'
+GLOBAL_PROJECT_GIT_BRANCH = '402_12_07'
 
 #DIRECTORIES
 # Directorios donde buscar codigos fuente de los proyectos a compilar
@@ -39,7 +39,7 @@ ROOTFS_DIR = '/MRT_OS/402.12/SYSTEM_IMAGE/'
 QOS_FW_NAME = 'qos_fw.tar.xz'
 
 #DATABASE PREFIX
-DB_TABLES_PREFIX = '402_12_00_'
+DB_TABLES_PREFIX = '402_12_07_'
 
 
 #TOOLCHAIN
