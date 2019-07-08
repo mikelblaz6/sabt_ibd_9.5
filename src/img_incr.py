@@ -55,7 +55,17 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 	pre_actions_text = ''
 	post_action_text = ''
 	for project in project_list:
-		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_PRE_CMDS_FILE
+		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + args.part_number + "/" + constants.PROJECT_UPDATE_PRE_CMDS_FILE
+		text = ''
+		try:
+			with open(path, "r") as f:
+				text = f.read()
+		except:
+			pass
+		if text.strip() != '':
+			pre_actions_text += text + "\n"
+
+		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + constants.PROJECT_UPDATE_PRE_CMDS_FILE
 		text = ''
 		try:
 			with open(path, "r") as f:
@@ -65,7 +75,17 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 		if text.strip() != '':
 			pre_actions_text += text + "\n"
 		
-		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_POST_CMDS_FILE
+		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + args.part_number + "/" + constants.PROJECT_UPDATE_POST_CMDS_FILE
+		text = ''
+		try:
+			with open(path, "r") as f:
+				text = f.read()
+		except:
+			pass
+		if text.strip() != '':
+			post_action_text += text + "\n"
+
+		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + constants.PROJECT_UPDATE_POST_CMDS_FILE
 		text = ''
 		try:
 			with open(path, "r") as f:
@@ -75,7 +95,7 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 		if text.strip() != '':
 			post_action_text += text + "\n"
 		
-		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_EXTRA_FILES_FILE
+		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + constants.PROJECT_UPDATE_EXTRA_FILES_FILE
 		files = []
 		try:
 			with open(path, "r") as f:
@@ -85,8 +105,8 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 		for cp_file in files:
 			cp_file = cp_file.strip()
 			if len(cp_file) != 0:
-				if os.system("cp -af " + paths.build_path + "/" + project + constants.PROJECT_UPDATE_EXTRA_FILES_PATH + cp_file + " " + work_tmp_dir + "/update_files/files/"):
-					print_error("Error copying " + paths.build_path + "/" + project + constants.PROJECT_UPDATE_EXTRA_FILES_PATH + cp_file)
+				if os.system("cp -af " + paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + constants.PROJECT_UPDATE_EXTRA_FILES_PATH + cp_file + " " + work_tmp_dir + "/update_files/files/"):
+					print_error("Error copying " + paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + constants.PROJECT_UPDATE_EXTRA_FILES_PATH + cp_file)
 					raise Exception()
 				
 	pre_actions_text += "exit 0;"	

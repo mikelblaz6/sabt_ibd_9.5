@@ -102,17 +102,20 @@ MAKEFILE_PHONY_TARGET_TEMPLATE_FILE = "/templates/phony_target.tmpl"
 MAKEFILE_IMAGE_TARGET_TEMPLATE_FILE = "/templates/image_target.tmpl"
 MAKEFILE_INCR_TARGET_TEMPLATE_FILE = "/templates/incr_install.tmpl"
 
+
+PROJECT_UPDATE_BASE = "/mrt/incr_update/"
+
 ''' Archivo con los comandos a ejecutar en una actualizacion incremental
 previos a la copia de archivos a /sabt y a / 
 	Son especificos para cada nueva version de proyecto
 '''
-PROJECT_UPDATE_PRE_CMDS_FILE = "/mrt/incr_update/pre_cmds.tmpl"
+PROJECT_UPDATE_PRE_CMDS_FILE = "pre_cmds.tmpl"
 
 ''' Archivo con los comandos a ejecutar en una actualizacion incremental
 posteriores a la copia de archivos a /sabt y a / 
 	Son especificos para cada nueva version de proyecto
 '''
-PROJECT_UPDATE_POST_CMDS_FILE = "/mrt/incr_update/post_cmds.tmpl"
+PROJECT_UPDATE_POST_CMDS_FILE = "post_cmds.tmpl"
 
 ''' Archivo con la lista de archivos extra copiar para llevar a cabo 
 una actualizacion incremental de un proyecto.
@@ -121,8 +124,8 @@ de los propios archivos de instalacion del proyecto, que se copiaran
 siempre
 	Son especificos para cada nueva version de proyecto
 '''
-PROJECT_UPDATE_EXTRA_FILES_FILE = "/mrt/incr_update/files"
-PROJECT_UPDATE_EXTRA_FILES_PATH = "/mrt/incr_update/"
+PROJECT_UPDATE_EXTRA_FILES_FILE = "files"
+PROJECT_UPDATE_EXTRA_FILES_PATH = ""
 
 MAINSH_FILE = "main.sh"
 
