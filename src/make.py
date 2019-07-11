@@ -52,6 +52,11 @@ def doit(args, paths):
 			compilation_id = None
 			if args.final_release:
 				compilation_id = sql.NewRelease(args.final_release_version)
+				cur_commit = mrt_git.get_current_commit(constants.MAIN_DIR)[1]
+				cur_version = ""
+				logger.info(str("Project compiler") + ". Commit id: " + str(cur_commit))
+				print(str("Project compiler") + ". Commit id: " + str(cur_commit))
+				sql.NewProject(compilation_id, "Project compiler", cur_commit, cur_version, tftp_img_included = 0)
 			
 			''' Imagen TFTP '''
 			make_writer_tftp = makewriter.Makewriter(args, project_tree, paths, constants.BUILD_TYPE_TFTP)
