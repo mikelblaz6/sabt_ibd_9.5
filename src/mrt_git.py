@@ -87,4 +87,12 @@ def get_branch_name(path):
 	return (0, stdout.strip())
 	
 			
+def get_status(path):
+	p = subprocess.Popen(['git', '-C', path, 'status', '--porcelain'], close_fds = True, stdout = subprocess.PIPE, stderr = subprocess.PIPE)
+	(stdout, stderr) = p.communicate()
+	if p.returncode != 0:
+		return 1
+	elif len(stdout.strip()) != 0:
+		return 1
+	return 0
 

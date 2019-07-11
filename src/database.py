@@ -103,7 +103,7 @@ class Database:
 	def GetCommitByVersion(self, name, version):
 		ret = None
 		query = "".join(["SELECT `commit` FROM `", constants.DB_TABLES_PREFIX, "modules` WHERE `name`='", str(name), "' AND `comp_id`=(SELECT `id` FROM `", constants.DB_TABLES_PREFIX, "compilations` WHERE `fw_version`='", str(version) ,"')"])
-		print query
+		#print query
 		try:
 			self.cur.execute(query)
 			rows = self.cur.fetchall()
@@ -117,5 +117,5 @@ class Database:
 
 if __name__ == '__main__':
 	db = Database()
-	print db.GetCommitByVersion("402_00_libafs_cpp", "0.0.1")
+	print db.GetCommitByVersion("402_00_libafs_cpp", "1.1.0")
 
