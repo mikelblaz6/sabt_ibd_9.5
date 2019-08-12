@@ -4,9 +4,10 @@ MAIN_DIR='/MRT_OS/SRC/project_compiler/'
 
 #GLOBAL PROJECT VARIABLES
 # Nombre del proyecto a generar
-GLOBAL_PROJECT = '402.12.07'
+GLOBAL_PROJECT = ''
+
 # Rama especifica del proyecto en GIT
-GLOBAL_PROJECT_GIT_BRANCH = '402_12_07'
+GLOBAL_PROJECT_GIT_BRANCH = ''
 
 #DIRECTORIES
 # Directorios donde buscar codigos fuente de los proyectos a compilar
@@ -39,8 +40,7 @@ ROOTFS_DIR = '/MRT_OS/402.12/SYSTEM_IMAGE/'
 QOS_FW_NAME = 'qos_fw.tar.xz'
 
 #DATABASE PREFIX
-DB_TABLES_PREFIX = '402_12_07_'
-
+DB_TABLES_PREFIX = ''
 
 #TOOLCHAIN
 # Directorios del toolchain para arm
@@ -54,7 +54,7 @@ GCC_BIN_x86_VERSION = '/usr/bin/gcc'
 # Propiedades de GIT
 GIT_URL = 'ssh://git@gitlab.merytronicidi.com:30022'
 # Orden de busqueda de ramas
-GIT_BRANCHES = (GLOBAL_PROJECT_GIT_BRANCH, '402_12', '402', 'master')
+GIT_BRANCHES = ('', '402_12', '402', 'master')
 # Namespaces de busqueda en git
 GIT_NAMESPACES = ('mrt_developers', 'mrt_os_projects') 
 
@@ -137,3 +137,18 @@ DB_NAME = "402_12_fw_versions"
 VALID_PART_NUMBERS = ("402.12.00", "402.12.01", "402.12.02", "402.12.03",
 					"402.12.04", "402.12.05.01", "402.12.06", "402.12.07",)
 
+
+def set_GLOBAL_PROJECT(pn):
+	global GLOBAL_PROJECT
+	global GLOBAL_PROJECT_GIT_BRANCH
+	global DB_TABLES_PREFIX
+	global GIT_BRANCHES
+	
+	if pn not in VALID_PART_NUMBERS and pn != "NULL":
+		print "Error Part-number not allowed"
+		exit(1)
+	
+	GLOBAL_PROJECT = pn
+	GLOBAL_PROJECT_GIT_BRANCH = pn.replace(".","_")
+	DB_TABLES_PREFIX = pn.replace(".","_") + "_"
+	GIT_BRANCHES = (GLOBAL_PROJECT_GIT_BRANCH, '402_12', '402', 'master')

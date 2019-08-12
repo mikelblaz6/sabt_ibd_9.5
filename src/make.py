@@ -14,6 +14,8 @@ import incr_makewriter
 import img_incr
 import database
 import mrt_git
+import include_projects
+import project_commits
 
 def doit(args, paths):
 	if args.part_number != "NULL":
@@ -22,13 +24,13 @@ def doit(args, paths):
 			exit(1)
 		project_compiler_part_number = mrt_git.get_branch_name(constants.MAIN_DIR)
 		args_part_number = args.part_number.replace('.', '_')
-		if project_compiler_part_number[0] == 0:
+		'''if project_compiler_part_number[0] == 0:
 			if project_compiler_part_number[1] != args_part_number  and (args.images or args.final_release):
 				print "Project compiler branch does not match selected part_number"
 				exit(1)
 		else:
 			print "Error getting project_compiler branch"
-			exit(1)
+			exit(1)'''
 	
 	sql = None
 	if args.final_release:
@@ -98,6 +100,9 @@ def doit(args, paths):
 if __name__ == '__main__':
 	args = args_parser.get_shell_args(sys.argv[1:])
 	args = args_parser.normalize_args(args)
+	constants.set_GLOBAL_PROJECT(args.part_number)
+	include_projects.set_include_projects()
+	project_commits.set_project_commits()
 	paths = args_parser.get_paths(args)
 	logger.init(args, paths)
 	os.umask(0022)
