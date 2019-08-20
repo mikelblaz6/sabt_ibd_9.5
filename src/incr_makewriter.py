@@ -8,7 +8,7 @@ import dependencies
 import utils
 import mrt_git
 import database
-from include_projects import *
+import include_projects
 
 class IncrProjectWriter:
 	def __init__(self, args, project, version, project_tree, paths, compilation_id, sql):
@@ -48,7 +48,7 @@ class IncrProjectWriter:
 				if b=='y':
 					self.include = True'''
 				
-			for proj, inc in INCLUDE_PROJECTS_INCR.iteritems():
+			for proj, inc in include_projects.INCLUDE_PROJECTS_INCR.iteritems():
 				if proj == self.project and inc == 'YES':
 					self.include = True
 					
@@ -74,7 +74,7 @@ class IncrProjectWriter:
 					b = raw_input()
 					if b=='y':
 						self.include = True
-				for proj, inc in INCLUDE_PROJECTS_INCR.iteritems():
+				for proj, inc in include_projects.INCLUDE_PROJECTS_INCR.iteritems():
 					self.include = False
 					if proj == self.project and inc == 'YES':
 						self.include = True
@@ -196,7 +196,7 @@ class IncrMakewriter:
 		
 
 if __name__ == '__main__':
-	for proj, inc in INCLUDE_PROJECTS_INCR.iteritems():
+	for proj, inc in include_projects.INCLUDE_PROJECTS_INCR.iteritems():
 		if inc == 'YES':
 			print "Proyecto", proj, "incluido en la actualizacion incremental. Desea corregir? (y/n)"
 		else:
