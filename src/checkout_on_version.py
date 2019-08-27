@@ -99,14 +99,7 @@ class Dependencies:
 
 def doit(args):
 	args_part_number = args.part_number.replace('.', '_')
-	project_compiler_part_number = mrt_git.get_branch_name(constants.MAIN_DIR)
-	args_part_number = args.part_number.replace('.', '_')
-	if project_compiler_part_number[0] == 0:
-		if project_compiler_part_number[1] != args_part_number:
-			print "ERROR. Project compiler branch does not match selected part_number"
-			exit(1)
-
-	
+	constants.set_GLOBAL_PROJECT(args.part_number)
 	dep_processor_chk = Dependencies(args)
 	dep_processor_chk .get_depend_projects()
 	
