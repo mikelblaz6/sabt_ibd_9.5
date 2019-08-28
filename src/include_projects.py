@@ -6,7 +6,12 @@ UPDATE_BOOTLOADER = False
 def set_include_projects():
 	global INCLUDE_PROJECTS_INCR
 	global UPDATE_BOOTLOADER
-	if constants.GLOBAL_PROJECT == "402.12.01":
+	if constants.GLOBAL_PROJECT == "402.12.00":
+		INCLUDE_PROJECTS_INCR = {
+			'402_00_libafs_cpp': 'YES',
+			'402_00_tasker_cpp': 'YES',
+		}
+	elif constants.GLOBAL_PROJECT == "402.12.01":
 		INCLUDE_PROJECTS_INCR = {
 			'402_00_libafs_cpp': 'YES',
 			'402_00_improxy_cpp': 'YES',
@@ -184,18 +189,6 @@ def set_include_projects():
 	elif constants.GLOBAL_PROJECT == "402.12.07":
 		INCLUDE_PROJECTS_INCR = {
 			'402_00_libafs_cpp': 'YES',
-			'402_00_improxy_cpp': 'YES',
-			'402_00_cmm_cpp': 'YES',
-			'402_00_login_reg_cpp': 'YES',
-			'402_00_login_host_cpp': 'YES',
-			'402_00_web_cpp': 'YES',
-			'402_00_shell_cpp': 'YES',
-			'402_00_qos_cpp': 'YES',
-			'402_00_qos_fwupdate_cpp': 'YES',
-			'402_00_restore_web_cpp': 'YES',
 			'402_00_tasker_cpp': 'YES',
-			'linux-4.4.19': 'YES',
-			'rootfs': 'YES', 
 		}
 
-		UPDATE_BOOTLOADER = True
