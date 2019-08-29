@@ -26,6 +26,7 @@ def get_shell_args(shell_args):
     parser.add_argument('--part-number', help='Part number', default = "NULL") 
     parser.add_argument('-V', '--final-release-version', help='set fw version for current release. Needed if --final-release active', default = "local")
     parser.add_argument('-M', '--previous-min-version', help='Minimum fw version needed in RTU for compatibility with new fw. Needed if --final-release active', default = "local")
+    parser.add_argument('--compiler', help='Compiler version (5/7)', default = "")
     return parser.parse_args(shell_args)
 
 
@@ -70,6 +71,8 @@ def normalize_args(parsed_args):
         if parsed_args.part_number == "NULL":
             print_error("[--part-number] required for final release compilation")
             raise Exception()
+        if parsed_args.compiler == "":
+			print_error("[--compiler] required for final release compilation")
             
         parsed_args.project = "rootfs"
         parsed_args.compile_deps = True
@@ -102,10 +105,9 @@ def normalize_args(parsed_args):
             print_error("[-I --images] option not compatible with other parameters ([-P --project] not rootfs, [-d --debug])")
             raise Exception()
             
-        if parsed_args.images and (parsed_args.part_number == "NULL" or parsed_args.final_release_version == "local" or parsed_args.previous_min_version == "local"):
-            print_error("[-I --images] option must include ([-p --part-number], [-V --final-release-version] and [-M --previous-min-version])")
+        if parsed_args.images and (parsed_args.part_number == "NULL" or parsed_args.final_release_version == "local" \
+			or parsed_args.previous_min_version == "local" or parsed_args.compiler == ""):
+            print_error("[-I --images] option must include ([-p --part-number], [-V --final-release-version], [-M --previous-min-version] and [--compiler])")
             raise Exception()
-            
-        
-             
+                         
     return parsed_args
