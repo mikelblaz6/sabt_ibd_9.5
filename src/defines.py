@@ -44,11 +44,12 @@ DB_TABLES_PREFIX = ''
 
 #TOOLCHAIN
 # Directorios del toolchain para arm
+GCC_LINK = '/MRT_OS/gcc-linaro-toolchain'
 GCC_5_DIR = '/MRT_OS/gcc-linaro-toolchain-5/'
 GCC_7_DIR = '/MRT_OS/gcc-linaro-toolchain-7.2.1/'
-GCC_DIR = '/MRT_OS/gcc-linaro-toolchain'
+GCC_DIR = '/MRT_OS/gcc-linaro-toolchain/bin/'
 #GCC_BIN_VERSION = '/MRT_OS/gcc-linaro-toolchain/bin/arm-linux-gnueabihf-gcc-7.2.1'
-GCC_BIN_VERSION = GCC_DIR + '/bin/arm-linux-gnueabihf-gcc'
+GCC_BIN_VERSION = GCC_DIR + '/arm-linux-gnueabihf-gcc'
 
 # Directorios del toolchain para x86
 GCC_DIR_x86 = '/usr/bin/'

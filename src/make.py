@@ -18,11 +18,11 @@ import include_projects
 import project_commits
 
 def doit(args, paths):
-	os.system("rm " + constants.GCC_DIR)
+	os.system("rm " + constants.GCC_LINK)
 	if args.compiler == "5":
-		os.system("ln -s " + constants.GCC_5_DIR + " " + constants.GCC_DIR)
+		os.system("ln -s " + constants.GCC_5_DIR + " " + constants.GCC_LINK)
 	else:
-		os.system("ln -s " + constants.GCC_7_DIR + " " + constants.GCC_DIR)
+		os.system("ln -s " + constants.GCC_7_DIR + " " + constants.GCC_LINK)
 	if args.part_number != "NULL":
 		if args.part_number not in constants.VALID_PART_NUMBERS:
 			print "Error Part-number not allowed"
