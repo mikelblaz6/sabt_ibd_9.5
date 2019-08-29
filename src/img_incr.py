@@ -116,7 +116,8 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 	f.close()
 	
 	''' Anadimos a post_actions la modificacion de la version de fw en la base de datos '''
-	post_action_text += '/bin/sqlite3 /sabt/data/db/system_db.db3 "update fw_info set fw_version=\'' + args.final_release_version + '\', fw_ts = 0;" || exit 1\n'
+	post_action_text += '/bin/sqlite3 /sabt/data/db/system_db.db3 "update fw_info set fw_ts = 0;"\n'
+	post_action_text += '/bin/sqlite3 /sabt/data/db/system_db.db3 "update fw_info set fw_version=\'' + args.final_release_version + '\';" || exit 1\n'
 	post_action_text += '/bin/sqlite3 /sabt/data/db/regs_db.db3 "update rtu_status set web_status=\'UPDATED\';" || exit 1\n'
 	post_action_text += "exit 0;"
 	f = open(work_tmp_dir + "/update_files/post_actions.sh", "w")
