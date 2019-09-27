@@ -137,6 +137,7 @@ def set_include_projects():
 			'402_00_tasker_cpp': 'YES',
 
 			'tz' : 'YES',
+			'rootfs' : 'YES',
 		}
 
 	elif constants.GLOBAL_PROJECT == "402.12.05.01":
