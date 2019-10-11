@@ -105,7 +105,7 @@ def doit(args, paths):
 if __name__ == '__main__':
 	args = args_parser.get_shell_args(sys.argv[1:])
 	args = args_parser.normalize_args(args)
-	constants.set_GLOBAL_PROJECT(args.part_number)
+	constants.set_GLOBAL_PROJECT(args.fw_family)
 	include_projects.set_include_projects()
 	project_commits.set_project_commits()
 	paths = args_parser.get_paths(args)

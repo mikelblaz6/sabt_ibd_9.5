@@ -23,10 +23,11 @@ def get_shell_args(shell_args):
     #parser.add_argument('-C', '--clean-install-dir', action='store_true', help='clean install directory (only if install selected)')
     parser.add_argument('--no-rebuild', action='store_true', help='do not rebuild whole project (only if -l, and not -i and -D)')
     parser.add_argument('-I', '--images', action='store_true', help='create full tftp and web images, and incremental image')
-    parser.add_argument('--part-number', help='Part number', default = "NULL") 
+    parser.add_argument('--fw-family', help='Fw Family', default = "NULL") 
     parser.add_argument('-V', '--final-release-version', help='set fw version for current release. Needed if --final-release active', default = "local")
     parser.add_argument('-M', '--previous-min-version', help='Minimum fw version needed in RTU for compatibility with new fw. Needed if --final-release active', default = "local")
     parser.add_argument('--compiler', help='Compiler version (5/7)', default = "")
+    parser.add_argument('--part-number-list', help='Part number List', default = "NULL") 
     return parser.parse_args(shell_args)
 
 
