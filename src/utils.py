@@ -3,8 +3,10 @@ import defines as constants
 import os,sys
 
 
-def get_full_path(project, version):
-	version_str = '' if version == None else ('_' + str(version))
+def get_full_path(project, version, compiler):
+	version_str = '' if version == None else ('_git')
+	if compiler != "7": 
+		version_str = version_str + '_cpp5'
 	return str(project) + version_str
 
 
@@ -23,9 +25,9 @@ def print_error(text):
 * A continuacion escribe el MD5 del comprimido a proteger
 * A continuacion escribe el comprimido en si
 '''
-def add_digest(project_tree, compress_file, dest_file, paths):
+def add_digest(project_tree, compress_file, dest_file, paths, compiler):
 	for version in project_tree[constants.CMM_PROJECT]:
-		project_name = get_full_path(constants.CMM_PROJECT, version)
+		project_name = get_full_path(constants.CMM_PROJECT, version, compiler)
 		break
 					
 	priv_key = paths.build_path + "/" + project_name + constants.CMM_PRIV_KEY_FILE

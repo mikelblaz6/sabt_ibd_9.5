@@ -19,9 +19,9 @@ def search_project_path(project):
 	return path
 
 
-def prepare_local(project, version, build_path, remove=True):
+def prepare_local(project, version, build_path, compiler, remove=True):
 	source_path = search_project_path(project)
-	project_build_path = build_path + utils.get_full_path(project, version)
+	project_build_path = build_path + utils.get_full_path(project, version, compiler)
 	if os.path.isdir(project_build_path) and remove:
 		shutil.rmtree(project_build_path)
 
@@ -30,8 +30,8 @@ def prepare_local(project, version, build_path, remove=True):
 	os.system("cp -aRf " + 	source_path + project + " " + build_path)
 	#shutil.copytree(source_path + project, project_build_path, symlinks=True)
 		
-def prepare_deploy(project, version, deploy_path):
+def prepare_deploy(project, version, deploy_path, compiler):
 	os.system("mkdir -p "  + deploy_path)
-	project_deploy_path = deploy_path + utils.get_full_path(project, version)
+	project_deploy_path = deploy_path + utils.get_full_path(project, version, compiler)
 	if os.path.isdir(project_deploy_path):
 		shutil.rmtree(project_deploy_path)

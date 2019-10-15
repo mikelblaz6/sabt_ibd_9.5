@@ -32,6 +32,7 @@ class Dependencies:
 		self.paths = paths
 		self.git_last_versions = {}
 		self.no_rebuild = args.no_rebuild
+		self.compiler = args.compiler
 	
 	def get_depend_projects(self):
 		self.get_depend_projects_iter(self.main_project)
@@ -44,13 +45,13 @@ class Dependencies:
 			if not project in self.project_tree:
 				self.project_tree[project] = {}
 				if self.local:
-					local.prepare_local(project, None, self.paths.build_path, not self.no_rebuild)
+					local.prepare_local(project, None, self.paths.build_path, self.compiler, not self.no_rebuild)
 				else:
-					version = mrt_git.get_project_source(project, self.paths.build_path)
+					version = mrt_git.get_project_source(project, self.paths.build_path, self.compiler)
 			else:
 				return
 
-			project_build_path = self.paths.build_path + utils.get_full_path(project, version)
+			project_build_path = self.paths.build_path + utils.get_full_path(project, version, self.compiler)
 			cfg = ConfigParser.RawConfigParser(allow_no_value=True)
 			cfg.optionxform=str
 			cfg.read(project_build_path + '/mrt/project')

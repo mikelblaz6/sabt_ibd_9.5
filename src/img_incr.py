@@ -15,10 +15,10 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 	os.system("mkdir -p " + work_tmp_dir + "/update_files/files/")
 	
 	for version in project_tree[constants.ROOTFS_PROJECT]:
-		project_name = utils.get_full_path(constants.ROOTFS_PROJECT, version)
+		project_name = utils.get_full_path(constants.ROOTFS_PROJECT, version, args.compiler)
 		break
 	for version in project_tree[constants.UBOOT_PROJECT]:
-		uboot_project_name = utils.get_full_path(constants.UBOOT_PROJECT, version)
+		uboot_project_name = utils.get_full_path(constants.UBOOT_PROJECT, version, args.compiler)
 		break
 				
 	''' Rellenamos main.sh con la version de firmware a actualizar
@@ -44,7 +44,7 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 		if args.final_release:
 			for version in project_tree[constants.UBOOT_PROJECT]:
 				break
-			project_folder = utils.get_full_path(constants.UBOOT_PROJECT, version)
+			project_folder = utils.get_full_path(constants.UBOOT_PROJECT, version, args.compiler)
 			project_build_path = paths.build_path + project_folder
 			cur_version = mrt_git.get_last_tag(project_build_path)[1]
 			sql.SetIncrUpdIncluded(compilation_id, constants.UBOOT_PROJECT, cur_version, incr_upd_included = 1)
@@ -161,6 +161,6 @@ def create_incr_img(args, project_tree, project_list, paths, compilation_id, sql
 	
 	pack_fw(dest_compress_file, work_dir)
 	
-	utils.add_digest(project_tree, dest_compress_file, dest_file, paths)
+	utils.add_digest(project_tree, dest_compress_file, dest_file, paths, args.compiler)
 			
 	os.system("rm -Rf " + work_dir)

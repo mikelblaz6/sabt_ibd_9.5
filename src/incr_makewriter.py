@@ -17,7 +17,7 @@ class IncrProjectWriter:
 		self.project = project
 		self.version = version
 		self.project_tree = project_tree
-		self.project_folder = utils.get_full_path(self.project, self.version)
+		self.project_folder = utils.get_full_path(self.project, self.version, args.compiler)
 		self.project_build_path = self.paths.build_path + self.project_folder
 		self.project_deploy_path = self.paths.deploy_path + self.project_folder
 		self.min_version = args.previous_min_version
@@ -164,7 +164,7 @@ class IncrMakewriter:
 				pr_writer = IncrProjectWriter(self.args, project, version, self.project_tree, self.paths, compilation_id, sql)
 				project_text = pr_writer.project_install_target_process()
 				if len(project_text) > 0:
-					project_list.append(utils.get_full_path(project, version))
+					project_list.append(utils.get_full_path(project, version, self.args.compiler))
 				if project == constants.ROOTFS_PROJECT and self.args.images:
 					project_text += pr_writer.project_install_target_process_incr_type()
 				make_text += project_text
@@ -175,7 +175,7 @@ class IncrMakewriter:
 			install_project_list.append(project + "_install")
 		for version in self.project_tree[constants.ROOTFS_PROJECT]:
 			break
-		install_project_list.append(utils.get_full_path(constants.ROOTFS_PROJECT, version) + "_install-incr")
+		install_project_list.append(utils.get_full_path(constants.ROOTFS_PROJECT, version, self.args.compiler) + "_install-incr")
 		repl_tags = [('$INCR_PROJECTS$', " ".join(install_project_list)),]
 		mk_temp = open(constants.MAIN_DIR + constants.MAKEFILE_INCR_TARGET_TEMPLATE_FILE)
 		temp_text = mk_temp.read()
