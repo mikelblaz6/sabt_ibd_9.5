@@ -75,7 +75,7 @@ def set_project_commits():
 			'402_00_cmm_cpp': '8d4a4da',
 			'402_00_improxy_cpp': '8cab761',
 			'402_00_indust_cpp': 'e219736',
-			'402_00_libafs_cpp': '78383df9',	
+			'402_00_libafs_cpp': 'eece6e2d',	
 			'402_00_libdlms_client_cpp': '45ea5b0f',
 			'402_00_login_host_cpp': '4e7b7cd',
 			'402_00_login_reg_cpp': 'b201b86',
