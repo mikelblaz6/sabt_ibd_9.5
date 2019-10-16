@@ -26,7 +26,7 @@ def get_shell_args(shell_args):
     parser.add_argument('--fw-family', help='Fw Family', default = "NULL") 
     parser.add_argument('-V', '--final-release-version', help='set fw version for current release. Needed if --final-release active', default = "local")
     parser.add_argument('-M', '--previous-min-version', help='Minimum fw version needed in RTU for compatibility with new fw. Needed if --final-release active', default = "local")
-    parser.add_argument('--compiler', help='Compiler version (5/7)', default = "")
+    parser.add_argument('--compiler', help='Compiler version (5/7)', default = "7")
     parser.add_argument('--part-number-list', help='Part number List', default = "NULL") 
     return parser.parse_args(shell_args)
 
