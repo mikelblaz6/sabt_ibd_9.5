@@ -73,7 +73,8 @@ def normalize_args(parsed_args):
             print_error("[--part-number] required for final release compilation")
             raise Exception()
         if parsed_args.compiler == "":
-			print_error("[--compiler] required for final release compilation")
+            print_error("[--compiler] required for final release compilation")
+            raise Exception()
             
         parsed_args.project = "rootfs"
         parsed_args.compile_deps = True

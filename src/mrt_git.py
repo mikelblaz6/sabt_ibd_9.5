@@ -37,7 +37,7 @@ def get_current_commit(path):
 	return (0, stdout.strip())
 
 
-def get_project_source(project, build_path):
+def get_project_source(project, build_path, compiler):
 	print "Getting git sources for " + project
 	tmp_build_path = build_path + '/' + project + '_tmp'
 	if os.path.isdir(tmp_build_path):
@@ -72,9 +72,9 @@ def get_project_source(project, build_path):
 		version = version[1:]   #Quitamos la 'v'
 
 		
-	if os.path.isdir(build_path + utils.get_full_path(project, version)):
-		shutil.rmtree(build_path + utils.get_full_path(project, version))
-	shutil.move(tmp_build_path, build_path + utils.get_full_path(project, version))
+	if os.path.isdir(build_path + utils.get_full_path(project, version, compiler)):
+		shutil.rmtree(build_path + utils.get_full_path(project, version, compiler))
+	shutil.move(tmp_build_path, build_path + utils.get_full_path(project, version, compiler))
 	
 	return version
 	

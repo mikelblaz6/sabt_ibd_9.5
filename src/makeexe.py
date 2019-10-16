@@ -19,14 +19,14 @@ def do_make(file_path, target):
 def do_build(project_tree, args, paths):
 	
 	for version in project_tree[args.project]:
-		project_name = utils.get_full_path(args.project, version)
+		project_name = utils.get_full_path(args.project, version, args.compiler)
 		break
 	
 	
 	for project in project_tree:
 		if args.project == project or args.compile_deps:
 			for version in project_tree[project]:
-				local.prepare_deploy(project, version, paths.deploy_path)
+				local.prepare_deploy(project, version, paths.deploy_path, args.compiler)
 				break
 	
 	if args.images:
@@ -39,7 +39,7 @@ def do_build(project_tree, args, paths):
 
 def do_install(project_tree, args, paths, build_type = None):
 	for version in project_tree[args.project]:
-		project_name = utils.get_full_path(args.project, version)
+		project_name = utils.get_full_path(args.project, version, args.compiler)
 		break
 	
 	if build_type == constants.BUILD_TYPE_INCR:
@@ -75,9 +75,9 @@ def do_install(project_tree, args, paths, build_type = None):
 					
 ''' Crea el archivo .img con la imagen bruta '''
 ''' Utiliza makefile segun lo que se indica en el makefile del proyecto rootfs '''
-def create_raw_image_file(project_tree, work_path, build_type):
+def create_raw_image_file(project_tree, work_path, build_type, compiler):
 	for version in project_tree[constants.ROOTFS_PROJECT]:
-		project_name = utils.get_full_path(constants.ROOTFS_PROJECT, version)
+		project_name = utils.get_full_path(constants.ROOTFS_PROJECT, version, compiler)
 		break
 	
 	if build_type == constants.BUILD_TYPE_TFTP:

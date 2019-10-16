@@ -54,7 +54,7 @@ class ProjectWriter:
 		self.project = project
 		self.version = version
 		self.project_tree = project_tree
-		self.project_folder = utils.get_full_path(self.project, self.version)
+		self.project_folder = utils.get_full_path(self.project, self.version, args.compiler)
 		self.project_build_path = self.paths.build_path + self.project_folder
 		self.project_deploy_path = self.paths.deploy_path + self.project_folder
 		
@@ -106,9 +106,9 @@ class ProjectWriter:
 				for dep in self.project_tree[self.project][self.version]['depends']:
 					for version in self.project_tree[dep]:
 						break #solo una version por proyecto
-					repl_tags.append(('${DEPLOY_DIR}/' + dep + ' ', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version) + ' '))
-					repl_tags.append(('${DEPLOY_DIR}/' + dep + ';', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version) + ';'))
-					repl_tags.append(('${DEPLOY_DIR}/' + dep + '/', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version) + '/'))
+					repl_tags.append(('${DEPLOY_DIR}/' + dep + ' ', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version, self.args.compiler) + ' '))
+					repl_tags.append(('${DEPLOY_DIR}/' + dep + ';', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version, self.args.compiler) + ';'))
+					repl_tags.append(('${DEPLOY_DIR}/' + dep + '/', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version, self.args.compiler) + '/'))
 			
 		make_exe = open(self.project_build_path + '/mrt/makefile.final', 'w')
 		make_exe.write(utils.replace_strings(temp_text, repl_tags)	)
@@ -124,7 +124,7 @@ class ProjectWriter:
 				for dep in self.project_tree[self.project][self.version]['depends']:
 					for version in self.project_tree[dep]:
 						break #solo una version por proyecto
-					depend_provides_list.append("${DEPLOY_DIR}/" + utils.get_full_path(dep, version) + self.project_tree[dep][version]['provides'][0]) 
+					depend_provides_list.append("${DEPLOY_DIR}/" + utils.get_full_path(dep, version, self.args.compiler) + self.project_tree[dep][version]['provides'][0]) 
 			depend_provides = " ".join(depend_provides_list)
 		
 		#Tags to replace in target template
@@ -159,7 +159,7 @@ class ProjectWriter:
 			for dep in self.project_tree[self.project][self.version]['install_depends']:
 				for version in self.project_tree[dep]:
 					break #solo una version por proyecto
-				install_depend_list.append(utils.get_full_path(dep, version) + '_install') 
+				install_depend_list.append(utils.get_full_path(dep, version, self.args.compiler) + '_install') 
 			install_depends = " ".join(install_depend_list)
 		
 		#Tags to replace in PROJECT INSTALL template

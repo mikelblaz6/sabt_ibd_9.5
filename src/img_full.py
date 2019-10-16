@@ -26,10 +26,10 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 	global uboot_included
 
 	for version in project_tree[constants.ROOTFS_PROJECT]:
-		project_name = utils.get_full_path(constants.ROOTFS_PROJECT, version)
+		project_name = utils.get_full_path(constants.ROOTFS_PROJECT, version, args.compiler)
 		break
 	for version in project_tree[constants.UBOOT_PROJECT]:
-		uboot_project_name = utils.get_full_path(constants.UBOOT_PROJECT, version)
+		uboot_project_name = utils.get_full_path(constants.UBOOT_PROJECT, version, args.compiler)
 		break
 				
 	''' Rellenamos main.sh con la version de firmware '''
@@ -60,7 +60,7 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 		if args.final_release and include_in_database:
 			for tree_version in project_tree[project]:
 				break
-			project_folder = utils.get_full_path(project, tree_version)
+			project_folder = utils.get_full_path(project, tree_version, args.compiler)
 			project_build_path = paths.build_path + project_folder
 			cur_version = mrt_git.get_last_tag(project_build_path)[1]
 			sql.SetFullUpdIncluded(compilation_id, project, cur_version, full_upd_included = 1)
@@ -114,11 +114,11 @@ def create_full_img(args, project_tree, paths, compilation_id, sql):
 	# Realiza los cambios necesarios sobre el sistema ya compilado e instalado en SYSTEM
 	prepare_full_update_files(args, project_tree, paths, work_dir, compilation_id, sql)
 	
-	makeexe.create_raw_image_file(project_tree, paths.work_path, constants.BUILD_TYPE_FULL)
+	makeexe.create_raw_image_file(project_tree, paths.work_path, constants.BUILD_TYPE_FULL, args.compiler)
 	makeexe.create_bin_image_file(args.part_number, dest_tftp_img_file, work_dir)
 	
 	pack_fw(args.part_number, dest_compress_file, work_dir)
 	
-	utils.add_digest(project_tree, dest_compress_file, dest_file, paths)
+	utils.add_digest(project_tree, dest_compress_file, dest_file, paths, args.compiler)
 			
 	os.system("rm -Rf " + work_dir)
