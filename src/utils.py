@@ -7,6 +7,9 @@ def get_full_path(project, version, compiler):
 	version_str = '' if version == None else ('_git')
 	if compiler != "7": 
 		version_str = version_str + '_cpp5'
+	else:
+		version_str = version_str + '_cpp7'
+
 	return str(project) + version_str
 
 
