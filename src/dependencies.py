@@ -45,7 +45,8 @@ class Dependencies:
 			if not project in self.project_tree:
 				self.project_tree[project] = {}
 				if self.local:
-					local.prepare_local(project, None, self.paths.build_path, self.compiler, not self.no_rebuild)
+					if self.compile_deps or project==self.main_project:
+						local.prepare_local(project, None, self.paths.build_path, self.compiler, not self.no_rebuild)
 				else:
 					version = mrt_git.get_project_source(project, self.paths.build_path, self.compiler)
 			else:
@@ -63,7 +64,8 @@ class Dependencies:
 				for fdep in cfg.items('INSTALL_DEPS'):
 					self.project_tree[project][version]['install_depends'].append(fdep[0])
 					
-			if cfg.has_section('DEPS') and self.compile_deps:
+			#if cfg.has_section('DEPS') and self.compile_deps:
+			if cfg.has_section('DEPS') and (project==self.main_project or self.compile_deps):
 				for dependency in cfg.items('DEPS'):
 					#Not version checking. Version set to None
 					if not dependency[0] in self.project_tree[project][version]['depends']:

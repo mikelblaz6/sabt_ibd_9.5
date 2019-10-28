@@ -101,14 +101,14 @@ class ProjectWriter:
 		
 		repl_tags = self.get_common_repl_tags()
 		
-		if self.args.compile_deps:
-			if len(self.project_tree[self.project][self.version]['depends']) > 0:
-				for dep in self.project_tree[self.project][self.version]['depends']:
-					for version in self.project_tree[dep]:
-						break #solo una version por proyecto
-					repl_tags.append(('${DEPLOY_DIR}/' + dep + ' ', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version, self.args.compiler) + ' '))
-					repl_tags.append(('${DEPLOY_DIR}/' + dep + ';', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version, self.args.compiler) + ';'))
-					repl_tags.append(('${DEPLOY_DIR}/' + dep + '/', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version, self.args.compiler) + '/'))
+		#if self.args.compile_deps:
+		if len(self.project_tree[self.project][self.version]['depends']) > 0:
+			for dep in self.project_tree[self.project][self.version]['depends']:
+				for version in self.project_tree[dep]:
+					break #solo una version por proyecto
+				repl_tags.append(('${DEPLOY_DIR}/' + dep + ' ', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version, self.args.compiler) + ' '))
+				repl_tags.append(('${DEPLOY_DIR}/' + dep + ';', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version, self.args.compiler) + ';'))
+				repl_tags.append(('${DEPLOY_DIR}/' + dep + '/', '${DEPLOY_DIR}/' + utils.get_full_path(dep, version, self.args.compiler) + '/'))
 			
 		make_exe = open(self.project_build_path + '/mrt/makefile.final', 'w')
 		make_exe.write(utils.replace_strings(temp_text, repl_tags)	)
