@@ -1,5 +1,6 @@
 #! /usr/bin/python
-import argparse, os, logging, time, sys
+import os, logging, time, sys
+import mrt_argparse
 import defines as constants
 
 
@@ -51,7 +52,7 @@ def pack(pck_file, folder):
 
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description='Pack 402.12 firmware update packages')
+	parser = mrt_argparse.ArgumentParser(description='Pack 402.12 firmware update packages')
 	parser.add_argument('-f', '--file', help='destination file', required=True)
 	parser.add_argument('-d', '--folder', help='folder to compress', required=True)
 	parser.add_argument('-p', '--private-key', help='private key', required=True)

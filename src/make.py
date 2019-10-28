@@ -16,6 +16,7 @@ import database
 import mrt_git
 import include_projects
 import project_commits
+from __builtin__ import None
 
 def doit(args, paths):
 	os.system("rm " + constants.GCC_LINK)
@@ -23,19 +24,6 @@ def doit(args, paths):
 		os.system("ln -s " + constants.GCC_5_DIR + " " + constants.GCC_LINK)
 	else:
 		os.system("ln -s " + constants.GCC_7_DIR + " " + constants.GCC_LINK)
-	if args.part_number != "NULL":
-		if args.part_number not in constants.VALID_PART_NUMBERS:
-			print "Error Part-number not allowed"
-			exit(1)
-		project_compiler_part_number = mrt_git.get_branch_name(constants.MAIN_DIR)
-		args_part_number = args.part_number.replace('.', '_')
-		'''if project_compiler_part_number[0] == 0:
-			if project_compiler_part_number[1] != args_part_number  and (args.images or args.final_release):
-				print "Project compiler branch does not match selected part_number"
-				exit(1)
-		else:
-			print "Error getting project_compiler branch"
-			exit(1)'''
 	
 	sql = None
 	if args.final_release:
@@ -58,12 +46,15 @@ def doit(args, paths):
 		else:
 			compilation_id = None
 			if args.final_release:
-				compilation_id = sql.NewRelease(args.final_release_version)
+				legacy_min_version_list = None
+				if args.legacy_mode:
+					legacy_min_version_list = args.legacy_min_versions
+				compilation_id = sql.NewRelease(constants.GLOBAL_PROJECT, args.final_release_version, args.part_number_list, args.previous_min_versions_list, str(args), legacy_min_version_list)
 				cur_commit = mrt_git.get_current_commit(constants.MAIN_DIR)[1]
 				cur_version = ""
 				logger.info(str("Project compiler") + ". Commit id: " + str(cur_commit))
 				print(str("Project compiler") + ". Commit id: " + str(cur_commit))
-				sql.NewProject(compilation_id, "Project compiler", cur_commit, cur_version, tftp_img_included = 0)
+				sql.NewModule(compilation_id, "Project compiler", cur_commit, tftp_img_included = 0)
 			
 			''' Imagen TFTP '''
 			make_writer_tftp = makewriter.Makewriter(args, project_tree, paths, constants.BUILD_TYPE_TFTP)
@@ -105,7 +96,7 @@ def doit(args, paths):
 if __name__ == '__main__':
 	args = args_parser.get_shell_args(sys.argv[1:])
 	args = args_parser.normalize_args(args)
-	constants.set_GLOBAL_PROJECT(args.fw_family)
+	constants.set_GLOBAL_PROJECT(args.part_number_list, args.fw_family, args.previous_min_versions_list)
 	include_projects.set_include_projects()
 	project_commits.set_project_commits()
 	paths = args_parser.get_paths(args)

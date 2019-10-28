@@ -1,5 +1,6 @@
 #! /usr/bin/python
-import argparse, os, logging
+import os, logging
+import mrt_argparse
 from distutils.version import LooseVersion, StrictVersion
 
 import defines as constants
@@ -20,15 +21,14 @@ class IncrProjectWriter:
 		self.project_folder = utils.get_full_path(self.project, self.version, args.compiler)
 		self.project_build_path = self.paths.build_path + self.project_folder
 		self.project_deploy_path = self.paths.deploy_path + self.project_folder
-		self.min_version = args.previous_min_version
+		#self.min_version = args.previous_min_version
 
 		self.include = False
 		last_commit = None
 		
 		if self.args.final_release:	
-			cur_version = mrt_git.get_last_tag(self.project_build_path)[1]
 			cur_commit = mrt_git.get_current_commit(self.project_build_path)[1]
-			min_version_commit = sql.GetCommitByVersion(self.project, self.min_version)
+			#min_version_commit = sql.GetCommitByVersion(self.project, self.min_version)  #TODO: SOlucionar. Busca commit anterior
 
 		if self.project != constants.UBOOT_PROJECT:
 			'''if self.args.final_release:	
@@ -53,24 +53,25 @@ class IncrProjectWriter:
 					self.include = True
 					
 			if self.include:
-				print "Proyecto", self.project, ":",self.version, "incluido en la actualizacion incremental. Desea corregir? (y/n)"
+				print "Modulo", self.project, "incluido en la actualizacion incremental. Desea corregir? (y/n)"
 			else:
-				print "Proyecto", self.project, ":",self.version, "NO incluido en la actualizacion incremental. Desea corregir? (y/n)"
+				print "Modulo", self.project, "NO incluido en la actualizacion incremental. Desea corregir? (y/n)"
 			b = raw_input()
 			if b=='y':
 				if self.args.final_release:	
-					if min_version_commit == None:
+					'''if min_version_commit == None:
 						print "Proyecto", self.project, ":",self.version, "no encontrado en releases anteriores"
 					elif min_version_commit != cur_commit:
 						print "Proyecto", self.project, ":",self.version, "ha cambiado respecto de la anterior release"
 					else:
 						print "Proyecto", self.project, ":",self.version, "NO ha cambiado respecto de la anterior release, pero verifica dependencias"
-					print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
+					'''
+					print "Desea incluir el modulo", self.project, "en la actualizacion incremental? (y/n)"
 					b = raw_input()
 					if b=='y':
 						self.include = True
 				else:
-					print "Desea incluir el proyecto", self.project, ":",self.version, "en la actualizacion incremental? (y/n)"
+					print "Desea incluir el modulo", self.project, "en la actualizacion incremental? (y/n)"
 					b = raw_input()
 					if b=='y':
 						self.include = True
@@ -80,7 +81,7 @@ class IncrProjectWriter:
 						self.include = True
 				
 		if self.include and self.args.final_release:
-			sql.SetIncrUpdIncluded(compilation_id, self.project, cur_version, incr_upd_included = 1)
+			sql.SetIncrUpdIncluded(compilation_id, self.project, incr_upd_included = 1)
 			
 		
 
@@ -144,7 +145,8 @@ class IncrMakewriter:
 						('$DEPLOY_DIR$', self.paths.deploy_path),
 						('$INSTALL_DIR$', constants.INSTALL_DIR_INCR),
 						('$ROOTFS_DIR$', constants.ROOTFS_DIR),
-						('$PART_NUMBER$', self.args.part_number),]
+						('$PART_NUMBER_LIST$', self.args.part_number_list),
+						('$FW_FAMILY$', self.args.fw_family),]
 							
 		mk_temp = open(constants.MAIN_DIR + constants.MAKEFILE_HEADER_TEMPLATE_FILE)
 		temp_text = mk_temp.read()

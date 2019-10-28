@@ -1,5 +1,6 @@
 #! /usr/bin/python
-import argparse, os, sys
+import os, sys
+import mrt_argparse
 from distutils.version import LooseVersion, StrictVersion
 
 import defines as constants
@@ -72,11 +73,10 @@ class ProjectWriter:
 			
 		if self.args.git:
 			cur_commit = mrt_git.get_current_commit(self.project_build_path)[1]
-			cur_version = mrt_git.get_last_tag(self.project_build_path)[1]
-			logger.info(str(self.project) + ". Commit id: " + str(cur_commit) + ". Version: " + str(cur_version))
-			print(str(self.project) + ". Commit id: " + str(cur_commit) + ". Version: " + str(cur_version))
+			logger.info(str(self.project) + ". Commit id: " + str(cur_commit))
+			print(str(self.project) + ". Commit id: " + str(cur_commit))
 			if self.args.final_release and sql != None:
-				sql.NewProject(compilation_id, self.project, cur_commit, cur_version, tftp_img_included = 1)
+				sql.NewModule(compilation_id, self.project, cur_commit, tftp_img_included = 1)
 
 
 	def get_common_repl_tags(self):
@@ -239,7 +239,8 @@ class Makewriter:
 						('$DEPLOY_DIR$', self.paths.deploy_path),
 						('$INSTALL_DIR$', install_dir),
 						('$ROOTFS_DIR$', constants.ROOTFS_DIR),
-						('$PART_NUMBER$', self.args.part_number),]
+						('$PART_NUMBER_LIST$', self.args.part_number_list),
+						('$FW_FAMILY$', self.args.fw_family),]
 							
 		mk_temp = open(constants.MAIN_DIR + constants.MAKEFILE_HEADER_TEMPLATE_FILE)
 		temp_text = mk_temp.read()

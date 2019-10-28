@@ -22,7 +22,7 @@ Dejamos en work_tmp_dir los archivos:
 	* Opcional: MLO
 	* Opcional: u-boot.img
 '''
-def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilation_id, sql):
+def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilation_id, sql, legacy_mode):
 	global uboot_included
 
 	for version in project_tree[constants.ROOTFS_PROJECT]:
@@ -36,8 +36,15 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 	f = open(paths.build_path + "/" + project_name + constants.BUILD_TYPE_FULL_MAINSH_TEMPLATE, "r")
 	text = f.read()
 	f.close()
-	tags = [("$FW_VERSION_PAR$", args.final_release_version),
-			("$PART_NUMBER$", args.part_number)]
+	tags = []
+	if legacy_mode:
+		tags = [("$FW_VERSION_PAR$", args.final_release_version),
+				("$PART_NUMBER_LIST$", args.part_number_list),
+				("$LEGACY$", "1")]
+	else:
+		tags = [("$FW_VERSION_PAR$", args.final_release_version),
+				("$PART_NUMBER_LIST$", args.part_number_list),
+				("$LEGACY$", "0")]
 	
 	f = open(work_tmp_dir + "/" + constants.MAINSH_FILE, "w")
 	f.write(utils.replace_strings(text, tags))
@@ -62,14 +69,13 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 				break
 			project_folder = utils.get_full_path(project, tree_version, args.compiler)
 			project_build_path = paths.build_path + project_folder
-			cur_version = mrt_git.get_last_tag(project_build_path)[1]
-			sql.SetFullUpdIncluded(compilation_id, project, cur_version, full_upd_included = 1)
+			sql.SetFullUpdIncluded(compilation_id, project, full_upd_included = 1)
 
 ''' Mueve el contenido de work_tmp_dir al directorio de destino para comprimir.
 Comprime en tar.xz '''
-def pack_fw(part_number, dest_file, work_tmp_dir):
+def pack_fw(dest_file, work_tmp_dir):
 	global uboot_included
-	tftp_img_file = part_number + ".bin"
+	tftp_img_file = constants.PRODUCT + ".bin"
 	compress_dir = work_tmp_dir + "/compress/"
 	if os.system("mkdir -p " + compress_dir):
 		print_error("Error packing fw full")
@@ -101,24 +107,57 @@ def pack_fw(part_number, dest_file, work_tmp_dir):
 
 def create_full_img(args, project_tree, paths, compilation_id, sql):
 	fw_version = args.final_release_version
-	releases_dir = os.getenv("HOME") + "/RELEASES/" + args.part_number + "/" + fw_version + "/FULL/"
-	os.system("mkdir -p " + releases_dir)
+	
+	#Generacion de actualizacion full para la familia de fw
+	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + fw_version + "/FULL/"
+	os.system("mkdir -p " + releases_dir)	
+	dest_file = releases_dir + "MRT_" + args.fw_family + "_" + fw_version + "_full.bin"
+	
 	work_dir = paths.work_path + "/full_temp/"
 	os.system("rm -Rf " + work_dir)
 	os.system("mkdir -p " + work_dir)
-	dest_tftp_img_file = work_dir + "/" + args.part_number + ".bin"
-	dest_compress_file = work_dir + "/MRT_" + args.part_number + "_" + fw_version + "_full.tar.xz"
-	
-	dest_file = releases_dir + "MRT_" + args.part_number + "_" + fw_version + "_full.bin"
+	dest_tftp_img_file = work_dir + "/" + constants.PRODUCT + ".bin"
+	dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + fw_version + "_full.tar.xz"
 	
 	# Realiza los cambios necesarios sobre el sistema ya compilado e instalado en SYSTEM
-	prepare_full_update_files(args, project_tree, paths, work_dir, compilation_id, sql)
-	
+	prepare_full_update_files(args, project_tree, paths, work_dir, compilation_id, sql, False)
 	makeexe.create_raw_image_file(project_tree, paths.work_path, constants.BUILD_TYPE_FULL, args.compiler)
-	makeexe.create_bin_image_file(args.part_number, dest_tftp_img_file, work_dir)
-	
-	pack_fw(args.part_number, dest_compress_file, work_dir)
-	
+	makeexe.create_bin_image_file(dest_tftp_img_file, work_dir)
+	pack_fw(dest_compress_file, work_dir)
 	utils.add_digest(project_tree, dest_compress_file, dest_file, paths, args.compiler)
+	
+	#Copiamos binario a cada part-number soportado
+	for pn in args.part_number_list.split(","):
+		releases_dir = os.getenv("HOME") + "/RELEASES/" + pn + "/" + fw_version + "/FULL/"
+		os.system("rm -Rf " + releases_dir)
+		os.system("mkdir -p " + releases_dir)
+		pn_specific_dest_file = releases_dir + "MRT_" + pn + "_" + fw_version + "_" + args.fw_family + "_full.bin"
+		os.system("cp " + dest_file + " " + pn_specific_dest_file)
 			
 	os.system("rm -Rf " + work_dir)
+	
+	#Modo de compatibilidad. Afecta al main.sh de la actualizacion
+	'''if args.legacy_mode:
+		pns = args.part_number_list.split(",")
+		
+		for index in xrange(len(pns)):
+			releases_dir = os.getenv("HOME") + "/RELEASES/" + pns[index] + "/" + fw_version + "/FULL_LEGACY/"
+			os.system("rm -Rf " + releases_dir)
+			os.system("mkdir -p " + releases_dir)	
+			dest_file = releases_dir + "MRT_" + pns[index] + "_" + args.final_release_version + "_" + args.fw_family + "_full_legacy.bin"
+			
+			os.system("mkdir -p " + work_dir)
+			dest_tftp_img_file = work_dir + "/" + constants.PRODUCT + ".bin"
+			dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + fw_version + "_full.tar.xz"
+			
+			# Realiza los cambios necesarios sobre el sistema ya compilado e instalado en SYSTEM
+			prepare_full_update_files(args, project_tree, paths, work_dir, compilation_id, sql, True)
+			makeexe.create_raw_image_file(project_tree, paths.work_path, constants.BUILD_TYPE_FULL, args.compiler)
+			makeexe.create_bin_image_file(dest_tftp_img_file, work_dir)
+			pack_fw(dest_compress_file, work_dir)
+			utils.add_digest(project_tree, dest_compress_file, dest_file, paths, args.compiler)
+					
+			os.system("rm -Rf " + work_dir)'''
+
+		
+		

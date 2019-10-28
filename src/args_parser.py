@@ -1,11 +1,12 @@
 #! /usr/bin/python
-import argparse, time, sys
+import time, sys
+import mrt_argparse
 import defines as constants
 
 from utils import print_error
 
 def get_shell_args(shell_args):
-    parser = argparse.ArgumentParser(description='Build MRT developments and dependencies.')
+    parser = mrt_argparse.ArgumentParser(description='Build MRT developments and dependencies.')
     parser.add_argument('-P', '--project', help='project to build', default = "")
     parser.add_argument('-v', '--project-version', help='project version to build (if not set, last version will be built). Only valid when using git', default = "")
     group = parser.add_mutually_exclusive_group()
@@ -25,9 +26,11 @@ def get_shell_args(shell_args):
     parser.add_argument('-I', '--images', action='store_true', help='create full tftp and web images, and incremental image')
     parser.add_argument('--fw-family', help='Fw Family', default = "NULL") 
     parser.add_argument('-V', '--final-release-version', help='set fw version for current release. Needed if --final-release active', default = "local")
-    parser.add_argument('-M', '--previous-min-version', help='Minimum fw version needed in RTU for compatibility with new fw. Needed if --final-release active', default = "local")
+    parser.add_argument('-M', '--previous-min-versions-list', help='Minimum fw version needed in RTU for compatibility with new fw. Needed if --final-release active. Format: [FW_FAMILY,MIN_VERSION;]', default = "local")
     parser.add_argument('--compiler', help='Compiler version (5/7)', default = "7")
     parser.add_argument('--part-number-list', help='Part number List', default = "NULL") 
+    parser.add_argument('--legacy-mode', action='store_true', help='Produce fw packages for each part-number in part-number-list parameter')
+    parser.add_argument('--legacy-min-versions', help='Min fw versions for each part-number in part-number-list', default="")
     return parser.parse_args(shell_args)
 
 
@@ -50,6 +53,16 @@ def get_paths(parsed_args):
 
 
 def normalize_args(parsed_args):
+    
+    if parsed_args.legacy_mode and parsed_args.legacy_min_versions == "":
+        print_error("[--legacy-min-versions] needed if [--legacy-mode] set")
+        raise Exception()
+    
+    if parsed_args.legacy_mode and \
+        len(parsed_args.part_number_list.split(",")) != len(parsed_args.legacy_min_versions.split(",")):
+        print_error("[--legacy-min-versions] and [--part-number-list] lengths must match")
+        raise Exception()
+    
     if parsed_args.final_release:
         if parsed_args.local:
             print("WARNING: [-l --local] option ignored")
@@ -66,16 +79,20 @@ def normalize_args(parsed_args):
         if parsed_args.final_release_version == "local":
             print_error("[-V --final-release-version] option required. Must be numeric")
             raise Exception()
-        if parsed_args.previous_min_version == "local":
-            print_error("[-M --previous-min-version] option required. Must be numeric")
+        if parsed_args.previous_min_versions_list == "local":
+            print_error("[-M --previous-min-versions] option required. Must be numeric")
             raise Exception()
-        if parsed_args.part_number == "NULL":
-            print_error("[--part-number] required for final release compilation")
+        if parsed_args.part_number_list == "NULL":
+            print_error("[--part-number-list] required for final release compilation")
+            raise Exception()
+        if parsed_args.fw_family == "NULL":
+            print_error("[--fw-family] required for final release compilation")
             raise Exception()
         if parsed_args.compiler == "":
             print_error("[--compiler] required for final release compilation")
             raise Exception()
-            
+        
+    
         parsed_args.project = "rootfs"
         parsed_args.compile_deps = True
         parsed_args.install = True
@@ -107,9 +124,9 @@ def normalize_args(parsed_args):
             print_error("[-I --images] option not compatible with other parameters ([-P --project] not rootfs, [-d --debug])")
             raise Exception()
             
-        if parsed_args.images and (parsed_args.part_number == "NULL" or parsed_args.final_release_version == "local" \
-			or parsed_args.previous_min_version == "local" or parsed_args.compiler == ""):
-            print_error("[-I --images] option must include ([-p --part-number], [-V --final-release-version], [-M --previous-min-version] and [--compiler])")
+        if parsed_args.images and (parsed_args.part_number_list == "NULL" or parsed_args.final_release_version == "local" \
+			or parsed_args.previous_min_versions_list == "local" or parsed_args.compiler == "" or parsed_args.fw_family == "NULL"):
+            print_error("[-I --images] option must include ([--part-number-list], [--fw-family], [-V --final-release-version], [-M --previous-min-version] and [--compiler])")
             raise Exception()
                          
     return parsed_args

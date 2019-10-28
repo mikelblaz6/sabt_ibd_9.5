@@ -10,7 +10,7 @@ import mrt_git
 from utils import print_error
 from include_projects import *
 
-def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_dir, compilation_id, sql):
+def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_dir, compilation_id, sql, pn_legacy = "", min_version_legacy = ""):
 	os.system("mkdir -p " + work_tmp_dir + "/update_files/system/")
 	os.system("mkdir -p " + work_tmp_dir + "/update_files/files/")
 	
@@ -26,8 +26,13 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 	f = open(paths.build_path + "/" + project_name + constants.BUILD_TYPE_INCR_MAINSH_TEMPLATE, "r")
 	text = f.read()
 	f.close()
-	tags = [("$FW_VERSION_PAR$", args.final_release_version), ("$MIN_VERSION_PAR$", args.previous_min_version),
-			("$PART_NUMBER$", args.part_number)]
+	tags = []
+	if min_version_legacy == "":
+		tags = [("$FW_VERSION_PAR$", args.final_release_version), ("$MIN_VERSION_PAR$", args.previous_min_versions_list),
+				("$PART_NUMBER_LIST$", args.part_number_list), ("$LEGACY$", "0")]
+	else:
+		tags = [("$FW_VERSION_PAR$", args.final_release_version), ("$MIN_VERSION_PAR$", min_version_legacy),
+				("$PART_NUMBER_LIST$", pn_legacy), ("$LEGACY$", "1")]
 	
 	f = open(work_tmp_dir + "/" + constants.MAINSH_FILE, "w")
 	f.write(utils.replace_strings(text, tags))
@@ -46,8 +51,7 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 				break
 			project_folder = utils.get_full_path(constants.UBOOT_PROJECT, version, args.compiler)
 			project_build_path = paths.build_path + project_folder
-			cur_version = mrt_git.get_last_tag(project_build_path)[1]
-			sql.SetIncrUpdIncluded(compilation_id, constants.UBOOT_PROJECT, cur_version, incr_upd_included = 1)
+			sql.SetIncrUpdIncluded(compilation_id, constants.UBOOT_PROJECT, incr_upd_included = 1)
 
 	
 	''' Rellenamos los scripts pre_actions.sh y post_actions.sh, y 
@@ -56,7 +60,7 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 	pre_actions_text = ''
 	post_action_text = ''
 	for project in project_list:
-		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + args.part_number + "/" + constants.PROJECT_UPDATE_PRE_CMDS_FILE
+		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + args.fw_family + "/" + constants.PROJECT_UPDATE_PRE_CMDS_FILE
 		text = ''
 		try:
 			with open(path, "r") as f:
@@ -76,7 +80,7 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 		if text.strip() != '':
 			pre_actions_text += text + "\n"
 		
-		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + args.part_number + "/" + constants.PROJECT_UPDATE_POST_CMDS_FILE
+		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + args.fw_family + "/" + constants.PROJECT_UPDATE_POST_CMDS_FILE
 		text = ''
 		try:
 			with open(path, "r") as f:
@@ -148,19 +152,47 @@ def pack_fw(dest_file, work_tmp_dir):
 	
 	
 def create_incr_img(args, project_tree, project_list, paths, compilation_id, sql):
-	releases_dir = os.getenv("HOME") + "/RELEASES/" + args.part_number + "/" + args.final_release_version + "/INCR/"
+	fw_version = args.final_release_version
+	
+	#Generacion de actualizacion incr para la familia de fw
+	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + args.final_release_version + "/INCR/"
 	os.system("mkdir -p " + releases_dir)
+	dest_file = releases_dir + "MRT_" + args.fw_family + "_" + args.final_release_version + "_incr.bin"
+	
 	work_dir = paths.work_path + "/incr_temp/"
 	os.system("rm -Rf " + work_dir)
 	os.system("mkdir -p " + work_dir)
-	dest_compress_file = work_dir + "/MRT_" + args.part_number + "_" + args.final_release_version + "_incr.tar.xz"
-	
-	dest_file = releases_dir + "MRT_" + args.part_number + "_" + args.final_release_version + "_incr.bin"
+	dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + args.final_release_version + "_incr.tar.xz"
 	
 	prepare_incr_update_files(args, project_tree, paths, project_list, work_dir, compilation_id, sql)
-	
 	pack_fw(dest_compress_file, work_dir)
-	
 	utils.add_digest(project_tree, dest_compress_file, dest_file, paths, args.compiler)
 			
+	for pn in args.part_number_list.split(","):
+		releases_dir = os.getenv("HOME") + "/RELEASES/" + pn + "/" + fw_version + "/INCR/"
+		os.system("rm -Rf " + releases_dir)
+		os.system("mkdir -p " + releases_dir)
+		pn_specific_dest_file = releases_dir + "MRT_" + pn + "_" + fw_version + "_" + args.fw_family + "_incr.bin"
+		os.system("cp " + dest_file + " " + pn_specific_dest_file)
+			
 	os.system("rm -Rf " + work_dir)
+	
+	#Modo de compatibilidad. Solo 1 version minima por cada part-number
+	if args.legacy_mode:
+		pns = args.part_number_list.split(",")
+		min_vers = args.legacy_min_versions.split(",")
+		
+		for index in xrange(len(pns)):
+			releases_dir = os.getenv("HOME") + "/RELEASES/" + pns[index] + "/" + args.final_release_version + "/INCR_LEGACY/"
+			os.system("rm -Rf " + releases_dir)
+			os.system("mkdir -p " + releases_dir)
+			dest_file = releases_dir + "MRT_" + pns[index] + "_" + args.final_release_version + "_" + args.fw_family + "_incr_legacy.bin"
+	
+			os.system("mkdir -p " + work_dir)
+			dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + args.final_release_version + "_incr.tar.xz"
+			
+			prepare_incr_update_files(args, project_tree, paths, project_list, work_dir, compilation_id, sql, pns[index], min_vers[index])
+			pack_fw(dest_compress_file, work_dir)
+			utils.add_digest(project_tree, dest_compress_file, dest_file, paths, args.compiler)
+					
+			os.system("rm -Rf " + work_dir)

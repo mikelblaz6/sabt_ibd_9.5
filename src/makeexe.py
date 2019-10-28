@@ -90,9 +90,9 @@ def create_raw_image_file(project_tree, work_path, build_type, compiler):
 		
 ''' Crea el archivo .bin con la imagen bruta mas el CRC '''
 ''' No ejecuta nada relacionado con los makefiles '''
-def create_bin_image_file(part_number, dest_file, work_path):
+def create_bin_image_file(dest_file, work_path):
 	work_dir = work_path + "/bin_img_temp"
-	raw_img_file = part_number + ".img"
+	raw_img_file = constants.PRODUCT + ".img"
 	orig_raw_img_file_path = constants.ROOTFS_DIR + "/" + raw_img_file
 	crc_file_path = work_dir + "/crc"
 	tftp_img_file_path = dest_file

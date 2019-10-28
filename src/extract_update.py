@@ -1,5 +1,6 @@
 #! /usr/bin/python
-import argparse, os, logging, time, sys
+import os, logging, time, sys
+import mrt_argparse
 import defines as constants
 
 
@@ -21,7 +22,7 @@ def extract(pck_file, folder):
 
 
 if __name__ == '__main__':
-	parser = argparse.ArgumentParser(description='Extract 402.12 firmware update packages')
+	parser = mrt_argparse.ArgumentParser(description='Extract 402.12 firmware update packages')
 	parser.add_argument('-f', '--file', help='file to extract', required=True)
 	parser.add_argument('-d', '--folder', help='destiny folder', default = ".")
 	args = parser.parse_args()

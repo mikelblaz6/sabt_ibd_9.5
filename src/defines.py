@@ -141,18 +141,34 @@ DB_NAME = "402_12_fw_versions"
 VALID_PART_NUMBERS = ("402.12.00", "402.12.01", "402.12.02", "402.12.03",
 					"402.12.04", "402.12.05.01", "402.12.06", "402.12.07",)
 
+VALID_FW_FAMILY = ("IBD", "UFD", "MLY", )
 
-def set_GLOBAL_PROJECT(pn):
+PRODUCT = "402.12"
+
+
+def set_GLOBAL_PROJECT(pn_list, fw_family, min_versions):
 	global GLOBAL_PROJECT			#Now represents FW_FAMILY
 	global GLOBAL_PROJECT_GIT_BRANCH
 	global DB_TABLES_PREFIX
 	global GIT_BRANCHES
 	
-	if pn not in VALID_PART_NUMBERS and pn != "NULL":
-		print "Error Part-number not allowed"
+	if fw_family != "NULL" and fw_family not in VALID_FW_FAMILY:
+		print "Error fw-family", fw_family, "not allowed"
 		exit(1)
 	
-	GLOBAL_PROJECT = pn
-	GLOBAL_PROJECT_GIT_BRANCH = pn.replace(".","_")
-	DB_TABLES_PREFIX = pn.replace(".","_") + "_"
+	if pn_list != "NULL":
+		for pn in pn_list.split(","):
+			if pn not in VALID_PART_NUMBERS:
+				print "Error Part-number", pn, "not allowed"
+				exit(1)
+		
+	if min_versions != "local":
+		for min_vers in min_versions.split(";"):
+			if min_vers.split(",")[0] not in VALID_FW_FAMILY:
+				print "Error fw-family", min_vers.split(",")[0], "not allowed for minimal version"
+				exit(1)
+	
+	GLOBAL_PROJECT = fw_family
+	GLOBAL_PROJECT_GIT_BRANCH = fw_family
+	#DB_TABLES_PREFIX = pn.replace(".","_") + "_"
 	GIT_BRANCHES = (GLOBAL_PROJECT_GIT_BRANCH, '402_12', '402', 'master')

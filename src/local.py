@@ -26,8 +26,8 @@ def prepare_local(project, version, build_path, compiler, remove=True):
 		shutil.rmtree(project_build_path)
 
 	os.system("mkdir -p "  + build_path)
-	print "Copying sources from project", project, "..."
-	os.system("cp -aRf " + 	source_path + project + " " + build_path)
+	print "Copying sources from project", project, "to", project_build_path, "..."
+	os.system("cp -aRf " + 	source_path + project + " " + project_build_path)
 	#shutil.copytree(source_path + project, project_build_path, symlinks=True)
 		
 def prepare_deploy(project, version, deploy_path, compiler):
