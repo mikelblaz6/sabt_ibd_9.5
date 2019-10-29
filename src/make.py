@@ -16,7 +16,6 @@ import database
 import mrt_git
 import include_projects
 import project_commits
-from __builtin__ import None
 
 def doit(args, paths):
 	os.system("rm " + constants.GCC_LINK)
@@ -26,10 +25,16 @@ def doit(args, paths):
 		os.system("ln -s " + constants.GCC_7_DIR + " " + constants.GCC_LINK)
 	
 	sql = None
-	if args.final_release:
-		sql = database.Database()
-		
+	legacy_min_version_list = None
+	
 	try:
+		if args.final_release:
+			sql = database.Database()
+			if args.legacy_mode:
+				legacy_min_version_list = args.legacy_min_versions
+			if sql.VerifyNewRelease(constants.GLOBAL_PROJECT, args.final_release_version, args.part_number_list, args.previous_min_versions_list, legacy_min_version_list) != 0:
+				exit(1)
+			
 		dep_processor = dependencies.Dependencies(args, paths)
 		project_tree = dep_processor.get_depend_projects()
 		
@@ -46,12 +51,8 @@ def doit(args, paths):
 		else:
 			compilation_id = None
 			if args.final_release:
-				legacy_min_version_list = None
-				if args.legacy_mode:
-					legacy_min_version_list = args.legacy_min_versions
 				compilation_id = sql.NewRelease(constants.GLOBAL_PROJECT, args.final_release_version, args.part_number_list, args.previous_min_versions_list, str(args), legacy_min_version_list)
 				cur_commit = mrt_git.get_current_commit(constants.MAIN_DIR)[1]
-				cur_version = ""
 				logger.info(str("Project compiler") + ". Commit id: " + str(cur_commit))
 				print(str("Project compiler") + ". Commit id: " + str(cur_commit))
 				sql.NewModule(compilation_id, "Project compiler", cur_commit, tftp_img_included = 0)
@@ -60,7 +61,9 @@ def doit(args, paths):
 			make_writer_tftp = makewriter.Makewriter(args, project_tree, paths, constants.BUILD_TYPE_TFTP)
 			make_writer_tftp.write_makefile(compilation_id, sql)
 			
-			makeexe.do_build(project_tree, args, paths)
+			print "TO COMPILE"
+			#makeexe.do_build(project_tree, args, paths)
+			print "END TO COMPILE"
 			
 			os.system('rm -Rf ' + constants.INSTALL_DIR_TFTP)
 			makeexe.do_install(project_tree, args, paths, constants.BUILD_TYPE_TFTP)

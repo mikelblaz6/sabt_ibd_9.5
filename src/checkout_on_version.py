@@ -36,14 +36,16 @@ def prepare_local(project, version, part_number):
     source_path = search_project_path(project) + project
     if version == "final":
         branch_name = ''
-        for branch in constants.GIT_BRANCHES:
-            if mrt_git.checkout(source_path, branch) == 0:
-                print "Checking out sources for project", project, ". Branch", branch, ". Path", source_path
-                branch_name = branch
-                break
-        if branch_name == '':
-            print "ERROR checking out project", project, "on branch. ABORTING"
-            exit(1)
+        #=======================================================================
+        # for branch in constants.GIT_BRANCHES:
+        #     if mrt_git.checkout(source_path, branch) == 0:
+        #         print "Checking out sources for project", project, ". Branch", branch, ". Path", source_path
+        #         branch_name = branch
+        #         break
+        # if branch_name == '':
+        #     print "ERROR checking out project", project, "on branch. ABORTING"
+        #     exit(1)
+        #=======================================================================
     else:
         commit_id = 0
         sql = database.Database()
@@ -54,9 +56,9 @@ def prepare_local(project, version, part_number):
         sql.quit()
         print "Checking out sources for project", project, ". Commit", commit_id, ". Path", source_path
 
-        if mrt_git.checkout(source_path, commit_id):
-            print "ERROR checking out project", project, ". ABORTING"
-            exit(1)
+#         if mrt_git.checkout(source_path, commit_id):
+#             print "ERROR checking out project", project, ". ABORTING"
+#             exit(1)
 
     return source_path
 

@@ -136,7 +136,7 @@ MAINSH_FILE = "main.sh"
 DB_HOST = "192.168.77.4"
 DB_USER = "merytronic"
 DB_PWD = "merytronic2012"
-DB_NAME = "402_12_fw_versions"
+DB_NAME = "402_12_fw"
 
 VALID_PART_NUMBERS = ("402.12.00", "402.12.01", "402.12.02", "402.12.03",
 					"402.12.04", "402.12.05.01", "402.12.06", "402.12.07",)
@@ -171,4 +171,5 @@ def set_GLOBAL_PROJECT(pn_list, fw_family, min_versions):
 	GLOBAL_PROJECT = fw_family
 	GLOBAL_PROJECT_GIT_BRANCH = fw_family
 	#DB_TABLES_PREFIX = pn.replace(".","_") + "_"
-	GIT_BRANCHES = (GLOBAL_PROJECT_GIT_BRANCH, '402_12', '402', 'master')
+	#GIT_BRANCHES = (GLOBAL_PROJECT_GIT_BRANCH, '402_12', '402', 'master')
+	GIT_BRANCHES = ("test_part_numbers", "test_part_number", "develop", '402_12', '402', 'master')

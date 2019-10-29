@@ -62,16 +62,8 @@ def get_project_source(project, build_path, compiler):
 	if branch_name == '':
 		raise Exception("Branch for project " + project + " not found in GIT")
 			
-
-	(ok, branch_version) = get_last_tag(tmp_build_path)
-	if branch != 'master':
-		version = branch_version[len(branch)+1:]  #Eg: 402/vX.Y.Z, solo interesa vX.Y.Z
-	else:
-		version = branch_version  #Eg: vX.Y.Z, solo interesa vX.Y.Z
-	if version[0] == 'v':
-		version = version[1:]   #Quitamos la 'v'
-
-		
+	version = "GIT"
+	
 	if os.path.isdir(build_path + utils.get_full_path(project, version, compiler)):
 		shutil.rmtree(build_path + utils.get_full_path(project, version, compiler))
 	shutil.move(tmp_build_path, build_path + utils.get_full_path(project, version, compiler))
