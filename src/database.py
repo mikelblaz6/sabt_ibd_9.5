@@ -545,19 +545,21 @@ if __name__ == '__main__':
             else:
                 db.RemoveRelease(fw_family, fw_version)
                 db.commit()
-        elif option == '4':
-            fw_family = raw_input("  Insert fw_family:")
-            fw_version = raw_input("  Insert fw_version:")
-            part_number_list = raw_input("  Insert part_number_list:")
-            min_versions_list = raw_input("  Insert min_versions_list:")
-            legacy_min_version_list = raw_input("  Insert legacy_min_version_list:")
-            if legacy_min_version_list == "":
-                legacy_min_version_list = None
-            #db.new_release(fw_family, fw_version, part_number_list, min_versions_list, "", legacy_min_version_list)
-            db.NewRelease('UFD', '1.3.0', '402.12.00,402.12.04', 'UFD,1.3.0', "", '1.1.3,1.2.2')
-            db.NewRelease('IBD', '1.2.9', '402.12.00,402.12.07', 'IBD,1.2.9', "", '1.1.3,1.1.3')
-            db.NewRelease('UFD', '1.3.1', '402.12.00,402.12.03,402.12.04,402.12.07,402.12.08', 'UFD,1.3.0;IBD,1.2.9', "", '1.1.0,1.1.0,None,None,None')
-            db.NewRelease('UFD', '1.3.2', '402.12.00,402.12.03,402.12.04,402.12.07,402.12.08', 'UFD,1.3.0;IBD,1.2.9', "", 'None,None,None,None,None')
+        #=======================================================================
+        # elif option == '4':
+        #     fw_family = raw_input("  Insert fw_family:")
+        #     fw_version = raw_input("  Insert fw_version:")
+        #     part_number_list = raw_input("  Insert part_number_list:")
+        #     min_versions_list = raw_input("  Insert min_versions_list:")
+        #     legacy_min_version_list = raw_input("  Insert legacy_min_version_list:")
+        #     if legacy_min_version_list == "":
+        #         legacy_min_version_list = None
+        #     #db.new_release(fw_family, fw_version, part_number_list, min_versions_list, "", legacy_min_version_list)
+        #     db.NewRelease('UFD', '1.3.0', '402.12.00,402.12.04', 'UFD,1.3.0', "", '1.1.3,1.2.2')
+        #     db.NewRelease('IBD', '1.2.9', '402.12.00,402.12.07', 'IBD,1.2.9', "", '1.1.3,1.1.3')
+        #     db.NewRelease('UFD', '1.3.1', '402.12.00,402.12.03,402.12.04,402.12.07,402.12.08', 'UFD,1.3.0;IBD,1.2.9', "", '1.1.0,1.1.0,None,None,None')
+        #     db.NewRelease('UFD', '1.3.2', '402.12.00,402.12.03,402.12.04,402.12.07,402.12.08', 'UFD,1.3.0;IBD,1.2.9', "", 'None,None,None,None,None')
+        #=======================================================================
         elif option == 'q':
             break
             
