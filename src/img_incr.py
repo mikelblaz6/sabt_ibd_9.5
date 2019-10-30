@@ -184,16 +184,17 @@ def create_incr_img(args, project_tree, project_list, paths, compilation_id, sql
 		min_vers = args.legacy_min_versions.split(",")
 		
 		for index in xrange(len(pns)):
-			releases_dir = os.getenv("HOME") + "/RELEASES/" + pns[index] + "/" + args.final_release_version + "/INCR_LEGACY/"
-			os.system("rm -Rf " + releases_dir)
-			os.system("mkdir -p " + releases_dir)
-			dest_file = releases_dir + "MRT_" + pns[index] + "_" + args.final_release_version + "_" + args.fw_family + "_incr_legacy.bin"
-	
-			os.system("mkdir -p " + work_dir)
-			dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + args.final_release_version + "_incr.tar.xz"
-			
-			prepare_incr_update_files(args, project_tree, paths, project_list, work_dir, compilation_id, sql, pns[index], min_vers[index])
-			pack_fw(dest_compress_file, work_dir)
-			utils.add_digest(project_tree, dest_compress_file, dest_file, paths, args.compiler)
-					
-			os.system("rm -Rf " + work_dir)
+			if min_vers[index] != 'None':
+				releases_dir = os.getenv("HOME") + "/RELEASES/" + pns[index] + "/" + args.final_release_version + "/INCR_LEGACY/"
+				os.system("rm -Rf " + releases_dir)
+				os.system("mkdir -p " + releases_dir)
+				dest_file = releases_dir + "MRT_" + pns[index] + "_" + args.final_release_version + "_" + args.fw_family + "_incr_legacy.bin"
+		
+				os.system("mkdir -p " + work_dir)
+				dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + args.final_release_version + "_incr.tar.xz"
+				
+				prepare_incr_update_files(args, project_tree, paths, project_list, work_dir, compilation_id, sql, pns[index], min_vers[index])
+				pack_fw(dest_compress_file, work_dir)
+				utils.add_digest(project_tree, dest_compress_file, dest_file, paths, args.compiler)
+						
+				os.system("rm -Rf " + work_dir)
