@@ -61,7 +61,7 @@ def doit(args, paths):
 			make_writer_tftp = makewriter.Makewriter(args, project_tree, paths, constants.BUILD_TYPE_TFTP)
 			make_writer_tftp.write_makefile(compilation_id, sql)
 			
-			makeexe.do_build(project_tree, args, paths)
+			#makeexe.do_build(project_tree, args, paths)
 			
 			os.system('rm -Rf ' + constants.INSTALL_DIR_TFTP)
 			makeexe.do_install(project_tree, args, paths, constants.BUILD_TYPE_TFTP)
@@ -98,7 +98,7 @@ def doit(args, paths):
 							filepath = os.path.join(root, name)
 							sign_file = paths.work_path + "/md5/" + name + "_sign.bin"
 							os.system("openssl dgst -MD5 -sign " + priv_key + " -out " + sign_file + " " + filepath)
-							logger.info(name + "," + name + "_sign.bin")
+							logger.info(project + "," + name + "," + name + "_sign.bin")
 			
 			print ""
 			print "Archivo de log en:", logger.get_filename(args, paths)
