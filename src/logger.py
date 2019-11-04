@@ -9,7 +9,6 @@ def get_filename(args, paths):
 
 def init(args, paths):
     global ready
-    os.system('mkdir -p ' + paths.work_path)
     filename = get_filename(args, paths)
     logging.basicConfig(filename=filename, format='%(message)s', level=logging.DEBUG)
     logging.info("Starting app")

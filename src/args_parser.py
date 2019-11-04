@@ -1,5 +1,5 @@
 #! /usr/bin/python
-import time, sys
+import time, sys, os
 import mrt_argparse
 import defines as constants
 
@@ -42,7 +42,9 @@ def get_paths(parsed_args):
     
     prefix = "local" if parsed_args.local else "git"
     date = time.strftime("%Y%m%d_%H%M%S", time.localtime())
-    paths.work_path = constants.MAIN_DIR + 'builds/'+ prefix+ '/' + date
+    paths.work_path = constants.MAIN_DIR + 'builds/'+ prefix+ '/' + parsed_args.fw_family + '_' + parsed_args.final_release_version + '_' + date
+    
+    os.system('mkdir -p ' + paths.work_path)
     
     cc_key = constants.ARM_TEMPLATE_SUFFIX if not parsed_args.no_cross_compile else constants.X86_TEMPLATE_SUFFIX
     deb_key = constants.DEBUG_TEMPLATE_SUFFIX if parsed_args.debug else constants.RELEASE_TEMPLATE_SUFFIX
