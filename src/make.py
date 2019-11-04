@@ -101,7 +101,7 @@ def doit(args, paths):
 							logger.info(name + "," + name + "_sign.bin")
 			
 			print ""
-			print "Archivo de log en:", logger.get_filename(paths)
+			print "Archivo de log en:", logger.get_filename(args, paths)
 			print "Archivos MD5 en:", paths.work_path + "/md5/"
 			print ""
 	except:
