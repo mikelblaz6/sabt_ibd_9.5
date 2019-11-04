@@ -61,7 +61,7 @@ def doit(args, paths):
 			make_writer_tftp = makewriter.Makewriter(args, project_tree, paths, constants.BUILD_TYPE_TFTP)
 			make_writer_tftp.write_makefile(compilation_id, sql)
 			
-			#makeexe.do_build(project_tree, args, paths)
+			makeexe.do_build(project_tree, args, paths)
 			
 			os.system('rm -Rf ' + constants.INSTALL_DIR_TFTP)
 			makeexe.do_install(project_tree, args, paths, constants.BUILD_TYPE_TFTP)
