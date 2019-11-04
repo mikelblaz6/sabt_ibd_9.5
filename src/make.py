@@ -98,10 +98,10 @@ def doit(args, paths):
 							filepath = os.path.join(root, name)
 							sign_file = paths.work_path + "/md5/" + name + "_sign.bin"
 							os.system("openssl dgst -MD5 -sign " + priv_key + " -out " + sign_file + " " + filepath)
-							logger.info(name + "," + name + "_sign.bin")
+							logger.info(project + "," + name + "," + name + "_sign.bin")
 			
 			print ""
-			print "Archivo de log en:", logger.get_filename(paths)
+			print "Archivo de log en:", logger.get_filename(args, paths)
 			print "Archivos MD5 en:", paths.work_path + "/md5/"
 			print ""
 	except:
