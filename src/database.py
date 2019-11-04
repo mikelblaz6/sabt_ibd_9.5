@@ -103,54 +103,54 @@ INNER JOIN part_number p1 ON pn1.part_number_id=p1.id"
         query = "INSERT INTO `compilations` (`fw_family_id`, `fw_version`, `date`, `command_line`) VALUES (%s,%s,%s,%s)"
         data = (fw_family_id, str(fw_version), str(date), str(command_line))
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.lastrowid    
         
     def insert_into_part_number_compatibility(self, comp_id, part_number_id):
         query = "INSERT INTO `part_number_compatibility` (`comp_id`, `part_number_id`) VALUES (%s,%s)"
         data = (comp_id, part_number_id)
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.lastrowid
         
     def insert_into_version_compatibility(self, pn_comp_id, min_compatible_pn_comp_id):
         query = "INSERT INTO `version_compatibility` (`pn_comp_id`, `min_compatible_pn_comp_id`) VALUES (%s,%s)"
         data = (pn_comp_id, min_compatible_pn_comp_id)
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.lastrowid
         
     def insert_into_modules(self, comp_id, name, commit, tftp_img_included, full_upd_included, incr_upd_included):
         query = "INSERT INTO `modules` (`comp_id`, `name`, `commit`, `tftp_img_included`, `full_upd_included`, `incr_upd_included`) VALUES (%s,%s,%s,%s,%s,%s)"
         data = (comp_id, str(name), str(commit), tftp_img_included, full_upd_included, incr_upd_included)
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.lastrowid
     
     def update_full_incl_into_modules(self, comp_id, name, full_upd_included):
         query = "UPDATE `modules` SET `full_upd_included`=%s WHERE `comp_id`=%s AND `name`=%s"
         data = (full_upd_included, comp_id, str(name))
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         
     def update_incr_incl_into_modules(self, comp_id, name, incr_upd_included):
         query = "UPDATE `modules` SET `incr_upd_included`=%s WHERE `comp_id`=%s AND `name`=%s"
         data = (incr_upd_included, comp_id, str(name))
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         
     def get_fw_family_id(self, fw_family):
         query = "SELECT `id` FROM `fw_family` WHERE `name`=%s"
         data = (str(fw_family),)
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchone()
         
     def get_part_number_id(self, part_number):
         query = "SELECT `id` FROM `part_number` WHERE `name`=%s"
         data = (str(part_number),)
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchone()
         
     def get_pn_comps_from_pn_fam_fw(self, part_number, fw_family, fw_version):
@@ -159,28 +159,28 @@ AND pn1.part_number_id=(SELECT `id` FROM `part_number` WHERE `name`=%s) \
 AND c1.fw_family_id=(SELECT `id` FROM `fw_family` WHERE `name`=%s)"])
         data = (str(fw_version), str(part_number), str(fw_family))
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchall()
         
     def get_pn_comps_from_fam_fw(self, fw_family, fw_version):
         query = "".join([self.get_comp_pn_query, " WHERE c1.fw_version=%s AND c1.fw_family_id=(SELECT `id` FROM `fw_family` WHERE `name`=%s)"])
         data = (str(fw_version), str(fw_family))
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchall()
         
     def get_modules_from_comp_id(self, comp_id):
-        query = "SELECT * FROM `modules` WHERE `comp_id`=%s"
+        query = "SELECT * FROM `modules` WHERE `comp_id`=%s ORDER BY `name`"
         data = (comp_id,)
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchall()
         
     def get_full_info_from_pn(self, part_number):
         query = "".join([self.get_full_info_query, " WHERE pn1.part_number_id=(SELECT `id` FROM `part_number` WHERE `name`=%s)"])
         data = (str(part_number),)
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchall()
         
     def get_full_info_from_pn_fam_fw(self, part_number, fw_family, fw_version):
@@ -190,21 +190,21 @@ AND c1.fw_version=%s \
 AND c1.fw_family_id=(SELECT `id` FROM `fw_family` WHERE `name`=%s)"])
         data = (str(part_number), str(fw_version), str(fw_family))
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchall()
         
     def get_full_info_from_fam_fw(self, fw_family, fw_version):
         query = "".join([self.get_full_info_query, " WHERE c1.fw_version=%s AND c1.fw_family_id=(SELECT `id` FROM `fw_family` WHERE `name`=%s)"])
         data = (str(fw_version), str(fw_family))
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchall()
     
     def get_module_from_version_family(self, name, fw_family, version):
         query = "SELECT * FROM `modules` WHERE `name`=%s AND `comp_id`=(SELECT `id` FROM `compilations` WHERE `fw_version`=%s AND `fw_family_id`=(SELECT `id` FROM `fw_family` WHERE `name`=%s))"
         data = (str(name), str(version), str(fw_family))
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchall()
     
     def get_module_from_version_part_number(self, name, fw_family, version, part_number):
@@ -214,7 +214,7 @@ INNER JOIN compilations c1 ON pn1.comp_id=c1.id WHERE pn1.part_number_id=(SELECT
 AND c1.fw_version=%s AND c1.fw_family_id=(SELECT `id` FROM `fw_family` WHERE `name`=%s))"
         data = (str(name), str(part_number), str(version), str(fw_family))
         self.cur.execute(query, data)
-        print self.cur._last_executed
+        #print self.cur._last_executed
         return self.cur.fetchall()
 
     
@@ -276,16 +276,16 @@ AND c1.fw_version=%s AND c1.fw_family_id=(SELECT `id` FROM `fw_family` WHERE `na
         ret = None
         rows = self.get_module_from_version_family(name, fw_family, version)
         if len(rows) > 0:
-            ret = rows[0][0]  
+            ret = rows[0][3]  
         return ret
         
     def GetCommitByVersionPartNumber(self, name, part_number, version):
         ret = None
         rows = self.get_module_from_version_part_number(name, "None", version, part_number)
         if len(rows) > 0:
-            ret = rows[0][0]  
+            ret = rows[0][3]  
         return ret
-                    
+      
         
     def GetModulesInfo(self, part_number, fw_version, fw_family):
         if self.get_part_number_id(part_number) == None:
@@ -375,7 +375,7 @@ AND c1.fw_version=%s AND c1.fw_family_id=(SELECT `id` FROM `fw_family` WHERE `na
             return 1
             
         if self.get_fw_family_id(fw_family) == None:
-            print "Error Fw family not allowed"
+            print "Error Fw family not registered"
             return 1
         
         entries = self.get_pn_comps_from_fam_fw(fw_family, fw_version)
@@ -545,6 +545,9 @@ if __name__ == '__main__':
             else:
                 db.RemoveRelease(fw_family, fw_version)
                 db.commit()
+        elif option == '5':
+            print db.GetCommitByVersionPartNumber("rootfs", "402.12.00", "1.1.3")
+
         #=======================================================================
         # elif option == '4':
         #     fw_family = raw_input("  Insert fw_family:")

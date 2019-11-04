@@ -6,6 +6,7 @@ import utils
 import defines as constants
 import database
 import mrt_git
+import include_projects
 
 from utils import print_error
 from include_projects import *
@@ -40,19 +41,28 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 	
 	#print("Desea incluir el bootloader en la actualizacion incremental? (y/n)")
 	#b = raw_input()
-	if UPDATE_BOOTLOADER:
-		project_list.append(constants.UBOOT_PROJECT)
-		for temp_file in constants.UBOOT_FILES:
-			if os.system("cp -af " + paths.deploy_path + "/" + uboot_project_name + "/" + temp_file + " " + work_tmp_dir + "/update_files/files/"):
-				print_error("Error copying u-boot file", paths.deploy_path + "/" + uboot_project_name + "/" + temp_file)
-				raise Exception()
-		if args.final_release:
-			for version in project_tree[constants.UBOOT_PROJECT]:
-				break
-			project_folder = utils.get_full_path(constants.UBOOT_PROJECT, version, args.compiler)
-			project_build_path = paths.build_path + project_folder
-			sql.SetIncrUpdIncluded(compilation_id, constants.UBOOT_PROJECT, incr_upd_included = 1)
-
+	#===========================================================================
+	# for proj, inc in include_projects.INCLUDE_PROJECTS_INCR.iteritems():
+	# 	if proj == constants.UBOOT_PROJECT and inc == 'YES':
+	# 		project_list.append(constants.UBOOT_PROJECT)
+	# 		for temp_file in constants.UBOOT_FILES:
+	# 			if os.system("cp -af " + paths.deploy_path + "/" + uboot_project_name + "/" + temp_file + " " + work_tmp_dir + "/update_files/files/"):
+	# 				print_error("Error copying u-boot file", paths.deploy_path + "/" + uboot_project_name + "/" + temp_file)
+	# 				raise Exception()
+	# 		if args.final_release:
+	# 			for version in project_tree[constants.UBOOT_PROJECT]:
+	# 				break
+	# 			project_folder = utils.get_full_path(constants.UBOOT_PROJECT, version, args.compiler)
+	# 			project_build_path = paths.build_path + project_folder
+	# 			sql.SetIncrUpdIncluded(compilation_id, constants.UBOOT_PROJECT, incr_upd_included = 1)
+	#===========================================================================
+	for filename in constants.UBOOT_FILES:
+		for root, dirs, files in os.walk(constants.INSTALL_DIR_INCR):
+			if filename in files:
+				filepath = os.path.join(root, filename)
+				if os.system("cp -af " + filepath + " " + work_tmp_dir + "/update_files/files/"):
+					print_error("Error copying u-boot file", filepath)
+	 				raise Exception()
 	
 	''' Rellenamos los scripts pre_actions.sh y post_actions.sh, y 
 	copiamos los archivos necesarios a work_tmp_dir/update_files/files 
@@ -154,16 +164,18 @@ def pack_fw(dest_file, work_tmp_dir):
 	
 def create_incr_img(args, project_tree, project_list, paths, compilation_id, sql):
 	fw_version = args.final_release_version
+	if args.rc != None:
+		fw_version = fw_version + "_rc" + str(args.rc)
 	
 	#Generacion de actualizacion incr para la familia de fw
-	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + args.final_release_version + "/INCR/"
+	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + fw_version + "/INCR/"
 	os.system("mkdir -p " + releases_dir)
-	dest_file = releases_dir + "MRT_" + args.fw_family + "_" + args.final_release_version + "_incr.bin"
+	dest_file = releases_dir + "MRT_" + args.fw_family + "_" + fw_version + "_incr.bin"
 	
 	work_dir = paths.work_path + "/incr_temp/"
 	os.system("rm -Rf " + work_dir)
 	os.system("mkdir -p " + work_dir)
-	dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + args.final_release_version + "_incr.tar.xz"
+	dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + fw_version + "_incr.tar.xz"
 	
 	prepare_incr_update_files(args, project_tree, paths, project_list, work_dir, compilation_id, sql)
 	pack_fw(dest_compress_file, work_dir)
@@ -185,13 +197,13 @@ def create_incr_img(args, project_tree, project_list, paths, compilation_id, sql
 		
 		for index in xrange(len(pns)):
 			if min_vers[index] != 'None':
-				releases_dir = os.getenv("HOME") + "/RELEASES/" + pns[index] + "/" + args.final_release_version + "/INCR_LEGACY/"
+				releases_dir = os.getenv("HOME") + "/RELEASES/" + pns[index] + "/" + fw_version + "/INCR_LEGACY/"
 				os.system("rm -Rf " + releases_dir)
 				os.system("mkdir -p " + releases_dir)
-				dest_file = releases_dir + "MRT_" + pns[index] + "_" + args.final_release_version + "_" + args.fw_family + "_incr_legacy.bin"
+				dest_file = releases_dir + "MRT_" + pns[index] + "_" + fw_version + "_" + args.fw_family + "_incr_legacy.bin"
 		
 				os.system("mkdir -p " + work_dir)
-				dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + args.final_release_version + "_incr.tar.xz"
+				dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + fw_version + "_incr.tar.xz"
 				
 				prepare_incr_update_files(args, project_tree, paths, project_list, work_dir, compilation_id, sql, pns[index], min_vers[index])
 				pack_fw(dest_compress_file, work_dir)

@@ -3,12 +3,15 @@ import logging, os
 
 ready = False
 
+def get_filename(paths):
+    return paths.work_path + '/log.txt'
+
 
 def init(args, paths):
     global ready
     os.system('mkdir -p ' + paths.work_path)
-    filename = paths.work_path + '/log.txt'
-    logging.basicConfig(filename=filename, format='%(asctime)s %(levelname)s:%(message)s', level=logging.DEBUG)
+    filename = get_filename(paths)
+    logging.basicConfig(filename=filename, format='%(message)s', level=logging.DEBUG)
     logging.info("Starting app")
     logging.info("Invoked with arguments: " + str(args))
     ready = True

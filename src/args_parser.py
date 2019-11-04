@@ -8,7 +8,6 @@ from utils import print_error
 def get_shell_args(shell_args):
     parser = mrt_argparse.ArgumentParser(description='Build MRT developments and dependencies.')
     parser.add_argument('-P', '--project', help='project to build', default = "")
-    parser.add_argument('-v', '--project-version', help='project version to build (if not set, last version will be built). Only valid when using git', default = "")
     group = parser.add_mutually_exclusive_group()
     group.add_argument('-g', '--git', action='store_true', help='build from git sources')
     group.add_argument('-l', '--local', action='store_true', help='build from local sources (disables git)')
@@ -31,6 +30,7 @@ def get_shell_args(shell_args):
     parser.add_argument('--part-number-list', help='Part number List', default = "NULL") 
     parser.add_argument('--legacy-mode', action='store_true', help='Produce fw packages for each part-number in part-number-list parameter')
     parser.add_argument('--legacy-min-versions', help='Min fw versions for each part-number in part-number-list', default="")
+    parser.add_argument('--rc', help='Set number for Release candidate versions', default=None)
     return parser.parse_args(shell_args)
 
 

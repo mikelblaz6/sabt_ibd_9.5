@@ -70,13 +70,15 @@ class ProjectWriter:
 			print_error('Template not found for project ' + str(project) + " for modes x86=" + str(self.args.no_cross_compile) + ", debug=" + str(self.args.debug))
 			raise Exception()
 			
-			
+		cur_commit = mrt_git.get_current_commit(self.project_build_path)[1]
 		if self.args.git:
-			cur_commit = mrt_git.get_current_commit(self.project_build_path)[1]
 			logger.info(str(self.project) + ". Commit id: " + str(cur_commit))
 			print(str(self.project) + ". Commit id: " + str(cur_commit))
 			if self.args.final_release and sql != None:
 				sql.NewModule(compilation_id, self.project, cur_commit, tftp_img_included = 1)
+		else:
+			logger.info(str(self.project) + ". Local commit id: " + str(cur_commit))
+			print(str(self.project) + ". Local Commit id: " + str(cur_commit))
 
 
 	def get_common_repl_tags(self):
@@ -252,6 +254,8 @@ class Makewriter:
 	def write_makefile(self, compilation_id = None, sql = None):
 		main_makefile_text = self.write_main_makefile_header()
 
+		logger.info("")
+		logger.info("--- Module, Current_commit ---")
 		for project, project_data in self.project_tree.iteritems():
 			for version in project_data:
 				pr_writer = ProjectWriter(self.args, project, version, self.project_tree, self.paths, compilation_id, sql)

@@ -13,6 +13,8 @@ else ifeq ($(FW_FAMILY),UFD)
 export CPP_FW_FAMILY=__UFD__
 else ifeq ($(FW_FAMILY),MLY)
 export CPP_FW_FAMILY=__MLY__
+else ifeq ($(FW_FAMILY),MRT)
+export CPP_FW_FAMILY=__MRT__
 endif
 
 ${BUILD_DIR}:

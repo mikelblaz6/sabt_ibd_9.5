@@ -6,7 +6,11 @@ import defines as constants
 import makeexe
 
 def create_tftp_img(project_tree, args, paths):
-	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + args.final_release_version + "/TFTP/"
+	fw_version = args.final_release_version
+	if args.rc != None:
+		fw_version = fw_version + "_rc" + str(args.rc)
+		
+	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + fw_version + "/TFTP/"
 	os.system("mkdir -p " + releases_dir)
 	dest_file = releases_dir + constants.PRODUCT + ".bin"
 	
@@ -15,7 +19,7 @@ def create_tftp_img(project_tree, args, paths):
 	makeexe.create_bin_image_file(dest_file, paths.work_path)
 	
 	for pn in args.part_number_list.split(","):
-		releases_dir = os.getenv("HOME") + "/RELEASES/" + pn + "/" + args.final_release_version + "/TFTP/"
+		releases_dir = os.getenv("HOME") + "/RELEASES/" + pn + "/" + fw_version + "/TFTP/"
 		os.system("rm -Rf " + releases_dir)
 		os.system("mkdir -p " + releases_dir)
 		pn_specific_dest_file = releases_dir  + pn + ".bin"

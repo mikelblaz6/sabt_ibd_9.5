@@ -10,7 +10,6 @@ import mrt_git
 from utils import print_error
 from include_projects import *
 
-uboot_included = False
 
 #TODO: FALTARIA INCLUIR ARCHIVO COMMANDS.TXT PARA EL BOOTLOADER?????
 
@@ -53,16 +52,10 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 	for project in project_tree:
 		include_in_database = True
 		if project == constants.UBOOT_PROJECT:
-			#print("Desea incluir el bootloader en la actualizacion completa (full)? (y/n)")
-			#b = raw_input()
-			if True:
-				uboot_included = True
-				for temp_file in constants.UBOOT_FILES:
-					if os.system("cp -af " + paths.deploy_path + "/" + uboot_project_name + "/" + temp_file + " " + work_tmp_dir):
-						print_error("Error copying u-boot file", paths.deploy_path + "/" + uboot_project_name + "/" + temp_file)
-						raise Exception()
-			else:
-				include_in_database = False
+			for temp_file in constants.UBOOT_FILES:
+				if os.system("cp -af " + paths.deploy_path + "/" + uboot_project_name + "/" + temp_file + " " + work_tmp_dir):
+					print_error("Error copying u-boot file", paths.deploy_path + "/" + uboot_project_name + "/" + temp_file)
+					raise Exception()
 				
 		if args.final_release and include_in_database:
 			for tree_version in project_tree[project]:
@@ -74,7 +67,6 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 ''' Mueve el contenido de work_tmp_dir al directorio de destino para comprimir.
 Comprime en tar.xz '''
 def pack_fw(dest_file, work_tmp_dir):
-	global uboot_included
 	tftp_img_file = constants.PRODUCT + ".bin"
 	compress_dir = work_tmp_dir + "/compress/"
 	if os.system("mkdir -p " + compress_dir):
@@ -83,20 +75,16 @@ def pack_fw(dest_file, work_tmp_dir):
 	if os.system("mv " + work_tmp_dir + "/main.sh " + compress_dir):
 		print_error("Error moving main.sh file to package")
 		raise Exception()
-	if uboot_included:
-		if os.system("mv " + work_tmp_dir + "/MLO " + compress_dir):
-			print_error("Error packing fw MLO")
-			raise Exception()
-		if os.system("mv " + work_tmp_dir + "/u-boot.img " + compress_dir):
-			print_error("Error packing fw u-boot")
-			raise Exception()
+	if os.system("mv " + work_tmp_dir + "/MLO " + compress_dir):
+		print_error("Error packing fw MLO")
+		raise Exception()
+	if os.system("mv " + work_tmp_dir + "/u-boot.img " + compress_dir):
+		print_error("Error packing fw u-boot")
+		raise Exception()
 	if os.system("mv " + work_tmp_dir + "/" + tftp_img_file + " " + compress_dir):
 		print_error("Error packing fw cannot move image")
 		raise Exception()
-	if uboot_included:
-		files_to_compress = " " + constants.MAINSH_FILE + " " + constants.UBOOT_FILES[0] + " " +  constants.UBOOT_FILES[1] + " " + tftp_img_file
-	else:
-		files_to_compress = " " + constants.MAINSH_FILE + " " + tftp_img_file
+	files_to_compress = " " + constants.MAINSH_FILE + " " + constants.UBOOT_FILES[0] + " " +  constants.UBOOT_FILES[1] + " " + tftp_img_file
 	if os.system("tar -Jcf " + dest_file + " -C " + compress_dir + files_to_compress):
 		print_error("Error full image compressing")
 		raise Exception()
@@ -107,6 +95,8 @@ def pack_fw(dest_file, work_tmp_dir):
 
 def create_full_img(args, project_tree, paths, compilation_id, sql):
 	fw_version = args.final_release_version
+	if args.rc != None:
+		fw_version = fw_version + "_rc" + str(args.rc)
 	
 	#Generacion de actualizacion full para la familia de fw
 	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + fw_version + "/FULL/"
@@ -135,29 +125,7 @@ def create_full_img(args, project_tree, paths, compilation_id, sql):
 		os.system("cp " + dest_file + " " + pn_specific_dest_file)
 			
 	os.system("rm -Rf " + work_dir)
-	
-	#Modo de compatibilidad. Afecta al main.sh de la actualizacion
-	'''if args.legacy_mode:
-		pns = args.part_number_list.split(",")
-		
-		for index in xrange(len(pns)):
-			releases_dir = os.getenv("HOME") + "/RELEASES/" + pns[index] + "/" + fw_version + "/FULL_LEGACY/"
-			os.system("rm -Rf " + releases_dir)
-			os.system("mkdir -p " + releases_dir)	
-			dest_file = releases_dir + "MRT_" + pns[index] + "_" + args.final_release_version + "_" + args.fw_family + "_full_legacy.bin"
-			
-			os.system("mkdir -p " + work_dir)
-			dest_tftp_img_file = work_dir + "/" + constants.PRODUCT + ".bin"
-			dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + fw_version + "_full.tar.xz"
-			
-			# Realiza los cambios necesarios sobre el sistema ya compilado e instalado en SYSTEM
-			prepare_full_update_files(args, project_tree, paths, work_dir, compilation_id, sql, True)
-			makeexe.create_raw_image_file(project_tree, paths.work_path, constants.BUILD_TYPE_FULL, args.compiler)
-			makeexe.create_bin_image_file(dest_tftp_img_file, work_dir)
-			pack_fw(dest_compress_file, work_dir)
-			utils.add_digest(project_tree, dest_compress_file, dest_file, paths, args.compiler)
-					
-			os.system("rm -Rf " + work_dir)'''
+
 
 		
 		

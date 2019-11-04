@@ -69,6 +69,8 @@ def add_digest(project_tree, compress_file, dest_file, paths, compiler):
 	f_sign.close()
 	f_dest_img.close()
 	
+	os.system("rm " + sign_file)
+	
 	
 def get_fw_tar(fw_file, dest_folder):
 	tar_file = "compress.tar.xz"
