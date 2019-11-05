@@ -21,7 +21,9 @@ def set_include_projects(version):
 				'linux-kernel': 'YES',
 				'rootfs': 'YES', 
 			
+				'curl' : 'YES',
 				'sqlitecpp' : 'YES',
+				'tcpdump' : 'YES',
 				'tz' : 'YES',
 				
 				'u-boot' : 'YES',
