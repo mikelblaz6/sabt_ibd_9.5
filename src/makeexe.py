@@ -67,7 +67,7 @@ def do_install(project_tree, args, paths, build_type = None):
 				install_target_suffix = '-tftp'
 			do_make(paths.work_path + '/' + makefile_name, project_name + '_install' + install_target_suffix)
 				
-			ret = os.system('sqlite3 ' + install_dir_name + '/home/sabt/data/db/system_db.db3 "update fw_info set fw_version=\'' + args.final_release_version + '\';"')
+			ret = os.system('echo "update fw_info set fw_version=\'' + args.final_release_version + '\';" > ' + install_dir_name + '/home/sabt/data/db/dumps/fw_version.dump')
 			if ret != 0:
 				print_error("Error setting db fw info")
 				raise Exception()

@@ -94,20 +94,18 @@ def pack_fw(dest_file, work_tmp_dir):
 
 
 def create_full_img(args, project_tree, paths, compilation_id, sql):
-	fw_version = args.final_release_version
-	if args.rc != None:
-		fw_version = fw_version + "_rc" + str(args.rc)
+	fw_version = utils.get_rc_fw_version(args)
 	
 	#Generacion de actualizacion full para la familia de fw
 	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + fw_version + "/FULL/"
 	os.system("mkdir -p " + releases_dir)	
-	dest_file = releases_dir + "MRT_" + args.fw_family + "_" + fw_version + "_full.bin"
+	dest_file = releases_dir + constants.PRODUCT + "_" + args.fw_family + "_" + fw_version + "_full.bin"
 	
 	work_dir = paths.work_path + "/full_temp/"
 	os.system("rm -Rf " + work_dir)
 	os.system("mkdir -p " + work_dir)
 	dest_tftp_img_file = work_dir + "/" + constants.PRODUCT + ".bin"
-	dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + fw_version + "_full.tar.xz"
+	dest_compress_file = work_dir + constants.PRODUCT + "_" + args.fw_family + "_" + fw_version + "_full.tar.xz"
 	
 	# Realiza los cambios necesarios sobre el sistema ya compilado e instalado en SYSTEM
 	prepare_full_update_files(args, project_tree, paths, work_dir, compilation_id, sql, False)

@@ -68,6 +68,8 @@ BUILD_TYPE_INCR_MAINSH_TEMPLATE = "/mrt/templates/incr_update/main.sh"
 
 UBOOT_FILES = ["MLO", "u-boot.img"]
 
+MRT_SERVER_FOLDER = "/media/merytronic/I+D\ PRODUCTOS/402\ -\ SABT/402.12\ \(ADVANCED\ FEEDER\ CONCENTRATOR\)/FIRMWARE/"
+
 
 #DO NOT EDIT:
 # Templates search order
@@ -155,13 +157,7 @@ def set_GLOBAL_PROJECT(pn_list, fw_family, min_versions):
 	if fw_family != "NULL" and fw_family not in VALID_FW_FAMILY:
 		print "Error fw-family", fw_family, "not allowed"
 		exit(1)
-	
-	if pn_list != "NULL":
-		for pn in pn_list.split(","):
-			if pn not in VALID_PART_NUMBERS:
-				print "Error Part-number", pn, "not allowed"
-				exit(1)
-		
+			
 	if min_versions != "local":
 		for min_vers in min_versions.split(";"):
 			if min_vers.split(",")[0] not in VALID_FW_FAMILY:

@@ -132,7 +132,7 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 	''' Anadimos a post_actions la modificacion de la version de fw en la base de datos '''
 	post_action_text += '/bin/sqlite3 /sabt/data/db/system_db.db3 "update fw_info set fw_ts = 0;"\n'
 	post_action_text += '/bin/sqlite3 /sabt/data/db/system_db.db3 "update fw_info set fw_version=\'' + args.final_release_version + '\';" || exit 1\n'
-	post_action_text += '/bin/sqlite3 /sabt/data/db/system_db.db3 "update fw_info set fw_family=\'' + str(constants.GLOBAL_PROJECT) + '\';" || exit 1\n'
+	post_action_text += '/bin/sqlite3 /sabt/data/db/system_db.db3 "update fw_info set fw_family=\'' + str(sql.get_fw_family_code(constants.GLOBAL_PROJECT)) + '\';" || exit 1\n'
 	post_action_text += '/bin/sqlite3 /sabt/data/db/regs_db.db3 "update rtu_status set web_status=\'UPDATED\';" || exit 1\n'
 	post_action_text += "exit 0;"
 	f = open(work_tmp_dir + "/update_files/post_actions.sh", "w")
@@ -163,19 +163,17 @@ def pack_fw(dest_file, work_tmp_dir):
 	
 	
 def create_incr_img(args, project_tree, project_list, paths, compilation_id, sql):
-	fw_version = args.final_release_version
-	if args.rc != None:
-		fw_version = fw_version + "_rc" + str(args.rc)
+	fw_version = utils.get_rc_fw_version(args)
 	
 	#Generacion de actualizacion incr para la familia de fw
 	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + fw_version + "/INCR/"
 	os.system("mkdir -p " + releases_dir)
-	dest_file = releases_dir + "MRT_" + args.fw_family + "_" + fw_version + "_incr.bin"
+	dest_file = releases_dir + constants.PRODUCT + "_" + args.fw_family + "_" + fw_version + "_incr.bin"
 	
 	work_dir = paths.work_path + "/incr_temp/"
 	os.system("rm -Rf " + work_dir)
 	os.system("mkdir -p " + work_dir)
-	dest_compress_file = work_dir + "/MRT_" + args.fw_family + "_" + fw_version + "_incr.tar.xz"
+	dest_compress_file = work_dir + constants.PRODUCT + "_" + args.fw_family + "_" + fw_version + "_incr.tar.xz"
 	
 	prepare_incr_update_files(args, project_tree, paths, project_list, work_dir, compilation_id, sql)
 	pack_fw(dest_compress_file, work_dir)

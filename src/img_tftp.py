@@ -6,9 +6,7 @@ import defines as constants
 import makeexe
 
 def create_tftp_img(project_tree, args, paths):
-	fw_version = args.final_release_version
-	if args.rc != None:
-		fw_version = fw_version + "_rc" + str(args.rc)
+	fw_version = utils.get_rc_fw_version(args)
 		
 	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + fw_version + "/TFTP/"
 	os.system("mkdir -p " + releases_dir)

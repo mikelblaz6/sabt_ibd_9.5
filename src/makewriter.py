@@ -10,6 +10,7 @@ import utils
 import mrt_git
 import database
 import logger
+import cpp_defines
 
 from utils import print_error
 
@@ -236,13 +237,21 @@ class Makewriter:
 			install_dir = constants.INSTALL_DIR_GENERIC		
 
 		
+		custom_cpp_flags_dir = cpp_defines.get_cpp_defines(self.args.fw_family)
+		custom_cpp_flags_str = ""
+		for key, flag in custom_cpp_flags_dir.iteritems():
+			if flag[1] == True:
+				custom_cpp_flags_str = custom_cpp_flags_str + " -D" + flag[0]
+		
+		
 		repl_tags  = [('$GCC_DIR$', constants.GCC_DIR_x86 if self.args.no_cross_compile else constants.GCC_DIR),
 						('$BUILD_DIR$', self.paths.build_path),
 						('$DEPLOY_DIR$', self.paths.deploy_path),
 						('$INSTALL_DIR$', install_dir),
 						('$ROOTFS_DIR$', constants.ROOTFS_DIR),
 						('$PART_NUMBER_LIST$', self.args.part_number_list),
-						('$FW_FAMILY$', self.args.fw_family),]
+						('$FW_FAMILY$', self.args.fw_family),
+						('$CUSTOM_CPP_FLAGS$', custom_cpp_flags_str),]
 							
 		mk_temp = open(constants.MAIN_DIR + constants.MAKEFILE_HEADER_TEMPLATE_FILE)
 		temp_text = mk_temp.read()

@@ -104,6 +104,10 @@ def doit(args, paths):
 			print "Archivo de log en:", logger.get_filename(args, paths)
 			print "Archivos MD5 en:", paths.work_path + "/md5/"
 			print ""
+			
+			fw_version = utils.get_rc_fw_version(args)
+			releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + fw_version + "/"
+			os.system("cp " + logger.get_filename(args, paths) + " " + releases_dir)
 	except:
 		if args.final_release:
 			sql.quit()

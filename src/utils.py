@@ -12,6 +12,12 @@ def get_full_path(project, version, compiler):
 
 	return str(project) + version_str
 
+def get_rc_fw_version(args):
+	fw_version = args.final_release_version
+	if args.rc != None:
+		fw_version = fw_version + "_rc" + str(args.rc)
+	return fw_version
+
 
 def replace_strings(text, tags):
 	for tag in tags:

@@ -28,10 +28,12 @@ def set_include_projects(version):
 				
 				'u-boot' : 'YES',
 			}
+		elif '9.9.' in version:
+			return 0
 		elif version != "local":
 			return 1
 	elif constants.GLOBAL_PROJECT == "IBD":
-		if version == '1.2.5':
+		if version == '1.2.5' or version == '1.2.6':
 			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
 				'402_00_improxy_cpp': 'YES',
@@ -76,6 +78,8 @@ def set_include_projects(version):
 				
 				'u-boot' : 'YES',
 			}
+		elif '9.9.' in version:
+			return 0
 		elif version != "local":
 			return 1
 	elif constants.GLOBAL_PROJECT == "MRT":
@@ -124,6 +128,8 @@ def set_include_projects(version):
 				
 				'u-boot' : 'YES',
 			}
+		elif '9.9.' in version:
+			return 0
 		elif version != "local":
 			return 1
 	
