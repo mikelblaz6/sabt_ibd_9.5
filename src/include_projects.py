@@ -5,7 +5,7 @@ INCLUDE_PROJECTS_INCR = {}
 def set_include_projects(version):
 	global INCLUDE_PROJECTS_INCR
 	if constants.GLOBAL_PROJECT == "UFD":
-		if version == '1.2.5':
+		if version == '1.2.6':
 			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
 				'402_00_improxy_cpp': 'YES',
