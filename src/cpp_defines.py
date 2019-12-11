@@ -44,6 +44,7 @@ FW_IBD_DEFINES =  {
                     '__USER_TIME_SET__':            ['__USER_TIME_SET__', False],         #El usuario puede poner en hora el equipo
                     '__WEB_MET_EVENTS__':           ['__WEB_MET_EVENTS__', False],         #Mostar en la web las pestanas de eventos de tarjetas
                     '__SHOW_PQ_VERSION__':          ['__SHOW_PQ_VERSION__', False],         #Mostar en la web versiobn de fw de PQ
+                    '__SKIP_ALARM_REG_EVENTS__':    ['__SKIP_ALARM_REG_EVENTS__', False],   #NO utiliza el registro de alarmas de las tarjetas para decidir que subgupos de eventos pedir
                     }
 
 FW_UFD_DEFINES =  {
@@ -91,6 +92,7 @@ FW_UFD_DEFINES =  {
                     '__USER_TIME_SET__':            ['__USER_TIME_SET__', True],         #El usuario puede poner en hora el equipo
                     '__WEB_MET_EVENTS__':           ['__WEB_MET_EVENTS__', True],         #Mostar en la web las pestanas de eventos de tarjetas
                     '__SHOW_PQ_VERSION__':          ['__SHOW_PQ_VERSION__', True],         #Mostar en la web versiobn de fw de PQ
+                    '__SKIP_ALARM_REG_EVENTS__':    ['__SKIP_ALARM_REG_EVENTS__', True], 
                    }
 
 DEPENDENCIES =  {
