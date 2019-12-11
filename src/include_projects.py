@@ -22,6 +22,8 @@ def set_include_projects(version):
 				'rootfs': 'YES', 
 			
 				'curl' : 'YES',
+				'sqldiff' : 'YES',
+				'sqlite' : 'YES',
 				'sqlitecpp' : 'YES',
 				'tcpdump' : 'YES',
 				'tz' : 'YES',
