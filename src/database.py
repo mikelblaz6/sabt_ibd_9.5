@@ -654,6 +654,7 @@ if __name__ == '__main__':
 			part_number = raw_input("  Insert part-number:")
 			fw_version = raw_input("  Insert fw-version:")
 			fw_family = raw_input("  Insert fw-family:")
+			db.GetModulesInfo(part_number, fw_version, fw_family)
 		elif option == '2':
 			part_number = raw_input("  Insert part-number:")
 			db.GetInfoForPartNumber(part_number)
