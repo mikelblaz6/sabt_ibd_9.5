@@ -56,9 +56,9 @@ def prepare_local(project, version, part_number):
         sql.quit()
         print "Checking out sources for project", project, ". Commit", commit_id, ". Path", source_path
 
-#         if mrt_git.checkout(source_path, commit_id):
-#             print "ERROR checking out project", project, ". ABORTING"
-#             exit(1)
+        if mrt_git.checkout(source_path, commit_id):
+            print "ERROR checking out project", project, ". ABORTING"
+            exit(1)
 
     return source_path
 
