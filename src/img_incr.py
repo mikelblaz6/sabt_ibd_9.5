@@ -110,6 +110,7 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 		if text.strip() != '':
 			post_action_text += text + "\n"
 		
+		#archivo en mrt/incr_update/files
 		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + constants.PROJECT_UPDATE_EXTRA_FILES_FILE
 		files = []
 		try:
@@ -120,8 +121,25 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 		for cp_file in files:
 			cp_file = cp_file.strip()
 			if len(cp_file) != 0:
-				if os.system("cp -af " + paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + constants.PROJECT_UPDATE_EXTRA_FILES_PATH + cp_file + " " + work_tmp_dir + "/update_files/files/"):
-					print_error("Error copying " + paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + constants.PROJECT_UPDATE_EXTRA_FILES_PATH + cp_file)
+				src_file = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + constants.PROJECT_UPDATE_EXTRA_FILES_PATH + cp_file
+				if os.system("cp -af " + src_file + " " + work_tmp_dir + "/update_files/files/"):
+					print_error("Error copying " + src_file)
+					raise Exception()
+				
+		#archivo en mrt/UFD/incr_update/files
+		path = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + args.fw_family + "/" + constants.PROJECT_UPDATE_EXTRA_FILES_FILE
+		files = []
+		try:
+			with open(path, "r") as f:
+				files = f.readlines()
+		except:
+			pass
+		for cp_file in files:
+			cp_file = cp_file.strip()
+			if len(cp_file) != 0:
+				src_file = paths.build_path + "/" + project + constants.PROJECT_UPDATE_BASE + args.fw_family + "/" + constants.PROJECT_UPDATE_EXTRA_FILES_PATH + cp_file
+				if os.system("cp -af " + src_file + " " + work_tmp_dir + "/update_files/files/"):
+					print_error("Error copying " + src_file)
 					raise Exception()
 				
 	pre_actions_text += "exit 0;"	
