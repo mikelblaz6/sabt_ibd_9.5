@@ -71,6 +71,7 @@ def set_include_projects(version):
 				'pcre' : 'YES',
 				'pugixml' : 'YES',
 				'rng-tools' : 'YES',
+				'sqldiff' : 'YES',
 				'sqlite' : 'YES',
 				'sqlitecpp' : 'YES',
 				'tz' : 'YES',
