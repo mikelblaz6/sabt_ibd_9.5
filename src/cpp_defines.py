@@ -45,6 +45,7 @@ FW_IBD_DEFINES =  {
                     '__WEB_MET_EVENTS__':           ['__WEB_MET_EVENTS__', False],         #Mostar en la web las pestanas de eventos de tarjetas
                     '__SHOW_PQ_VERSION__':          ['__SHOW_PQ_VERSION__', False],         #Mostar en la web versiobn de fw de PQ
                     '__SKIP_ALARM_REG_EVENTS__':    ['__SKIP_ALARM_REG_EVENTS__', False],   #NO utiliza el registro de alarmas de las tarjetas para decidir que subgupos de eventos pedir
+                    '__FT_ALARM_SYNOP__':          	['__FT_ALARM_SYNOP__', False],			#Mostrar la alarma de fugas a tierra en e sinoptico de la web
                     }
 
 FW_UFD_DEFINES =  {
@@ -93,6 +94,7 @@ FW_UFD_DEFINES =  {
                     '__WEB_MET_EVENTS__':           ['__WEB_MET_EVENTS__', True],         #Mostar en la web las pestanas de eventos de tarjetas
                     '__SHOW_PQ_VERSION__':          ['__SHOW_PQ_VERSION__', True],         #Mostar en la web versiobn de fw de PQ
                     '__SKIP_ALARM_REG_EVENTS__':    ['__SKIP_ALARM_REG_EVENTS__', True], 
+                    '__FT_ALARM_SYNOP__':          	['__FT_ALARM_SYNOP__', True],			#Mostrar la alarma de fugas a tierra en e sinoptico de la web
                    }
 
 DEPENDENCIES =  {
