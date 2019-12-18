@@ -27,9 +27,16 @@ def prepare_incr_update_files(args, project_tree, paths, project_list, work_tmp_
 	f = open(paths.build_path + "/" + project_name + constants.BUILD_TYPE_INCR_MAINSH_TEMPLATE, "r")
 	text = f.read()
 	f.close()
+	
+	min_versions_tmp = args.previous_min_versions_list.split(';')
+	min_versions = []
+	for min_vers_tmp in min_versions_tmp:
+		min_versions.append(sql.get_fw_family_code(min_vers_tmp.split(',')[0]) + "," + min_vers_tmp.split(',')[1])
+	min_vers_file_str = ";".join([x for x in min_versions])
+	
 	tags = []
 	if min_version_legacy == "":
-		tags = [("$FW_VERSION_PAR$", args.final_release_version), ("$MIN_VERSION_PAR$", args.previous_min_versions_list),
+		tags = [("$FW_VERSION_PAR$", args.final_release_version), ("$MIN_VERSION_PAR$", min_vers_file_str),
 				("$PART_NUMBER_LIST$", args.part_number_list), ("$LEGACY$", "0")]
 	else:
 		tags = [("$FW_VERSION_PAR$", args.final_release_version), ("$MIN_VERSION_PAR$", min_version_legacy),
