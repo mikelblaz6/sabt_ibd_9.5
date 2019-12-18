@@ -31,6 +31,7 @@ def get_shell_args(shell_args):
     parser.add_argument('--legacy-mode', action='store_true', help='Produce fw packages for each part-number in part-number-list parameter')
     parser.add_argument('--legacy-min-versions', help='Min fw versions for each part-number in part-number-list', default="")
     parser.add_argument('--rc', help='Set number for Release candidate versions', default=None)
+    parser.add_argument('--test', action='store_true', help='SCreate version only for tests purposes')
     return parser.parse_args(shell_args)
 
 
@@ -92,6 +93,12 @@ def normalize_args(parsed_args):
             raise Exception()
         if parsed_args.compiler == "":
             print_error("[--compiler] required for final release compilation")
+            raise Exception()
+        if parsed_args.test:
+            print_error("[--test] not admited for final version")
+            raise Exception()
+        if parsed_args.rc != None:
+            print_error("[--rc] not admited for final version")
             raise Exception()
         
     

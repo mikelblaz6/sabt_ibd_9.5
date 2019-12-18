@@ -32,8 +32,9 @@ def doit(args, paths):
 			sql = database.Database()
 			if args.legacy_mode:
 				legacy_min_version_list = args.legacy_min_versions
-			if sql.VerifyNewRelease(constants.GLOBAL_PROJECT, args.final_release_version, args.part_number_list, args.previous_min_versions_list, legacy_min_version_list) != 0:
-				exit(1)
+			if not args.test:
+				if sql.VerifyNewRelease(constants.GLOBAL_PROJECT, args.final_release_version, args.part_number_list, args.previous_min_versions_list, legacy_min_version_list) != 0:
+					exit(1)
 			
 		dep_processor = dependencies.Dependencies(args, paths)
 		project_tree = dep_processor.get_depend_projects()
