@@ -46,6 +46,9 @@ FW_IBD_DEFINES =  {
                     '__SHOW_PQ_VERSION__':          ['__SHOW_PQ_VERSION__', False],         #Mostar en la web versiobn de fw de PQ
                     '__SKIP_ALARM_REG_EVENTS__':    ['__SKIP_ALARM_REG_EVENTS__', False],   #NO utiliza el registro de alarmas de las tarjetas para decidir que subgupos de eventos pedir
                     '__FT_ALARM_SYNOP__':          	['__FT_ALARM_SYNOP__', False],			#Mostrar la alarma de fugas a tierra en e sinoptico de la web
+                    '__MODBUS_MODULE__':			['__MODBUS_MODULE__', False],		#Modulo modbus habilitado
+                    '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', False],	#Pedir a tarjetas valores instantaneos con alarmas
+                    '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
                     }
 
 FW_UFD_DEFINES =  {
@@ -95,6 +98,113 @@ FW_UFD_DEFINES =  {
                     '__SHOW_PQ_VERSION__':          ['__SHOW_PQ_VERSION__', True],         #Mostar en la web versiobn de fw de PQ
                     '__SKIP_ALARM_REG_EVENTS__':    ['__SKIP_ALARM_REG_EVENTS__', True], 
                     '__FT_ALARM_SYNOP__':          	['__FT_ALARM_SYNOP__', True],			#Mostrar la alarma de fugas a tierra en e sinoptico de la web
+                    '__MODBUS_MODULE__':			['__MODBUS_MODULE__', False],		#Modulo modbus habilitado
+                    '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', False],	#Pedir a tarjetas valores instantaneos con alarmas
+                    '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
+                   }
+                   
+FW_MRT_DEFINES =  {
+                    '__VTN__':                      ['__VTN__', True],                 #Funcionalidad VTN visible
+                    '__FUS_1_ALG__':                ['__FUS_1_ALG__', True],  # Algoritmo UFD de fusible fundido
+                    '__UFD_WS_ID__':                ['__UFD_WS_ID__', True],           #Identificador de WS de UFD'
+                    '__VOLT_AL_METERS__':           ['__VOLT_AL_METERS__', True],      #Alarmas de tension en tarjetas
+                    '__EXT_PROFILES__':             ['__EXT_PROFILES__', True],        #Perfiles extendidos 
+                    '__IP_IS_CFG__':                ['__IP_IS_CFG__', True],           #Relacion Ip/Is configurable
+                    '__INOM_EXT_RANGE__':           ['__INOM_EXT_RANGE__', True],      #Rango extendido para Inom[0-5000]
+                    '__STRONG_PWD__':               ['__STRONG_PWD__', True],          #Contrasenas reforzadas
+                    '__IFT_CFG__':                  ['__IFT_CFG__', True],             #Ratio Ift configurable
+                    '__FIREWALL__':                 ['__FIREWALL__', True],            #Firewall
+                    '__SYNC_MET_ALWAYS__':          ['__SYNC_MET_ALWAYS__', True],       #Sincronizar hora de tarjetas aunque no haya NTP
+                    '__C50__':                      ['__C50__', True],
+                    '__C51__':                      ['__C51__', True],
+                    '__C62__':                      ['__C62__', True],
+                    '__G50__':                      ['__G50__', True],
+                    '__G51__':                      ['__G51__', True],
+                    '__G52__':                      ['__G52__', True],
+                    '__G53__':                      ['__G53__', True],
+                    '__G54__':                      ['__G54__', True],
+                    '__G55__':                      ['__G55__', True],
+                    '__G56__':                      ['__G56__', True],
+                    '__G57__':                      ['__G57__', True],
+                    '__G58__':                      ['__G58__', True],
+                    '__G59__':                      ['__G59__', True],
+                    '__G61__':                      ['__G61__', True],
+                    '__G62__':                      ['__G62__', True],
+                    '__G63__':                      ['__G63__', True],
+                    '__G64__':                      ['__G64__', True],
+                    '__G65__':                      ['__G65__', True],
+                    '__SM7__':                      ['__SM7__', True],
+                    '__M01__':                      ['__M01__', True],
+                    '__M02__':                      ['__M02__', True],
+                    '__S69_SYNC__':                 ['__S69_SYNC__', True],            #S69 se puede pedir de forma sincrona
+                    '__S72_SYNC__':                 ['__S72_SYNC__', True],            #S72 se puede pedir de forma sincrona
+                    '__FW_FAM_EN__':                ['__FW_FAM_EN__', True],           #Habilitado pedir y mostrar la familia de fw de las tarjetas y RTU
+                    '__WEB_LANG_SEL__':             ['__WEB_LANG_SEL__', True],        #Selector de idioma en web
+                    '__LDAP_DN_CFG__':              ['__LDAP_DN_CFG__', True],         #LDAP Domain Name configurable
+                    '__NETWORK_SEC__':              ['__NETWORK_SEC__', True],         #Habilitar protocolos seguros y control de conexiones
+                    '__PROFILES_DIS__':             ['__PROFILES_DIS__', True],        #Los perfiles se pueden deshabilitar con per=0 en Web
+                    '__WEB_HEADER_LOGIN__':         ['__WEB_HEADER_LOGIN__', True],    #Mostrar la cabecera de la web en las pantallas de login
+                    '__FW_HASH_CHECK__':            ['__FW_HASH_CHECK__', True],         #Habilitar el chequeo del hash de los fw en la web
+                    '__USER_TIME_SET__':            ['__USER_TIME_SET__', True],         #El usuario puede poner en hora el equipo
+                    '__WEB_MET_EVENTS__':           ['__WEB_MET_EVENTS__', True],         #Mostar en la web las pestanas de eventos de tarjetas
+                    '__SHOW_PQ_VERSION__':          ['__SHOW_PQ_VERSION__', True],         #Mostar en la web versiobn de fw de PQ
+                    '__SKIP_ALARM_REG_EVENTS__':    ['__SKIP_ALARM_REG_EVENTS__', True], 
+                    '__FT_ALARM_SYNOP__':          	['__FT_ALARM_SYNOP__', True],			#Mostrar la alarma de fugas a tierra en e sinoptico de la web
+                    '__MODBUS_MODULE__':			['__MODBUS_MODULE__', True],		#Modulo modbus habilitado
+                    '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', True],	#Pedir a tarjetas valores instantaneos con alarmas
+                    '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
+                   }
+                   
+FW_MLY_DEFINES =  {
+                    '__VTN__':                      ['__VTN__', True],                 #Funcionalidad VTN visible
+                    '__FUS_1_ALG__':                ['__FUS_1_ALG__', True],  # Algoritmo UFD de fusible fundido
+                    '__UFD_WS_ID__':                ['__UFD_WS_ID__', True],           #Identificador de WS de UFD'
+                    '__VOLT_AL_METERS__':           ['__VOLT_AL_METERS__', True],      #Alarmas de tension en tarjetas
+                    '__EXT_PROFILES__':             ['__EXT_PROFILES__', True],        #Perfiles extendidos 
+                    '__IP_IS_CFG__':                ['__IP_IS_CFG__', True],           #Relacion Ip/Is configurable
+                    '__INOM_EXT_RANGE__':           ['__INOM_EXT_RANGE__', True],      #Rango extendido para Inom[0-5000]
+                    '__STRONG_PWD__':               ['__STRONG_PWD__', True],          #Contrasenas reforzadas
+                    '__IFT_CFG__':                  ['__IFT_CFG__', True],             #Ratio Ift configurable
+                    '__FIREWALL__':                 ['__FIREWALL__', True],            #Firewall
+                    '__SYNC_MET_ALWAYS__':          ['__SYNC_MET_ALWAYS__', True],       #Sincronizar hora de tarjetas aunque no haya NTP
+                    '__C50__':                      ['__C50__', True],
+                    '__C51__':                      ['__C51__', True],
+                    '__C62__':                      ['__C62__', True],
+                    '__G50__':                      ['__G50__', True],
+                    '__G51__':                      ['__G51__', True],
+                    '__G52__':                      ['__G52__', True],
+                    '__G53__':                      ['__G53__', True],
+                    '__G54__':                      ['__G54__', True],
+                    '__G55__':                      ['__G55__', True],
+                    '__G56__':                      ['__G56__', True],
+                    '__G57__':                      ['__G57__', True],
+                    '__G58__':                      ['__G58__', True],
+                    '__G59__':                      ['__G59__', True],
+                    '__G61__':                      ['__G61__', True],
+                    '__G62__':                      ['__G62__', True],
+                    '__G63__':                      ['__G63__', True],
+                    '__G64__':                      ['__G64__', True],
+                    '__G65__':                      ['__G65__', True],
+                    '__SM7__':                      ['__SM7__', True],
+                    '__M01__':                      ['__M01__', True],
+                    '__M02__':                      ['__M02__', True],
+                    '__S69_SYNC__':                 ['__S69_SYNC__', True],            #S69 se puede pedir de forma sincrona
+                    '__S72_SYNC__':                 ['__S72_SYNC__', True],            #S72 se puede pedir de forma sincrona
+                    '__FW_FAM_EN__':                ['__FW_FAM_EN__', True],           #Habilitado pedir y mostrar la familia de fw de las tarjetas y RTU
+                    '__WEB_LANG_SEL__':             ['__WEB_LANG_SEL__', True],        #Selector de idioma en web
+                    '__LDAP_DN_CFG__':              ['__LDAP_DN_CFG__', True],         #LDAP Domain Name configurable
+                    '__NETWORK_SEC__':              ['__NETWORK_SEC__', True],         #Habilitar protocolos seguros y control de conexiones
+                    '__PROFILES_DIS__':             ['__PROFILES_DIS__', True],        #Los perfiles se pueden deshabilitar con per=0 en Web
+                    '__WEB_HEADER_LOGIN__':         ['__WEB_HEADER_LOGIN__', True],    #Mostrar la cabecera de la web en las pantallas de login
+                    '__FW_HASH_CHECK__':            ['__FW_HASH_CHECK__', True],         #Habilitar el chequeo del hash de los fw en la web
+                    '__USER_TIME_SET__':            ['__USER_TIME_SET__', True],         #El usuario puede poner en hora el equipo
+                    '__WEB_MET_EVENTS__':           ['__WEB_MET_EVENTS__', True],         #Mostar en la web las pestanas de eventos de tarjetas
+                    '__SHOW_PQ_VERSION__':          ['__SHOW_PQ_VERSION__', True],         #Mostar en la web versiobn de fw de PQ
+                    '__SKIP_ALARM_REG_EVENTS__':    ['__SKIP_ALARM_REG_EVENTS__', True], 
+                    '__FT_ALARM_SYNOP__':          	['__FT_ALARM_SYNOP__', True],			#Mostrar la alarma de fugas a tierra en e sinoptico de la web
+                    '__MODBUS_MODULE__':			['__MODBUS_MODULE__', False],		#Modulo modbus habilitado
+                    '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', True],	#Pedir a tarjetas valores instantaneos con alarmas
+                    '__DISPLAY__':					['__DISPLAY__', True],				#Display hw y modulo sw asociado
                    }
 
 DEPENDENCIES =  {
@@ -128,6 +238,10 @@ def get_cpp_defines(fw_family):
         defines = FW_IBD_DEFINES
     elif fw_family == 'UFD':
         defines = FW_UFD_DEFINES
+    elif fw_family == 'MRT':
+        defines = FW_MRT_DEFINES
+    elif fw_family == 'MLY':
+        defines = FW_MLY_DEFINES
     else:
         return {}
         

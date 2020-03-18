@@ -106,7 +106,32 @@ def set_include_projects(version):
 			return 0
 		elif version != "local":
 			return 1
-
+	elif constants.GLOBAL_PROJECT == "MRT":
+		if version =='1.2.10':
+			INCLUDE_PROJECTS_INCR = {
+				'400_libmodbus_c': 'YES',
+				'400_mcutils_c': 'YES',
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+				'402_00_modbus_cpp': 'YES',
+			}
+		elif '9.9.' in version:
+			return 0
+		elif version != "local":
+			return 1
+	elif constants.GLOBAL_PROJECT == "MLY":
+		if version =='1.2.10':
+			INCLUDE_PROJECTS_INCR = {
+			}
+		elif '9.9.' in version:
+			return 0
+		elif version != "local":
+			return 1
 	return 0
 
 
