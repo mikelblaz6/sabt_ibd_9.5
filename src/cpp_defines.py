@@ -49,6 +49,7 @@ FW_IBD_DEFINES =  {
                     '__MODBUS_MODULE__':			['__MODBUS_MODULE__', False],		#Modulo modbus habilitado
                     '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', False],	#Pedir a tarjetas valores instantaneos con alarmas
                     '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
+                    '__MY01__':						['__MY01__', False],				#MY01 report (CSV Malasia)
                     }
 
 FW_UFD_DEFINES =  {
@@ -101,6 +102,7 @@ FW_UFD_DEFINES =  {
                     '__MODBUS_MODULE__':			['__MODBUS_MODULE__', False],		#Modulo modbus habilitado
                     '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', False],	#Pedir a tarjetas valores instantaneos con alarmas
                     '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
+                    '__MY01__':						['__MY01__', False],				#MY01 report (CSV Malasia)
                    }
                    
 FW_MRT_DEFINES =  {
@@ -153,6 +155,7 @@ FW_MRT_DEFINES =  {
                     '__MODBUS_MODULE__':			['__MODBUS_MODULE__', True],		#Modulo modbus habilitado
                     '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', True],	#Pedir a tarjetas valores instantaneos con alarmas
                     '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
+                    '__MY01__':						['__MY01__', False],				#MY01 report (CSV Malasia)
                    }
                    
 FW_MLY_DEFINES =  {
@@ -202,9 +205,10 @@ FW_MLY_DEFINES =  {
                     '__SHOW_PQ_VERSION__':          ['__SHOW_PQ_VERSION__', True],         #Mostar en la web versiobn de fw de PQ
                     '__SKIP_ALARM_REG_EVENTS__':    ['__SKIP_ALARM_REG_EVENTS__', True], 
                     '__FT_ALARM_SYNOP__':          	['__FT_ALARM_SYNOP__', True],			#Mostrar la alarma de fugas a tierra en e sinoptico de la web
-                    '__MODBUS_MODULE__':			['__MODBUS_MODULE__', False],		#Modulo modbus habilitado
+                    '__MODBUS_MODULE__':			['__MODBUS_MODULE__', True],		#Modulo modbus habilitado
                     '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', True],	#Pedir a tarjetas valores instantaneos con alarmas
                     '__DISPLAY__':					['__DISPLAY__', True],				#Display hw y modulo sw asociado
+                    '__MY01__':						['__MY01__', True],				#MY01 report (CSV Malasia)
                    }
 
 DEPENDENCIES =  {
