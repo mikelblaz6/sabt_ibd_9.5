@@ -234,6 +234,7 @@ DEPENDENCIES =  {
                     '__G63__':                      ['__EXT_PROFILES__',],
                     '__G64__':                      ['__EXT_PROFILES__',],
                     '__SM7__':                      ['__EXT_PROFILES__',],
+                    '__MY01__':                     ['__EXT_PROFILES__',],
                    }
 
 
