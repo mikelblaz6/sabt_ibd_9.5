@@ -50,6 +50,7 @@ FW_IBD_DEFINES =  {
                     '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', False],	#Pedir a tarjetas valores instantaneos con alarmas
                     '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
                     '__MY01__':						['__MY01__', False],				#MY01 report (CSV Malasia)
+                    '__DNS__':                      ['__DNS__', False],                #Habilita configuracion de DNS y posibilidad de URLs para los servidores externos
                     }
 
 FW_UFD_DEFINES =  {
@@ -103,6 +104,7 @@ FW_UFD_DEFINES =  {
                     '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', False],	#Pedir a tarjetas valores instantaneos con alarmas
                     '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
                     '__MY01__':						['__MY01__', False],				#MY01 report (CSV Malasia)
+                    '__DNS__':                      ['__DNS__', False],                #Habilita configuracion de DNS y posibilidad de URLs para los servidores externos
                    }
                    
 FW_MRT_DEFINES =  {
@@ -156,6 +158,7 @@ FW_MRT_DEFINES =  {
                     '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', True],	#Pedir a tarjetas valores instantaneos con alarmas
                     '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
                     '__MY01__':						['__MY01__', False],				#MY01 report (CSV Malasia)
+                    '__DNS__':                      ['__DNS__', True],                #Habilita configuracion de DNS y posibilidad de URLs para los servidores externos
                    }
                    
 FW_MLY_DEFINES =  {
@@ -209,6 +212,7 @@ FW_MLY_DEFINES =  {
                     '__INSTANTS_WITH_ALARMS__':		['__INSTANTS_WITH_ALARMS__', True],	#Pedir a tarjetas valores instantaneos con alarmas
                     '__DISPLAY__':					['__DISPLAY__', True],				#Display hw y modulo sw asociado
                     '__MY01__':						['__MY01__', True],				#MY01 report (CSV Malasia)
+                    '__DNS__':                      ['__DNS__', True],                #Habilita configuracion de DNS y posibilidad de URLs para los servidores externos
                    }
 
 DEPENDENCIES =  {
