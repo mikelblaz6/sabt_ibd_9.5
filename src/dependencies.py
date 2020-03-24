@@ -63,10 +63,19 @@ class Dependencies:
 			if cfg.has_section('INSTALL_DEPS'):
 				for fdep in cfg.items('INSTALL_DEPS'):
 					self.project_tree[project][version]['install_depends'].append(fdep[0])
+			if cfg.has_section('SPEC_' + constants.GLOBAL_PROJECT + '_INSTALL_DEPS'):
+				for fdep in cfg.items('SPEC_' + constants.GLOBAL_PROJECT + '_INSTALL_DEPS'):
+					self.project_tree[project][version]['install_depends'].append(fdep[0])
 					
 			#if cfg.has_section('DEPS') and self.compile_deps:
 			if cfg.has_section('DEPS') and (project==self.main_project or self.compile_deps):
 				for dependency in cfg.items('DEPS'):
+					#Not version checking. Version set to None
+					if not dependency[0] in self.project_tree[project][version]['depends']:
+						self.project_tree[project][version]['depends'].append(dependency[0])
+					self.get_depend_projects_iter(dependency[0])
+			if cfg.has_section('SPEC_' + constants.GLOBAL_PROJECT + '_DEPS') and (project==self.main_project or self.compile_deps):
+				for dependency in cfg.items('SPEC_' + constants.GLOBAL_PROJECT + '_DEPS'):
 					#Not version checking. Version set to None
 					if not dependency[0] in self.project_tree[project][version]['depends']:
 						self.project_tree[project][version]['depends'].append(dependency[0])
@@ -82,6 +91,7 @@ if __name__=='__main__':
 	
 	args = args_parser.get_shell_args(sys.argv[1:])
 	args = args_parser.normalize_args(args)
+	constants.set_GLOBAL_PROJECT(args.part_number_list, args.fw_family, args.previous_min_versions_list)
 	paths = args_parser.get_paths(args)
 	dep_processor = Dependencies(args, paths)
 	project_tree = dep_processor.get_depend_projects()
