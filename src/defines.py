@@ -147,6 +147,8 @@ VALID_FW_FAMILY = ("IBD", "UFD", "MLY", "MRT")
 
 PRODUCT = "402.12"
 
+FW_FAMILY_CODES = {'IBD':'001','UFD':'004','MRT':'000','MLY':'005'}
+
 
 def set_GLOBAL_PROJECT(pn_list, fw_family, min_versions):
 	global GLOBAL_PROJECT			#Now represents FW_FAMILY
