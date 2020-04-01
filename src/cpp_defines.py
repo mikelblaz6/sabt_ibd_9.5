@@ -118,7 +118,7 @@ FW_UFD_DEFINES =  {
 FW_MRT_DEFINES =  {
                     '__VTN__':                      ['__VTN__', True],                 #Funcionalidad VTN visible
                     '__FUS_1_ALG__':                ['__FUS_1_ALG__', False],  # Algoritmo UFD de fusible fundido
-                    '__UFD_WS_ID__':                ['__UFD_WS_ID__', True],           #Identificador de WS de UFD'
+                    '__UFD_WS_ID__':                ['__UFD_WS_ID__', False],           #Identificador de WS de UFD'
                     '__VOLT_AL_METERS__':           ['__VOLT_AL_METERS__', True],      #Alarmas de tension en tarjetas
                     '__EXT_PROFILES__':             ['__EXT_PROFILES__', True],        #Perfiles extendidos 
                     '__IP_IS_CFG__':                ['__IP_IS_CFG__', True],           #Relacion Ip/Is configurable
@@ -176,7 +176,7 @@ FW_MRT_DEFINES =  {
 FW_MLY_DEFINES =  {
                     '__VTN__':                      ['__VTN__', False],                 #Funcionalidad VTN visible
                     '__FUS_1_ALG__':                ['__FUS_1_ALG__', False],  # Algoritmo UFD de fusible fundido
-                    '__UFD_WS_ID__':                ['__UFD_WS_ID__', True],           #Identificador de WS de UFD'
+                    '__UFD_WS_ID__':                ['__UFD_WS_ID__', False],           #Identificador de WS de UFD'
                     '__VOLT_AL_METERS__':           ['__VOLT_AL_METERS__', True],      #Alarmas de tension en tarjetas
                     '__EXT_PROFILES__':             ['__EXT_PROFILES__', True],        #Perfiles extendidos 
                     '__IP_IS_CFG__':                ['__IP_IS_CFG__', True],           #Relacion Ip/Is configurable
