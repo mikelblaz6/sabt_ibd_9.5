@@ -5,7 +5,7 @@ INCLUDE_PROJECTS_INCR = {}
 def set_include_projects(version):
 	global INCLUDE_PROJECTS_INCR
 	if constants.GLOBAL_PROJECT == "UFD":
-		if version == '1.2.8' or version =='1.2.9' or version =='1.2.10':
+		if version == '1.2.8' or version =='1.2.9':
 			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
 				'402_00_improxy_cpp': 'YES',
@@ -50,6 +50,18 @@ def set_include_projects(version):
 				'zlib' : 'YES',
 				
 				'u-boot' : 'YES',
+			}
+		elif version == '1.2.10':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
