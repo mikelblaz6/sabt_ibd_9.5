@@ -51,6 +51,10 @@ FW_IBD_DEFINES =  {
                     '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
                     '__MY01__':						['__MY01__', False],				#MY01 report (CSV Malasia)
                     '__DNS__':                      ['__DNS__', False],                #Habilita configuracion de DNS y posibilidad de URLs para los servidores externos
+                    '__NETWORK_SEC_XML__':          ['__NETWORK_SEC_XML__', False],         #Habilitar protocolos seguros y control de conexiones mediante XML y WS
+                    '__PWD_CHANGE_WEB__':           ['__PWD_CHANGE_WEB__', False],  #LAs password de acceso RTU y tarjetas se pueden cambiar desde la web
+                    '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', False],         #LDAP Domain Name configurable en XML/WS
+                    '__MRT_WS_ID__':                ['__MRT_WS_ID__', False],           #Identificador de WS de UFD'
                     }
 
 FW_UFD_DEFINES =  {
@@ -105,11 +109,15 @@ FW_UFD_DEFINES =  {
                     '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
                     '__MY01__':						['__MY01__', False],				#MY01 report (CSV Malasia)
                     '__DNS__':                      ['__DNS__', False],                #Habilita configuracion de DNS y posibilidad de URLs para los servidores externos
+                    '__NETWORK_SEC_XML__':          ['__NETWORK_SEC_XML__', False],         #Habilitar protocolos seguros y control de conexiones mediante XML y WS
+                    '__PWD_CHANGE_WEB__':           ['__PWD_CHANGE_WEB__', False],  #LAs password de acceso RTU y tarjetas se pueden cambiar desde la web
+                    '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', False],         #LDAP Domain Name configurable en XML/WS
+                    '__MRT_WS_ID__':                ['__MRT_WS_ID__', False],           #Identificador de WS de UFD'
                    }
                    
 FW_MRT_DEFINES =  {
                     '__VTN__':                      ['__VTN__', True],                 #Funcionalidad VTN visible
-                    '__FUS_1_ALG__':                ['__FUS_1_ALG__', True],  # Algoritmo UFD de fusible fundido
+                    '__FUS_1_ALG__':                ['__FUS_1_ALG__', False],  # Algoritmo UFD de fusible fundido
                     '__UFD_WS_ID__':                ['__UFD_WS_ID__', True],           #Identificador de WS de UFD'
                     '__VOLT_AL_METERS__':           ['__VOLT_AL_METERS__', True],      #Alarmas de tension en tarjetas
                     '__EXT_PROFILES__':             ['__EXT_PROFILES__', True],        #Perfiles extendidos 
@@ -159,11 +167,15 @@ FW_MRT_DEFINES =  {
                     '__DISPLAY__':					['__DISPLAY__', False],				#Display hw y modulo sw asociado
                     '__MY01__':						['__MY01__', False],				#MY01 report (CSV Malasia)
                     '__DNS__':                      ['__DNS__', True],                #Habilita configuracion de DNS y posibilidad de URLs para los servidores externos
+                    '__NETWORK_SEC_XML__':          ['__NETWORK_SEC_XML__', True],         #Habilitar protocolos seguros y control de conexiones mediante XML y WS
+                    '__PWD_CHANGE_WEB__':           ['__PWD_CHANGE_WEB__', True],  #LAs password de acceso RTU y tarjetas se pueden cambiar desde la web
+                    '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', True],         #LDAP Domain Name configurable en XML/WS
+                    '__MRT_WS_ID__':                ['__MRT_WS_ID__', True],           #Identificador de WS de UFD
                    }
                    
 FW_MLY_DEFINES =  {
                     '__VTN__':                      ['__VTN__', False],                 #Funcionalidad VTN visible
-                    '__FUS_1_ALG__':                ['__FUS_1_ALG__', True],  # Algoritmo UFD de fusible fundido
+                    '__FUS_1_ALG__':                ['__FUS_1_ALG__', False],  # Algoritmo UFD de fusible fundido
                     '__UFD_WS_ID__':                ['__UFD_WS_ID__', True],           #Identificador de WS de UFD'
                     '__VOLT_AL_METERS__':           ['__VOLT_AL_METERS__', True],      #Alarmas de tension en tarjetas
                     '__EXT_PROFILES__':             ['__EXT_PROFILES__', True],        #Perfiles extendidos 
@@ -213,6 +225,10 @@ FW_MLY_DEFINES =  {
                     '__DISPLAY__':					['__DISPLAY__', True],				#Display hw y modulo sw asociado
                     '__MY01__':						['__MY01__', True],				#MY01 report (CSV Malasia)
                     '__DNS__':                      ['__DNS__', True],                #Habilita configuracion de DNS y posibilidad de URLs para los servidores externos
+                    '__NETWORK_SEC_XML__':          ['__NETWORK_SEC_XML__', True],         #Habilitar protocolos seguros y control de conexiones mediante XML y WS
+                    '__PWD_CHANGE_WEB__':           ['__PWD_CHANGE_WEB__', True],  #LAs password de acceso RTU y tarjetas se pueden cambiar desde la web
+                    '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', True],         #LDAP Domain Name configurable en XML/WS
+                    '__MRT_WS_ID__':                ['__MRT_WS_ID__', True],           #Identificador de WS de UFD
                    }
 
 DEPENDENCIES =  {
