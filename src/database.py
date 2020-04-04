@@ -468,7 +468,7 @@ WHERE p1.name=%s AND p1.version=%s"
 		index = 0
 		for part_number in part_numbers:
 			if self.get_part_number_id(part_number) == None:
-				print "Error Part-number not allowed"
+				print "Error Part-number not allowed",part_number
 				return 1
 			
 			if legacy_min_version_list != None and legacy_min_versions[index] != 'None':
