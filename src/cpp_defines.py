@@ -174,7 +174,7 @@ FW_MRT_DEFINES =  {
                    }
                    
 FW_MLY_DEFINES =  {
-                    '__VTN__':                      ['__VTN__', False],                 #Funcionalidad VTN visible
+                    '__VTN__':                      ['__VTN__', True],                 #Funcionalidad VTN visible
                     '__FUS_1_ALG__':                ['__FUS_1_ALG__', False],  # Algoritmo UFD de fusible fundido
                     '__UFD_WS_ID__':                ['__UFD_WS_ID__', False],           #Identificador de WS de UFD'
                     '__VOLT_AL_METERS__':           ['__VOLT_AL_METERS__', True],      #Alarmas de tension en tarjetas
@@ -186,13 +186,13 @@ FW_MLY_DEFINES =  {
                     '__FIREWALL__':                 ['__FIREWALL__', True],            #Firewall
                     '__SYNC_MET_ALWAYS__':          ['__SYNC_MET_ALWAYS__', True],       #Sincronizar hora de tarjetas aunque no haya NTP
                     '__C50__':                      ['__C50__', True],
-                    '__C51__':                      ['__C51__', False],
+                    '__C51__':                      ['__C51__', True],
                     '__C62__':                      ['__C62__', True],
                     '__G50__':                      ['__G50__', True],
-                    '__G51__':                      ['__G51__', False],
-                    '__G52__':                      ['__G52__', False],
-                    '__G53__':                      ['__G53__', False],
-                    '__G54__':                      ['__G54__', False],
+                    '__G51__':                      ['__G51__', True],
+                    '__G52__':                      ['__G52__', True],
+                    '__G53__':                      ['__G53__', True],
+                    '__G54__':                      ['__G54__', True],
                     '__G55__':                      ['__G55__', True],
                     '__G56__':                      ['__G56__', True],
                     '__G57__':                      ['__G57__', True],
