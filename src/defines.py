@@ -60,7 +60,7 @@ GIT_URL = 'ssh://git@gitlab.merytronicidi.com:30022'
 # Orden de busqueda de ramas
 GIT_BRANCHES = ('', '402_12', '402', 'master')
 # Namespaces de busqueda en git
-GIT_NAMESPACES = ('mrt_developers', 'mrt_os_projects') 
+GIT_NAMESPACES = ('mrt_developers', 'mrt_os_projects', 'general-libraries') 
 
 
 BUILD_TYPE_FULL_MAINSH_TEMPLATE = "/mrt/templates/full_update/main.sh"
