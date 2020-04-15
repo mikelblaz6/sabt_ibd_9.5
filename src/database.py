@@ -231,7 +231,7 @@ AND c1.fw_family_id=(SELECT `id` FROM `fw_family` WHERE `name`=%s)"])
 	
 	def get_module_from_version_part_number(self, name, fw_family, version, part_number):
 		query = "SELECT * FROM `modules` WHERE `name`=%s AND \
-`comp_id`=(SELECT pn1.id FROM part_number_compatibility pn1 \
+`comp_id`=(SELECT pn1.comp_id FROM part_number_compatibility pn1 \
 INNER JOIN compilations c1 ON pn1.comp_id=c1.id WHERE pn1.part_number_id=(SELECT `id` FROM `part_number` WHERE `name`=%s) \
 AND c1.fw_version=%s AND c1.fw_family_id=(SELECT `id` FROM `fw_family` WHERE `name`=%s))"
 		data = (str(name), str(part_number), str(version), str(fw_family))
