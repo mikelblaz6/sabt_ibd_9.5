@@ -113,6 +113,8 @@ def set_include_projects(version):
 				'402_00_shell_cpp': 'YES',
 				'402_00_qos_cpp': 'YES',
 				'402_00_tasker_cpp': 'YES',
+				
+				'u-boot' : 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
@@ -133,6 +135,8 @@ def set_include_projects(version):
 				'402_00_qos_cpp': 'YES',
 				'402_00_tasker_cpp': 'YES',
 				'402_00_modbus_cpp': 'YES',
+				
+				'u-boot' : 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
