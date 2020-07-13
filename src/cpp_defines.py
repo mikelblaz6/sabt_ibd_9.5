@@ -55,6 +55,7 @@ FW_IBD_DEFINES =  {
                     '__PWD_CHANGE_WEB__':           ['__PWD_CHANGE_WEB__', False],  #LAs password de acceso RTU y tarjetas se pueden cambiar desde la web
                     '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', False],         #LDAP Domain Name configurable en XML/WS
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', False],           #Identificador de WS de UFD'
+                    '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', False],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                     }
 
 FW_UFD_DEFINES =  {
@@ -113,6 +114,7 @@ FW_UFD_DEFINES =  {
                     '__PWD_CHANGE_WEB__':           ['__PWD_CHANGE_WEB__', False],  #LAs password de acceso RTU y tarjetas se pueden cambiar desde la web
                     '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', False],         #LDAP Domain Name configurable en XML/WS
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', False],           #Identificador de WS de UFD'
+                    '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', False],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                    }
                    
 FW_MRT_DEFINES =  {
@@ -171,6 +173,7 @@ FW_MRT_DEFINES =  {
                     '__PWD_CHANGE_WEB__':           ['__PWD_CHANGE_WEB__', True],  #LAs password de acceso RTU y tarjetas se pueden cambiar desde la web
                     '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', True],         #LDAP Domain Name configurable en XML/WS
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', True],           #Identificador de WS de UFD
+                    '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', True],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                    }
                    
 FW_MLY_DEFINES =  {
@@ -229,6 +232,7 @@ FW_MLY_DEFINES =  {
                     '__PWD_CHANGE_WEB__':           ['__PWD_CHANGE_WEB__', True],  #LAs password de acceso RTU y tarjetas se pueden cambiar desde la web
                     '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', True],         #LDAP Domain Name configurable en XML/WS
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', True],           #Identificador de WS de UFD
+                    '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', True],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                    }
 
 DEPENDENCIES =  {
