@@ -51,6 +51,20 @@ def set_include_projects(version):
 				
 				'u-boot' : 'YES',
 			}
+		elif version == '1.2.11':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+			}
 		elif '9.9.' in version:
 			return 0
 		elif version != "local":
@@ -116,6 +130,20 @@ def set_include_projects(version):
 				
 				'u-boot' : 'YES',
 			}
+		elif version == '1.2.11':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+			}
 		elif '9.9.' in version:
 			return 0
 		elif version != "local":
@@ -137,6 +165,20 @@ def set_include_projects(version):
 				'402_00_modbus_cpp': 'YES',
 				
 				'u-boot' : 'YES',
+			}
+		elif version == '1.2.11':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
@@ -192,6 +234,20 @@ def set_include_projects(version):
 				'zlib' : 'YES',
 				
 				'u-boot' : 'YES',
+			}
+		elif version == '1.2.11':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
