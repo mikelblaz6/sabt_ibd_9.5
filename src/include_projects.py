@@ -68,6 +68,7 @@ def set_include_projects(version):
 				'400_mcutils_c': 'YES',
 				'402_00_modbus_cpp': 'YES',
 				'cppcms' : 'YES',
+				'u-boot' : 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
@@ -151,6 +152,7 @@ def set_include_projects(version):
 				'400_mcutils_c': 'YES',
 				'402_00_modbus_cpp': 'YES',
 				'cppcms' : 'YES',
+				'u-boot' : 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
@@ -191,6 +193,7 @@ def set_include_projects(version):
 				'400_mcutils_c': 'YES',
 				'402_00_modbus_cpp': 'YES',
 				'cppcms' : 'YES',
+				'u-boot' : 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
@@ -264,6 +267,7 @@ def set_include_projects(version):
 				'400_mcutils_c': 'YES',
 				'402_00_modbus_cpp': 'YES',
 				'cppcms' : 'YES',
+				'u-boot' : 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
