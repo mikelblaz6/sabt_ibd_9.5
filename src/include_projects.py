@@ -64,9 +64,6 @@ def set_include_projects(version):
 				'402_00_qos_fwupdate_cpp': 'YES',
 				'402_00_restore_web_cpp': 'YES',
 				'402_00_tasker_cpp': 'YES',
-				'400_libmodbus_c': 'YES',
-				'400_mcutils_c': 'YES',
-				'402_00_modbus_cpp': 'YES',
 				'cppcms' : 'YES',
 				'u-boot' : 'YES',
 			}
@@ -148,9 +145,6 @@ def set_include_projects(version):
 				'402_00_qos_fwupdate_cpp': 'YES',
 				'402_00_restore_web_cpp': 'YES',
 				'402_00_tasker_cpp': 'YES',
-				'400_libmodbus_c': 'YES',
-				'400_mcutils_c': 'YES',
-				'402_00_modbus_cpp': 'YES',
 				'cppcms' : 'YES',
 				'u-boot' : 'YES',
 			}
@@ -268,6 +262,7 @@ def set_include_projects(version):
 				'402_00_modbus_cpp': 'YES',
 				'cppcms' : 'YES',
 				'u-boot' : 'YES',
+				'402_00_lcd_keyb_cpp': 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
