@@ -56,6 +56,7 @@ FW_IBD_DEFINES =  {
                     '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', False],         #LDAP Domain Name configurable en XML/WS
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', False],           #Identificador de WS de UFD'
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', False],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
+                    '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                     }
 
 FW_UFD_DEFINES =  {
@@ -115,6 +116,7 @@ FW_UFD_DEFINES =  {
                     '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', False],         #LDAP Domain Name configurable en XML/WS
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', False],           #Identificador de WS de UFD'
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', False],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
+                    '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', True],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                    }
                    
 FW_MRT_DEFINES =  {
@@ -174,6 +176,7 @@ FW_MRT_DEFINES =  {
                     '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', True],         #LDAP Domain Name configurable en XML/WS
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', True],           #Identificador de WS de UFD
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', True],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
+                    '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                    }
                    
 FW_MLY_DEFINES =  {
@@ -233,6 +236,7 @@ FW_MLY_DEFINES =  {
                     '__LDAP_DN_CFG_XML__':          ['__LDAP_DN_CFG_XML__', True],         #LDAP Domain Name configurable en XML/WS
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', True],           #Identificador de WS de UFD
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', True],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
+                    '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                    }
 
 DEPENDENCIES =  {
