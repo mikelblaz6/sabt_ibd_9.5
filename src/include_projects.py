@@ -53,6 +53,10 @@ def set_include_projects(version):
 			}
 		elif version == '1.2.11':
 			INCLUDE_PROJECTS_INCR = {
+				'402_00_tasker_cpp': 'YES',
+			}
+		elif version == '1.2.12':
+			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
 				'402_00_improxy_cpp': 'YES',
 				'402_00_cmm_cpp': 'YES',
@@ -132,7 +136,7 @@ def set_include_projects(version):
 				
 				'u-boot' : 'YES',
 			}
-		elif version == '1.2.11':
+		elif version == '1.2.12':
 			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
 				'402_00_improxy_cpp': 'YES',
@@ -170,7 +174,7 @@ def set_include_projects(version):
 				
 				'u-boot' : 'YES',
 			}
-		elif version == '1.2.11':
+		elif version == '1.2.12':
 			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
 				'402_00_improxy_cpp': 'YES',
@@ -244,7 +248,7 @@ def set_include_projects(version):
 				
 				'u-boot' : 'YES',
 			}
-		elif version == '1.2.11':
+		elif version == '1.2.12':
 			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
 				'402_00_improxy_cpp': 'YES',
