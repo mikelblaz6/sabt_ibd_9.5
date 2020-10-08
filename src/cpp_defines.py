@@ -57,6 +57,7 @@ FW_IBD_DEFINES =  {
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', False],           #Identificador de WS de UFD'
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', False],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
+                    '__MT_EVENTS__':                ['__MT_EVENTS__', False],       #Publicacion eventos falta MT
                     }
 
 FW_UFD_DEFINES =  {
@@ -117,6 +118,7 @@ FW_UFD_DEFINES =  {
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', False],           #Identificador de WS de UFD'
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', False],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', True],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
+                    '__MT_EVENTS__':                ['__MT_EVENTS__', False],       #Publicacion eventos falta MT
                    }
                    
 FW_MRT_DEFINES =  {
@@ -177,6 +179,7 @@ FW_MRT_DEFINES =  {
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', True],           #Identificador de WS de UFD
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', True],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
+                    '__MT_EVENTS__':                ['__MT_EVENTS__', True],       #Publicacion eventos falta MT
                    }
                    
 FW_MLY_DEFINES =  {
@@ -237,6 +240,7 @@ FW_MLY_DEFINES =  {
                     '__MRT_WS_ID__':                ['__MRT_WS_ID__', True],           #Identificador de WS de UFD
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', True],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
+                    '__MT_EVENTS__':                ['__MT_EVENTS__', True],       #Publicacion eventos falta MT
                    }
 
 DEPENDENCIES =  {
