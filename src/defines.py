@@ -168,5 +168,5 @@ def set_GLOBAL_PROJECT(pn_list, fw_family, min_versions):
 	
 	GLOBAL_PROJECT = fw_family
 	GLOBAL_PROJECT_GIT_BRANCH = fw_family
-	GIT_BRANCHES = (GLOBAL_PROJECT_GIT_BRANCH, '402_12', '402', 'master')
+	GIT_BRANCHES = ('origin/tmp_ibd_spec_9-S51FTP', 'tmp_ibd_spec_9', GLOBAL_PROJECT_GIT_BRANCH, '402_12', '402', 'master')
 
