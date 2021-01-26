@@ -1,3 +1,4 @@
+import os
 #PROJECT_COMPILER_PROPERTIES
 # Directorio de fuentes python
 MAIN_DIR='/MRT_OS/SRC/project_compiler/'
@@ -14,16 +15,16 @@ GLOBAL_PROJECT_GIT_BRANCH = ''
 SRC_DIR = ('/MRT_OS/SRC/','/home/jonathan/Dropbox/CodeBlocks/')
 
 # Directorios de trabajo para arm.release
-BUILD_DIR = '/MRT_OS/402.12/BUILD/'
-DEPLOY_DIR = '/MRT_OS/402.12/DEPLOY/'
+BUILD_DIR = os.getcwd() + '/BUILD/'
+DEPLOY_DIR = os.getcwd() + '/DEPLOY/'
 
 # Directorios de trabajo para x86.release
 BUILD_DIR_x86 = BUILD_DIR + 'x86/'
 DEPLOY_DIR_x86 = DEPLOY_DIR + 'x86/'
 
 # Directorios de trabajo para arm.debug
-BUILD_DIR_DEBUG = '/MRT_OS/402.12/BUILD_DEBUG/'
-DEPLOY_DIR_DEBUG = '/MRT_OS/402.12/DEPLOY_DEBUG/'
+BUILD_DIR_DEBUG = os.getcwd() + '/BUILD_DEBUG/'
+DEPLOY_DIR_DEBUG = os.getcwd() + '/DEPLOY_DEBUG/'
 
 # Directorios de trabajo para x86.debug
 BUILD_DIR_x86_DEBUG = BUILD_DIR_DEBUG + 'x86/'
@@ -31,11 +32,11 @@ DEPLOY_DIR_x86_DEBUG = DEPLOY_DIR_DEBUG + 'x86/'
 
 #FINAL INSTALLATION DIRS
 # Directorios de instalacion y de generacion de rootfs
-INSTALL_DIR_GENERIC = '/MRT_OS/402.12/SYSTEM/'
-INSTALL_DIR_TFTP = '/MRT_OS/402.12/SYSTEM_TFTP/'
-INSTALL_DIR_FULL = '/MRT_OS/402.12/SYSTEM_FULL/'
-INSTALL_DIR_INCR = '/MRT_OS/402.12/SYSTEM_INCR/'
-ROOTFS_DIR = '/MRT_OS/402.12/SYSTEM_IMAGE/'
+INSTALL_DIR_GENERIC = os.getcwd() + '/SYSTEM/'
+INSTALL_DIR_TFTP = os.getcwd() + '/SYSTEM_TFTP/'
+INSTALL_DIR_FULL = os.getcwd() + '/SYSTEM_FULL/'
+INSTALL_DIR_INCR = os.getcwd() + '/SYSTEM_INCR/'
+ROOTFS_DIR = os.getcwd() + '/SYSTEM_IMAGE/'
 
 QOS_FW_NAME = 'qos_fw.tar.xz'
 
