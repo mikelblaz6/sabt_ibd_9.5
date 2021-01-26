@@ -152,7 +152,7 @@ def set_include_projects(version):
 				'cppcms' : 'YES',
 				'u-boot' : 'YES',
 			}
-		elif version == '1.3.1':
+		elif version == '1.3.1' or version == '1.3.2':
 			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
 				'402_00_improxy_cpp': 'YES',
