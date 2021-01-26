@@ -37,6 +37,7 @@ INSTALL_DIR_TFTP = os.getcwd() + '/SYSTEM_TFTP/'
 INSTALL_DIR_FULL = os.getcwd() + '/SYSTEM_FULL/'
 INSTALL_DIR_INCR = os.getcwd() + '/SYSTEM_INCR/'
 ROOTFS_DIR = os.getcwd() + '/SYSTEM_IMAGE/'
+RELEASES_DIR = os.getcwd() + '/RELEASES/'
 
 QOS_FW_NAME = 'qos_fw.tar.xz'
 

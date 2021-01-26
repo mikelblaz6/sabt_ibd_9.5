@@ -97,7 +97,7 @@ def create_full_img(args, project_tree, paths, compilation_id, sql):
 	fw_version = utils.get_rc_fw_version(args)
 	
 	#Generacion de actualizacion full para la familia de fw
-	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/" + args.fw_family + "/" + fw_version + "/FULL/"
+	releases_dir = constants.RELEASES_DIR + "FW_FAMILY/" + args.fw_family + "/" + fw_version + "/FULL/"
 	os.system("mkdir -p " + releases_dir)	
 	dest_file = releases_dir + constants.PRODUCT + "_" + args.fw_family + "_" + fw_version + "_full.bin"
 	
@@ -116,7 +116,7 @@ def create_full_img(args, project_tree, paths, compilation_id, sql):
 	
 	#Copiamos binario a cada part-number soportado
 	for pn in args.part_number_list.split(","):
-		releases_dir = os.getenv("HOME") + "/RELEASES/" + pn + "/" + fw_version + "/FULL/"
+		releases_dir = constants.RELEASES_DIR + pn + "/" + fw_version + "/FULL/"
 		os.system("rm -Rf " + releases_dir)
 		os.system("mkdir -p " + releases_dir)
 		pn_specific_dest_file = releases_dir + "MRT_" + pn + "_" + fw_version + "_" + args.fw_family + "_full.bin"

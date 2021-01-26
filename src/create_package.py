@@ -120,7 +120,7 @@ def create_package(args, work_path):
 		included_versions.append((included_vers_tmp.split(',')[0], included_vers_tmp.split(',')[1]))
 	
 	#Generacion de actualizacion incr para la familia de fw
-	releases_dir = os.getenv("HOME") + "/RELEASES/FW_FAMILY/PACKAGES/" + args.name + "/" + fw_version + "/"
+	releases_dir = constants.RELEASES_DIR + "/FW_FAMILY/PACKAGES/" + args.name + "/" + fw_version + "/"
 	os.system("mkdir -p " + releases_dir)
 	work_dir = work_path + "/package_temp/"
 	os.system("rm -Rf " + work_dir)
