@@ -169,6 +169,7 @@ def set_include_projects(version):
 				'u-boot' : 'YES',
 				'rootfs' : 'YES',
 				'linux-kernel': 'YES',
+				'curl': 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
