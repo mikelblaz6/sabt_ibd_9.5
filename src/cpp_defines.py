@@ -58,6 +58,7 @@ FW_IBD_DEFINES =  {
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', False],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                     '__MT_EVENTS__':                ['__MT_EVENTS__', False],       #Publicacion eventos falta MT
+                    '__FTP_FULL_CONF__':            ['__FTP_FULL_CONF__', False],       #Posibilidad de modificar puerto y paths de FTPs
                     }
 
 FW_UFD_DEFINES =  {
@@ -119,6 +120,7 @@ FW_UFD_DEFINES =  {
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', False],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', True],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                     '__MT_EVENTS__':                ['__MT_EVENTS__', False],       #Publicacion eventos falta MT
+                    '__FTP_FULL_CONF__':            ['__FTP_FULL_CONF__', False],       #Posibilidad de modificar puerto y paths de FTPs
                    }
                    
 FW_MRT_DEFINES =  {
@@ -180,6 +182,7 @@ FW_MRT_DEFINES =  {
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', True],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                     '__MT_EVENTS__':                ['__MT_EVENTS__', True],       #Publicacion eventos falta MT
+                    '__FTP_FULL_CONF__':            ['__FTP_FULL_CONF__', True],       #Posibilidad de modificar puerto y paths de FTPs
                    }
                    
 FW_MLY_DEFINES =  {
@@ -241,6 +244,7 @@ FW_MLY_DEFINES =  {
                     '__COMPOSED_VOLTAGES__':        ['__COMPOSED_VOLTAGES__', True],           #Tensiones compuestas (V12, V23, V31) en los informes de medida
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                     '__MT_EVENTS__':                ['__MT_EVENTS__', True],       #Publicacion eventos falta MT
+                    '__FTP_FULL_CONF__':            ['__FTP_FULL_CONF__', True],       #Posibilidad de modificar puerto y paths de FTPs
                    }
 
 DEPENDENCIES =  {
