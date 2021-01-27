@@ -212,6 +212,10 @@ def set_include_projects(version):
 				'cppcms' : 'YES',
 				'u-boot' : 'YES',
 			}
+		elif version == '1.2.13':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+			}
 		elif '9.9.' in version:
 			return 0
 		elif version != "local":
@@ -286,6 +290,28 @@ def set_include_projects(version):
 				'cppcms' : 'YES',
 				'u-boot' : 'YES',
 				'402_00_lcd_keyb_cpp': 'YES',
+			}
+		elif version == '1.2.13':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+				'400_libmodbus_c': 'YES',
+				'400_mcutils_c': 'YES',
+				'402_00_modbus_cpp': 'YES',
+				'cppcms' : 'YES',
+				'u-boot' : 'YES',
+				'402_00_lcd_keyb_cpp': 'YES',
+				'curl' : 'YES',
+				'linux-kernel': 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
