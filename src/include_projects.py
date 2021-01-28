@@ -71,6 +71,43 @@ def set_include_projects(version):
 				'cppcms' : 'YES',
 				'u-boot' : 'YES',
 			}
+		elif version == '1.2.13':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+				'cppcms' : 'YES',
+				'u-boot' : 'YES',
+				'curl' : 'YES',
+				'linux-kernel': 'YES',
+			}
+		elif version == '1.3.2':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+				'cppcms' : 'YES',
+				'u-boot' : 'YES',
+				'rootfs' : 'YES',
+				'curl': 'YES',
+				'linux-kernel': 'YES',
+			}
 		elif '9.9.' in version:
 			return 0
 		elif version != "local":
@@ -152,6 +189,24 @@ def set_include_projects(version):
 				'cppcms' : 'YES',
 				'u-boot' : 'YES',
 			}
+		elif version == '1.2.13':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+				'cppcms' : 'YES',
+				'u-boot' : 'YES',
+				'curl' : 'YES',
+				'linux-kernel': 'YES',
+			}
 		elif version == '1.3.1' or version == '1.3.2':
 			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
@@ -168,8 +223,8 @@ def set_include_projects(version):
 				'cppcms' : 'YES',
 				'u-boot' : 'YES',
 				'rootfs' : 'YES',
-				'linux-kernel': 'YES',
 				'curl': 'YES',
+				'linux-kernel': 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
@@ -215,6 +270,45 @@ def set_include_projects(version):
 		elif version == '1.2.13':
 			INCLUDE_PROJECTS_INCR = {
 				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+				'400_libmodbus_c': 'YES',
+				'400_mcutils_c': 'YES',
+				'402_00_modbus_cpp': 'YES',
+				'cppcms' : 'YES',
+				'u-boot' : 'YES',
+				'curl' : 'YES',
+				'linux-kernel': 'YES',
+			}
+		elif version == '1.3.2':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+				'400_libmodbus_c': 'YES',
+				'400_mcutils_c': 'YES',
+				'402_00_modbus_cpp': 'YES',
+				'cppcms' : 'YES',
+				'u-boot' : 'YES',
+				'rootfs' : 'YES',
+				'curl': 'YES',
+				'linux-kernel': 'YES',
 			}
 		elif '9.9.' in version:
 			return 0
@@ -311,6 +405,29 @@ def set_include_projects(version):
 				'u-boot' : 'YES',
 				'402_00_lcd_keyb_cpp': 'YES',
 				'curl' : 'YES',
+				'linux-kernel': 'YES',
+			}
+		elif version == '1.3.2':
+			INCLUDE_PROJECTS_INCR = {
+				'402_00_libafs_cpp': 'YES',
+				'402_00_improxy_cpp': 'YES',
+				'402_00_cmm_cpp': 'YES',
+				'402_00_login_reg_cpp': 'YES',
+				'402_00_login_host_cpp': 'YES',
+				'402_00_web_cpp': 'YES',
+				'402_00_shell_cpp': 'YES',
+				'402_00_qos_cpp': 'YES',
+				'402_00_qos_fwupdate_cpp': 'YES',
+				'402_00_restore_web_cpp': 'YES',
+				'402_00_tasker_cpp': 'YES',
+				'400_libmodbus_c': 'YES',
+				'400_mcutils_c': 'YES',
+				'402_00_modbus_cpp': 'YES',
+				'cppcms' : 'YES',
+				'u-boot' : 'YES',
+				'402_00_lcd_keyb_cpp': 'YES',
+				'rootfs' : 'YES',
+				'curl': 'YES',
 				'linux-kernel': 'YES',
 			}
 		elif '9.9.' in version:
