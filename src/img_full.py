@@ -41,7 +41,7 @@ def prepare_full_update_files(args, project_tree, paths, work_tmp_dir, compilati
 				("$PART_NUMBER_LIST$", args.part_number_list),
 				("$LEGACY$", "1")]
 	else:
-		tags = [("$FW_VERSION_PAR$", args.final_release_version),
+		tags = [("$FW_VERSION_PAR$", utils.get_rc_fw_version(args)),
 				("$PART_NUMBER_LIST$", args.part_number_list),
 				("$LEGACY$", "0")]
 	
