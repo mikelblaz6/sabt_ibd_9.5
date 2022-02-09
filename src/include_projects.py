@@ -227,7 +227,7 @@ def set_include_projects(version):
 				'curl': 'YES',
 				'linux-kernel': 'YES',
 			}
-		elif version == '1.3.3':
+		elif version == '1.3.3' or version == '1.3.4' or version == '1.3.5':
 			INCLUDE_PROJECTS_INCR = {
 				'400_mcutils_c'             : 'YES',
 				'400_libutils_cpp'          : 'YES',

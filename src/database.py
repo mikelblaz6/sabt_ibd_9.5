@@ -473,11 +473,11 @@ WHERE p1.name=%s AND p1.version=%s"
 			
 			if legacy_min_version_list != None and legacy_min_versions[index] != 'None':
 				entries = self.get_pn_comps_from_pn_fam_fw(part_number, 'None', legacy_min_versions[index])
-				if len(entries) == 0:
+				if len(entries) == 0: 
 					print "Error Previous legacy release not found for pn", part_number
 					return 1
 								
-			index += 1
+			index += 1 
 			
 		return 0
 		

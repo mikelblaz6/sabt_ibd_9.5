@@ -1,4 +1,4 @@
-
+# coding=utf-8
 FW_IBD_DEFINES =  {
                     '__VTN__':                      ['__VTN__', False],                 #Funcionalidad VTN visible
                     '__FUS_1_ALG__':                ['__FUS_1_ALG__', False],           #Algoritmo UFD de fusible fundido
@@ -59,6 +59,7 @@ FW_IBD_DEFINES =  {
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                     '__MT_EVENTS__':                ['__MT_EVENTS__', False],       #Publicacion eventos falta MT
                     '__FTP_FULL_CONF__':            ['__FTP_FULL_CONF__', False],       #Posibilidad de modificar puerto y paths de FTPs
+                    '__S82__':                      ['__S82__', False],                 # Habilitación del perfil S82 (LS Maximum Voltage and Current profile)
                     }
 
 FW_UFD_DEFINES =  {
@@ -121,6 +122,7 @@ FW_UFD_DEFINES =  {
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', True],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                     '__MT_EVENTS__':                ['__MT_EVENTS__', False],       #Publicacion eventos falta MT
                     '__FTP_FULL_CONF__':            ['__FTP_FULL_CONF__', False],       #Posibilidad de modificar puerto y paths de FTPs
+                    '__S82__':                      ['__S82__', True],                  # Habilitación del perfil S82 (LS Maximum Voltage and Current profile)
                    }
                    
 FW_MRT_DEFINES =  {
@@ -183,6 +185,7 @@ FW_MRT_DEFINES =  {
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                     '__MT_EVENTS__':                ['__MT_EVENTS__', True],       #Publicacion eventos falta MT
                     '__FTP_FULL_CONF__':            ['__FTP_FULL_CONF__', True],       #Posibilidad de modificar puerto y paths de FTPs
+                    '__S82__':                      ['__S82__', True],                  # Habilitación del perfil S82 (LS Maximum Voltage and Current profile)
                    }
                    
 FW_MLY_DEFINES =  {
@@ -245,6 +248,7 @@ FW_MLY_DEFINES =  {
                     '__ALL_EVENTS_OSCIL__':         ['__ALL_EVENTS_OSCIL__', False],    #Oscilografia habilitada para todos los eventos metrologicos de tarjetas
                     '__MT_EVENTS__':                ['__MT_EVENTS__', True],       #Publicacion eventos falta MT
                     '__FTP_FULL_CONF__':            ['__FTP_FULL_CONF__', True],       #Posibilidad de modificar puerto y paths de FTPs
+                    '__S82__':                      ['__S82__', True],                  # Habilitación del perfil S82 (LS Maximum Voltage and Current profile)
                    }
 
 DEPENDENCIES =  {

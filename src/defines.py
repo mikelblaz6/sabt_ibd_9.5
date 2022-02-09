@@ -1,18 +1,20 @@
 import os
 #PROJECT_COMPILER_PROPERTIES
 # Directorio de fuentes python
-MAIN_DIR='/MRT_OS/SRC/project_compiler/'
+# MAIN_DIR='/MRT_OS/SRC/project_compiler/' 
+MAIN_DIR='/MRT_OS/SRC/402_project_compiler/'  
 
 #GLOBAL PROJECT VARIABLES
 # Nombre del proyecto a generar
 GLOBAL_PROJECT = ''
 
 # Rama especifica del proyecto en GIT
-GLOBAL_PROJECT_GIT_BRANCH = ''
+GLOBAL_PROJECT_GIT_BRANCH = '' 
 
 #DIRECTORIES
 # Directorios donde buscar codigos fuente de los proyectos a compilar
-SRC_DIR = ('/MRT_OS/SRC/','/home/jonathan/Dropbox/CodeBlocks/')
+# SRC_DIR = ('/MRT_OS/SRC/','/home/jonathan/Dropbox/CodeBlocks/')
+SRC_DIR = ('/MRT_OS/SRC/')
 
 # Directorios de trabajo para arm.release
 BUILD_DIR = os.getcwd() + '/BUILD/'
@@ -46,9 +48,9 @@ DB_TABLES_PREFIX = ''
 
 #TOOLCHAIN
 # Directorios del toolchain para arm
-GCC_LINK = '/MRT_OS/gcc-linaro-toolchain'
+GCC_LINK = '/MRT_OS/gcc-linaro-toolchain/'
 GCC_5_DIR = '/MRT_OS/gcc-linaro-toolchain-5/'
-GCC_7_DIR = '/MRT_OS/gcc-linaro-toolchain-7.2.1/'
+GCC_7_DIR = '/MRT_OS/gcc-linaro-toolchain-7.2.1/' 
 GCC_DIR = '/MRT_OS/gcc-linaro-toolchain/bin/'
 #GCC_BIN_VERSION = '/MRT_OS/gcc-linaro-toolchain/bin/arm-linux-gnueabihf-gcc-7.2.1'
 GCC_BIN_VERSION = GCC_DIR + '/arm-linux-gnueabihf-gcc'
@@ -145,7 +147,7 @@ DB_NAME = "402_12_fw"
 VALID_PART_NUMBERS = ("402.12.00", "402.12.01", "402.12.02", "402.12.03",
 					"402.12.04", "402.12.05.01", "402.12.06", "402.12.07",)
 
-VALID_FW_FAMILY = ("IBD", "UFD", "MLY", "MRT")
+VALID_FW_FAMILY = ("IBD", "UFD", "MLY", "MRT") 
 
 PRODUCT = "402.12"
 

@@ -131,7 +131,7 @@ if __name__ == '__main__':
 	project_commits.set_project_commits()
 	paths = args_parser.get_paths(args)
 	if args.images:
-		logger.init(args, paths)
+		logger.init(args, paths) 
 	os.umask(0022)
 	doit(args, paths)
 	
